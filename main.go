@@ -43,6 +43,17 @@ func (p Player) isKokushimusou() bool {
 	return false;
 }
 
+func (p Player) isNikoNiko() bool {
+	count := 0
+	for _, val := range p.tiles {
+		if val != 2 {
+			return false
+		}
+		count++
+	}
+	return count == 7
+}
+
 func (p Player) String() string {
 	var tehai string
 	// 手牌を表示
@@ -87,13 +98,16 @@ func yakuCheck(p Player) string {
 
 	// 特殊役の判定
 
-	// TODO: 国士無双判定
+	// 国士無双判定
 	if p.isKokushimusou() {
 		// 確定
-		return "国士無双 役満"
+		return "国士無双"
 	}
-
-	// TODO: 七対子判定
+	// 七対子判定
+	if p.isNikoNiko() {
+		// TODO: チンイツとかホンイツとかホンロウ等もありえる
+		return "七対子"
+	}
 
 	// 手牌を雀頭と面子に分解する
 
@@ -102,6 +116,6 @@ func yakuCheck(p Player) string {
 	// TODO: 面子の判定
 	// TODO: 対子と順子どっち優先？
 
-	return "ノーテン 役なし"
+	return "ノーテン"
 }
 
