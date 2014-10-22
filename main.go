@@ -7,9 +7,14 @@ import (
 
 // 手牌
 var tiles map[mjp.MJP]int
+// フーロ
+var foo [][]mjp.MJP
 
 func main() {
+	// 33種類
 	tiles = make(map[mjp.MJP]int, 33)
+	// 最大4フーロ
+	foo = make([][]mjp.MJP, 4)
 
 	// ピンフ、一気通貫
 	tiles[mjp.M1] = 1
@@ -36,5 +41,14 @@ func main() {
 		}
 	}
 	fmt.Println()
+
+	// まず手牌を雀頭と面子に分解する
+
+	// TODO: 雀頭の判定
+
+	// TODO: 面子の判定
+	// TODO: 対子と順子どっち優先？
+
+
 }
 
