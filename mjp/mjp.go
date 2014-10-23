@@ -1,7 +1,16 @@
 package mjp
 
+type MJPType int
 type MJP int
 
+const (
+	NONE_TYPE MJPType = iota
+	P_TYPE
+	M_TYPE
+	S_TYPE
+	K_TYPE
+	G_TYPE
+)
 const (
 	// ピンズ
 	P1 MJP = (1 + iota)
@@ -43,6 +52,21 @@ const (
 	HAT
 	CHN
 )
+
+func (i MJP) Type() MJPType {
+	if i >= P1 && i <= P9 {
+		return P_TYPE
+	} else if i >= M1 && i <= M9 {
+		return M_TYPE
+	} else if i >= S1 && i <= S9 {
+		return S_TYPE
+	} else if i >= TON && i <= PEI {
+		return K_TYPE
+	} else if i >= HAK && i <= CHN {
+		return G_TYPE
+	}
+	return NONE_TYPE
+}
 
 func (i MJP) String() string {
 	switch i {
