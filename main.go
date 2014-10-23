@@ -24,6 +24,7 @@ func NewPlayer() Player {
 	return p
 }
 
+// 国士無双.
 func (p Player) isKokushimusou() bool {
 	if p.tiles[mjp.M1] >= 1 &&
 		p.tiles[mjp.M9] >= 1 &&
@@ -43,6 +44,24 @@ func (p Player) isKokushimusou() bool {
 	return false;
 }
 
+// 清一色.
+func (p Player) isChinniTsu() bool {
+	mjpType := mjp.NONE_TYPE
+	for key, val := range p.tiles {
+		if val < 1 {
+			continue
+		}
+
+		if mjpType == mjp.NONE_TYPE {
+			mjpType = key.Type()
+		} else if mjpType != key.Type() {
+			return false
+		}
+	}
+	return true
+}
+
+// 七対子.
 func (p Player) isNikoNiko() bool {
 	count := 0
 	for _, val := range p.tiles {
@@ -107,6 +126,11 @@ func yakuCheck(p Player) string {
 	if p.isNikoNiko() {
 		// TODO: チンイツとかホンイツとかホンロウ等もありえる
 		return "七対子"
+	}
+
+	// 清一色判定
+	if p.isChinniTsu() {
+		return "清一色"
 	}
 
 	// 手牌を雀頭と面子に分解する

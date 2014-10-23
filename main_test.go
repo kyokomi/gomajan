@@ -45,6 +45,48 @@ func TestYakuCheck(t *testing.T) {
 			},
 			out: "七対子",
 		},
+		// ソーズ清一色
+		TestCase{
+			in: map[mjp.MJP]int{
+				mjp.S1 : 2,
+				mjp.S2 : 2,
+				mjp.S3 : 2,
+				mjp.S4 : 1,
+				mjp.S5 : 1,
+				mjp.S6 : 1,
+				mjp.S7 : 3,
+				mjp.S9 : 2,
+			},
+			out: "清一色",
+		},
+		// マンズ清一色
+		TestCase{
+			in: map[mjp.MJP]int{
+				mjp.M1 : 2,
+				mjp.M2 : 2,
+				mjp.M3 : 2,
+				mjp.M4 : 1,
+				mjp.M5 : 1,
+				mjp.M6 : 1,
+				mjp.M7 : 3,
+				mjp.M9 : 2,
+			},
+			out: "清一色",
+		},
+		// ピンズ清一色
+		TestCase{
+			in: map[mjp.MJP]int{
+				mjp.P1 : 2,
+				mjp.P2 : 2,
+				mjp.P3 : 2,
+				mjp.P4 : 1,
+				mjp.P5 : 1,
+				mjp.P6 : 1,
+				mjp.P7 : 3,
+				mjp.P9 : 2,
+			},
+			out: "清一色",
+		},
 	}
 
 	for _, testCase := range testCases {
