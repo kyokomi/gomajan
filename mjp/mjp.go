@@ -13,7 +13,7 @@ const (
 )
 const (
 	// ピンズ
-	P1 MJP = (1 + iota)
+	P1 MJP = (0 + iota)
 	P2
 	P3
 	P4
