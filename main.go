@@ -20,17 +20,28 @@ type Player struct {
 func NewPlayer() Player {
 	p := Player{}
 	// 33種類
-	p.tiles = make([]Tehai, 33)
-	for i := 0; i < 33; i++ {
-		p.tiles[i].pai = mjp.MJP(i)
-		p.tiles[i].val = 0
-	}
+	p.tiles = NewTehai(nil)
 	// 最大4フーロ
 	p.foo = make([][]mjp.MJP, 4)
 
 	// TODO: ランダムな牌を設定する
 
 	return p
+}
+
+func NewTehai(tehai map[mjp.MJP]int) []Tehai {
+	tiles := make([]Tehai, 34)
+	for i := 0; i < 34; i++ {
+		tiles[i].pai = mjp.MJP(i)
+
+		if tehai != nil && tehai[tiles[i].pai] > 0 {
+			tiles[i].val = tehai[tiles[i].pai]
+		} else {
+			tiles[i].val = 0
+		}
+	}
+
+	return tiles
 }
 
 // 国士無双.
@@ -75,7 +86,7 @@ func (p Player) isNikoNiko() bool {
 	count := 0
 	for _, tehai := range p.tiles {
 		if tehai.val != 2 {
-			return false
+			continue
 		}
 		count++
 	}
@@ -152,6 +163,7 @@ func yakuCheck(p Player) []string {
 
 	temp := make([]mjp.MJP, 0)
 
+	// TODO: tempつくって面子できる毎にtempを更新して余ったやつを雀頭にする
 	for _, tehai := range p.tiles {
 		if tehai.val < 1 {
 			continue
