@@ -57,62 +57,34 @@ func yakuCheck(p Player) []string {
 
 	// TODO: 七対子は面子判定不要
 
-	// 手牌を雀頭と面子に分解する
-	var jyanto mjp.MJP
+	// 面子
 	mentsu := make([][]mjp.MJP, 0)
 
-	temp := make([]mjp.MJP, 0)
+	// 残り牌（テンパイ判定用）
 	nokori := make([]Tehai, 34)
 	copy(nokori, p.tiles)
 
+	// 面子がひとつも出来ない場合、判定終わり
 	for {
-		isMentsu := false
-		tiles := make([]Tehai, 34)
-		copy(tiles, nokori)
-		for _, tehai := range tiles {
-			if tehai.val < 1 {
-				continue
-			}
-
-			// 面子の判定（順子）
-			if len(temp) == 0 {
-				// 面子候補
-				temp = append(temp, tehai.pai)
-			} else {
-				if temp[len(temp) - 1] == (tehai.pai - 1) {
-					// 面子候補追加
-					temp = append(temp, tehai.pai)
-				} else if tehai.val >= 3 {
-					// 面子候補リセット
-					temp = make([]mjp.MJP, 0)
-					for i := 0; i < 3; i++ {
-						temp = append(temp, tehai.pai)
-					}
-				} else {
-					// 面子候補リセット
-					temp = make([]mjp.MJP, 0)
-					temp = append(temp, tehai.pai)
-				}
-			}
-
-			// 面子完成
-			if len(temp) == 3 {
-
-				for _, t := range temp {
-					nokori[t].val -= 1
-				}
-
-				mentsu = append(mentsu, temp)
-				temp = make([]mjp.MJP, 0)
-				isMentsu = true
-			}
+		men := checkMentsu(nokori)
+		if len(men) == 0 {
+			break
 		}
 
-		if !isMentsu {
-			break
+		for _, m := range men {
+			// 完成した面子を更新
+			mentsu = append(mentsu, m)
+
+			// 残り牌を更新
+			for _, p := range m {
+				nokori[p].val -= 1
+			}
 		}
 	}
 
+	// 手牌を雀頭と面子に分解する
+	var jyanto mjp.MJP
+	// 面子作成後の残り牌から雀頭を作成
 	for _, n := range nokori {
 		// 雀頭
 		if n.val == 2 {
