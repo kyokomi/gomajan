@@ -157,48 +157,84 @@ func yakuCheck(p Player) []string {
 		res = append(res, "清一色")
 	}
 
+	// TODO: 七対子は面子判定不要
+
 	// 手牌を雀頭と面子に分解する
 	var jyanto mjp.MJP
 	mentsu := make([][]mjp.MJP, 0)
 
 	temp := make([]mjp.MJP, 0)
+	nokori := make([]Tehai, 34)
+	copy(nokori, p.tiles)
 
-	// TODO: tempつくって面子できる毎にtempを更新して余ったやつを雀頭にする
-	for _, tehai := range p.tiles {
-		if tehai.val < 1 {
-			continue
-		}
-		// 雀頭
-		if tehai.val == 2 {
-			jyanto = tehai.pai
-		}
+	for {
+		isMentsu := false
+		tiles := make([]Tehai, 34)
+		copy(tiles, nokori)
+		for _, tehai := range tiles {
+			if tehai.val < 1 {
+				continue
+			}
 
-		// 面子の判定
-		if tehai.val == 1 && len(temp) == 0{
-			// 面子候補
-			temp = append(temp, tehai.pai)
-		} else if tehai.val == 1 {
-			if temp[len(temp) - 1] == (tehai.pai - 1) {
-				// 面子候補追加
+			// 面子の判定（順子）
+			if len(temp) == 0 {
+				// 面子候補
 				temp = append(temp, tehai.pai)
 			} else {
-				// 面子候補リセット
-				temp = make([]mjp.MJP, 0)
-				temp = append(temp, tehai.pai)
+				if temp[len(temp) - 1] == (tehai.pai - 1) {
+					// 面子候補追加
+					temp = append(temp, tehai.pai)
+				} else if tehai.val >= 3 {
+					// 面子候補リセット
+					temp = make([]mjp.MJP, 0)
+					for i := 0; i < 3; i++ {
+						temp = append(temp, tehai.pai)
+					}
+				} else {
+					// 面子候補リセット
+					temp = make([]mjp.MJP, 0)
+					temp = append(temp, tehai.pai)
+				}
 			}
-		} else {
-			// TODO: 暗刻または4枚
-			temp = make([]mjp.MJP, 0)
+
+			// 面子完成
+			if len(temp) == 3 {
+
+				for _, t := range temp {
+					nokori[t].val -= 1
+				}
+
+				mentsu = append(mentsu, temp)
+				temp = make([]mjp.MJP, 0)
+				isMentsu = true
+			}
 		}
 
-		// 面子完成
-		if len(temp) == 3 {
-			mentsu = append(mentsu, temp)
-			temp = make([]mjp.MJP, 0)
+		if !isMentsu {
+			break
+		}
+	}
+
+	for _, n := range nokori {
+		// 雀頭
+		if n.val == 2 {
+			jyanto = n.pai
+			nokori[n.pai].val -= 2
+			break
 		}
 	}
 	fmt.Println("雀頭 ", jyanto)
 	fmt.Println("面子 ", mentsu)
+
+	fmt.Print("残り ")
+	if !p.isNikoNiko() {
+		for _, n := range nokori {
+			if n.val >= 1 {
+				fmt.Print(n)
+			}
+		}
+	}
+	fmt.Println()
 
 	// TODO: 雀頭の判定
 
