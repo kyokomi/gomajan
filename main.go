@@ -5,55 +5,6 @@ import (
 	"github.com/kyokomi/gomajan/mjp"
 )
 
-// 国士無双.
-func (p Player) isKokushimusou() bool {
-	if p.tiles[mjp.M1].val >= 1 &&
-		p.tiles[mjp.M9].val >= 1 &&
-		p.tiles[mjp.S1].val >= 1 &&
-		p.tiles[mjp.S9].val >= 1 &&
-		p.tiles[mjp.P1].val >= 1 &&
-		p.tiles[mjp.P9].val >= 1 &&
-		p.tiles[mjp.TON].val >= 1 &&
-		p.tiles[mjp.NAN].val >= 1 &&
-		p.tiles[mjp.SHA].val >= 1 &&
-		p.tiles[mjp.PEI].val >= 1 &&
-		p.tiles[mjp.HAK].val >= 1 &&
-		p.tiles[mjp.HAT].val >= 1 &&
-		p.tiles[mjp.CHN].val >= 1 {
-		return true;
-	}
-	return false;
-}
-
-// 清一色.
-func (p Player) isChinniTsu() bool {
-	mjpType := mjp.NONE_TYPE
-	for _, tehai := range p.tiles {
-		if tehai.val < 1 {
-			continue
-		}
-
-		if mjpType == mjp.NONE_TYPE {
-			mjpType = tehai.pai.Type()
-		} else if mjpType != tehai.pai.Type() {
-			return false
-		}
-	}
-	return true
-}
-
-// 七対子.
-func (p Player) isNikoNiko() bool {
-	count := 0
-	for _, tehai := range p.tiles {
-		if tehai.val != 2 {
-			continue
-		}
-		count++
-	}
-	return count == 7
-}
-
 func main() {
 
 	p := NewPlayer()
@@ -87,20 +38,20 @@ func yakuCheck(p Player) []string {
 	// 特殊役の判定
 
 	// 国士無双判定
-	if p.isKokushimusou() {
+	if isKokushimusou(p.tiles) {
 		// 確定
 		res = append(res, "国士無双")
 		return res
 	}
 
 	// 七対子判定
-	if p.isNikoNiko() {
+	if isNikoNiko(p.tiles) {
 		// TODO: チンイツとかホンイツとかホンロウ等もありえる
 		res = append(res, "七対子")
 	}
 
 	// 清一色判定
-	if p.isChinniTsu() {
+	if isChinniTsu(p.tiles) {
 		res = append(res, "清一色")
 	}
 
@@ -174,7 +125,7 @@ func yakuCheck(p Player) []string {
 	fmt.Println("面子 ", mentsu)
 
 	fmt.Print("残り ")
-	if !p.isNikoNiko() {
+	if !isNikoNiko(p.tiles) {
 		for _, n := range nokori {
 			if n.val >= 1 {
 				fmt.Print(n)
