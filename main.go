@@ -27,6 +27,59 @@ func main() {
 	fmt.Println(yakuCheck(p))
 }
 
+type YakuCheck struct {
+	mentsu     [][]mjp.MJP
+	nakiMentsu [][]mjp.MJP
+	jyanto     mjp.MJP
+	nokori     []Tehai
+	//	yaku []string
+}
+
+func NewYakuCheck(p Player) *YakuCheck {
+	y := YakuCheck{}
+
+	// 面子
+	y.mentsu = make([][]mjp.MJP, 0)
+
+	// TODO: 鳴き面子
+	y.nakiMentsu = make([][]mjp.MJP, 0)
+
+	// 残り牌（テンパイ判定用）
+	y.nokori = make([]Tehai, 34)
+	copy(y.nokori, p.tiles)
+
+	// 面子がひとつも出来ない場合、判定終わり
+	for {
+		men := checkMentsu(y.nokori)
+		if len(men) == 0 {
+			break
+		}
+
+		for _, m := range men {
+			// 完成した面子を更新
+			y.mentsu = append(y.mentsu, m)
+
+			// 残り牌を更新
+			for _, p := range m {
+				y.nokori[p].val -= 1
+			}
+		}
+	}
+
+	// 手牌を雀頭と面子に分解する
+	// 面子作成後の残り牌から雀頭を作成
+	for _, n := range y.nokori {
+		// 雀頭
+		if n.val == 2 {
+			y.jyanto = n.pai
+			y.nokori[n.pai].val -= 2
+			break
+		}
+	}
+
+	return &y
+}
+
 func yakuCheck(p Player) []string {
 	fmt.Println(p)
 
@@ -58,48 +111,13 @@ func yakuCheck(p Player) []string {
 
 	// TODO: 七対子は面子判定不要
 
-	// 面子
-	mentsu := make([][]mjp.MJP, 0)
-
-	// 残り牌（テンパイ判定用）
-	nokori := make([]Tehai, 34)
-	copy(nokori, p.tiles)
-
-	// 面子がひとつも出来ない場合、判定終わり
-	for {
-		men := checkMentsu(nokori)
-		if len(men) == 0 {
-			break
-		}
-
-		for _, m := range men {
-			// 完成した面子を更新
-			mentsu = append(mentsu, m)
-
-			// 残り牌を更新
-			for _, p := range m {
-				nokori[p].val -= 1
-			}
-		}
-	}
-
-	// 手牌を雀頭と面子に分解する
-	var jyanto mjp.MJP
-	// 面子作成後の残り牌から雀頭を作成
-	for _, n := range nokori {
-		// 雀頭
-		if n.val == 2 {
-			jyanto = n.pai
-			nokori[n.pai].val -= 2
-			break
-		}
-	}
-	fmt.Println("雀頭 ", jyanto)
-	fmt.Println("面子 ", mentsu)
+	y := NewYakuCheck(p)
+	fmt.Println("雀頭 ", y.jyanto)
+	fmt.Println("面子 ", y.mentsu)
 
 	fmt.Print("残り ")
 	if !isNikoNiko(p.tiles) {
-		for _, n := range nokori {
+		for _, n := range y.nokori {
 			if n.val >= 1 {
 				fmt.Print(n)
 			}
