@@ -18,7 +18,7 @@ func checkMentsu(nokori []Tehai) [][]mjp.MJP {
 			continue
 		}
 
-		if len(temp) > 0 && temp[len(temp) - 1] == (t.pai - 1) {
+		if len(temp) > 0 && temp[len(temp)-1] == (t.pai-1) {
 			// 順子
 
 			// 面子候補追加
@@ -46,4 +46,3 @@ func checkMentsu(nokori []Tehai) [][]mjp.MJP {
 
 	return mentsu
 }
-

@@ -54,4 +54,3 @@ func NewTehai(tehai map[mjp.MJP]int) []Tehai {
 
 	return tiles
 }
-

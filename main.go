@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+
 	"github.com/kyokomi/gomajan/mjp"
 )
 
@@ -113,4 +114,3 @@ func yakuCheck(p Player) []string {
 
 	return res
 }
-

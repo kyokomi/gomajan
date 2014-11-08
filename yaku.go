@@ -4,7 +4,7 @@ import "github.com/kyokomi/gomajan/mjp"
 
 // 国士無双.
 func isKokushimusou(t []Tehai) bool {
-	if  t[mjp.M1].val >= 1 &&
+	if t[mjp.M1].val >= 1 &&
 		t[mjp.M9].val >= 1 &&
 		t[mjp.S1].val >= 1 &&
 		t[mjp.S9].val >= 1 &&
@@ -17,9 +17,9 @@ func isKokushimusou(t []Tehai) bool {
 		t[mjp.HAK].val >= 1 &&
 		t[mjp.HAT].val >= 1 &&
 		t[mjp.CHN].val >= 1 {
-		return true;
+		return true
 	}
-	return false;
+	return false
 }
 
 // 清一色.
@@ -50,4 +50,3 @@ func isNikoNiko(t []Tehai) bool {
 	}
 	return count == 7
 }
-
