@@ -109,6 +109,11 @@ func yakuCheck(p Player) []string {
 		res = append(res, "清一色")
 	}
 
+	// ホンイツ判定
+	if isHonniTsu(p.tiles) {
+		res = append(res, "混一色")
+	}
+
 	// TODO: 七対子は面子判定不要
 
 	y := NewYakuCheck(p)

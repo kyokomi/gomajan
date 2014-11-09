@@ -39,6 +39,29 @@ func isChinniTsu(t []Tehai) bool {
 	return true
 }
 
+// 混一色.
+func isHonniTsu(t []Tehai) bool {
+	jihai := false
+	mjpType := mjp.NONE_TYPE
+	for _, tehai := range t {
+		if tehai.val < 1 {
+			continue
+		}
+
+		if tehai.pai.Type() == mjp.G_TYPE || tehai.pai.Type() == mjp.K_TYPE {
+			jihai = true
+			continue
+		}
+
+		if mjpType == mjp.NONE_TYPE {
+			mjpType = tehai.pai.Type()
+		} else if mjpType != tehai.pai.Type() {
+			return false
+		}
+	}
+	return jihai
+}
+
 // 七対子.
 func isNikoNiko(t []Tehai) bool {
 	count := 0
