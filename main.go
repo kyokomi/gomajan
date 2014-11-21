@@ -114,6 +114,11 @@ func yakuCheck(p Player) []string {
 		res = append(res, "混一色")
 	}
 
+	// 断么九判定
+	if isTanyao(p.tiles) {
+		res = append(res, "断么九")
+	}
+
 	// TODO: 七対子は面子判定不要
 
 	y := NewYakuCheck(p)

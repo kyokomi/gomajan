@@ -62,6 +62,20 @@ func isHonniTsu(t []Tehai) bool {
 	return jihai
 }
 
+func isTanyao(t []Tehai) bool {
+	for _, tehai := range t {
+		if tehai.val < 1 {
+			continue
+		}
+
+		// 三元牌、風牌
+		if tehai.pai.IsJipai19() {
+			return false
+		}
+	}
+	return true
+}
+
 // 七対子.
 func isNikoNiko(t []Tehai) bool {
 	count := 0

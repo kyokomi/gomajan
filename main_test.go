@@ -128,6 +128,20 @@ func TestYakuCheck(t *testing.T) {
 			}),
 			out: []string{"混一色"},
 		},
+		// 断么九
+		TestCase{
+			in: NewTehai(map[mjp.MJP]int{
+				mjp.P2: 1,
+				mjp.P3: 1,
+				mjp.P4: 1,
+				mjp.S4: 1,
+				mjp.S5: 1,
+				mjp.S6: 1,
+				mjp.M7: 3,
+				mjp.P8: 2,
+			}),
+			out: []string{"断么九"},
+		},
 	}
 
 	for _, testCase := range testCases {
