@@ -68,6 +68,29 @@ func (i MJP) Type() MJPType {
 	return NONE_TYPE
 }
 
+func (i MJP) Is19() bool {
+	if i == P1 || i == P9 ||
+		i == M1 || i == M9 ||
+		i == S1 || i == S9 {
+		return true
+	}
+	return false
+}
+
+func (i MJP) IsJipai() bool {
+	if i.Type() == G_TYPE || i.Type() == K_TYPE {
+		return true
+	}
+	return false
+}
+
+func (i MJP) IsJipai19() bool {
+	if i.IsJipai() || i.Is19() {
+		return true
+	}
+	return false
+}
+
 func (i MJP) String() string {
 	switch i {
 	case P1:
