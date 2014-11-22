@@ -89,56 +89,91 @@ func yakuCheck(p Player) []string {
 
 	// TODO: 多牌判定
 
-	// 特殊役の判定
+	/////////////////////
+	// 役満の判定
+	yakuman := yakuManCheck(p)
+	if len(yakuman) != 0 {
+		// 役満確定したらチェック終わり
+		res = yakuman
+	} else {
+		/////////////////////
+		// 通常役の判定
 
-	// 国士無双判定
-	if isKokushimusou(p.tiles) {
-		// 確定
-		res = append(res, "国士無双")
-		return res
+		// 七対子判定
+		if isNikoNiko(p.tiles) {
+			// TODO: チンイツとかホンイツとかホンロウ等もありえる
+			res = append(res, "七対子")
+		}
+
+		// TODO: 混老頭
+
+		// 清一色判定
+		if isChinniTsu(p.tiles) {
+			res = append(res, "清一色")
+		}
+
+		// ホンイツ判定
+		if isHonniTsu(p.tiles) {
+			res = append(res, "混一色")
+		}
+
+		// 断么九判定
+		if isTanyao(p.tiles) {
+			res = append(res, "断么九")
+		}
 	}
 
-	// 七対子判定
-	if isNikoNiko(p.tiles) {
-		// TODO: チンイツとかホンイツとかホンロウ等もありえる
-		res = append(res, "七対子")
-	}
-
-	// 清一色判定
-	if isChinniTsu(p.tiles) {
-		res = append(res, "清一色")
-	}
-
-	// ホンイツ判定
-	if isHonniTsu(p.tiles) {
-		res = append(res, "混一色")
-	}
-
-	// 断么九判定
-	if isTanyao(p.tiles) {
-		res = append(res, "断么九")
-	}
-
-	// TODO: 七対子は面子判定不要
-
+	// TODO: 七対子と国士無双は面子判定不要
 	y := NewYakuCheck(p)
-	fmt.Println("雀頭 ", y.jyanto)
-	fmt.Println("面子 ", y.mentsu)
 
-	fmt.Print("残り ")
-	if !isNikoNiko(p.tiles) {
+	// TODO: test用
+	if !isNikoNiko(p.tiles) && !isKokushimusou(p.tiles) {
+		fmt.Println("雀頭 ", y.jyanto)
+		fmt.Println("面子 ", y.mentsu)
+
+		fmt.Print("残り ")
 		for _, n := range y.nokori {
 			if n.val >= 1 {
 				fmt.Print(n)
 			}
 		}
+		fmt.Println()
 	}
-	fmt.Println()
 
 	// TODO: 雀頭の判定
 
 	// TODO: 面子の判定
 	// TODO: 対子と順子どっち優先？
+
+	return res
+}
+
+func yakuManCheck(p Player) []string {
+	res := make([]string, 0)
+
+	// 国士無双判定
+	if isKokushimusou(p.tiles) {
+		res = append(res, "国士無双")
+		// 国士無双と他の組み合わせはないので終わり
+		return res
+	}
+
+	// TODO: 大三元
+
+	// TODO: 字一色
+
+	// TODO: 大四喜
+
+	// TODO: 小四喜
+
+	// TODO: 四暗刻
+
+	// TODO: 清老頭
+
+	// 緑一色
+	if isRyouiso(p.tiles) {
+		res = append(res, "緑一色")
+	}
 
 	return res
 }

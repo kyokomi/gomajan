@@ -142,6 +142,18 @@ func TestYakuCheck(t *testing.T) {
 			}),
 			out: []string{"断么九"},
 		},
+		// 緑一色
+		TestCase{
+			in: NewTehai(map[mjp.MJP]int{
+				mjp.S2: 2,
+				mjp.S3: 2,
+				mjp.S4: 2,
+				mjp.S6: 3,
+				mjp.HAT: 3,
+				mjp.S8: 2,
+			}),
+			out: []string{"緑一色"},
+		},
 	}
 
 	for _, testCase := range testCases {

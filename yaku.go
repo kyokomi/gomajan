@@ -22,6 +22,26 @@ func isKokushimusou(t []Tehai) bool {
 	return false
 }
 
+// 緑一色.
+func isRyouiso(t []Tehai) bool {
+	for _, tehai := range t {
+		if tehai.val < 1 {
+			continue
+		}
+
+		// S2, S3, S4, S6, S8, 発 以外はNG
+		if tehai.pai != mjp.S2 &&
+			tehai.pai != mjp.S3 &&
+			tehai.pai != mjp.S4 &&
+			tehai.pai != mjp.S6 &&
+			tehai.pai != mjp.S8 &&
+			mjp.HAT != tehai.pai {
+			return false
+		}
+	}
+	return true
+}
+
 // 清一色.
 func isChinniTsu(t []Tehai) bool {
 	mjpType := mjp.NONE_TYPE
