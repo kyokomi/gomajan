@@ -158,7 +158,10 @@ func yakuManCheck(p Player) []string {
 		return res
 	}
 
-	// TODO: 大三元
+	// 大三元
+	if isDaisangen(p.tiles) {
+		res = append(res, "大三元")
+	}
 
 	// TODO: 字一色
 

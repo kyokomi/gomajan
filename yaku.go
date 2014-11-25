@@ -22,6 +22,34 @@ func isKokushimusou(t []Tehai) bool {
 	return false
 }
 
+// 大三元.
+func isDaisangen(t []Tehai) bool {
+
+	hak := 0
+	hat := 0
+	chn := 0
+	for _, tehai := range t {
+		if tehai.val < 1 {
+			continue
+		}
+
+		if tehai.pai == mjp.HAK {
+			hak += tehai.val
+		}
+		if tehai.pai == mjp.HAT {
+			hat += tehai.val
+		}
+		if tehai.pai == mjp.CHN {
+			chn += tehai.val
+		}
+	}
+	if hak >= 3 && hat >= 3 && chn >= 3 {
+		return true
+	}
+
+	return false
+}
+
 // 緑一色.
 func isRyouiso(t []Tehai) bool {
 	for _, tehai := range t {
