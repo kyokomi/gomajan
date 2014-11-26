@@ -67,6 +67,85 @@ func isTuiso(t []Tehai) bool {
 	return true
 }
 
+// 大四喜.
+func isDaisushi(t []Tehai) bool {
+
+	// TODO: 鳴き面子OK
+
+	ton := 0
+	nan := 0
+	sha := 0
+	pei := 0
+	for _, tehai := range t {
+		if tehai.val < 1 {
+			continue
+		}
+
+		if tehai.pai == mjp.TON {
+			ton += tehai.val
+		}
+		if tehai.pai == mjp.NAN {
+			nan += tehai.val
+		}
+		if tehai.pai == mjp.SHA {
+			sha += tehai.val
+		}
+		if tehai.pai == mjp.PEI {
+			pei += tehai.val
+		}
+	}
+	if ton >= 3 && nan >= 3 && sha >= 3 && pei >= 3 {
+		return true
+	}
+
+	return false
+}
+
+// 小四喜
+func isSyosushi(t []Tehai) bool {
+
+	// TODO: 鳴き面子OK
+
+	ton := 0
+	nan := 0
+	sha := 0
+	pei := 0
+	for _, tehai := range t {
+		if tehai.val < 1 {
+			continue
+		}
+
+		if tehai.pai == mjp.TON {
+			ton += tehai.val
+		}
+		if tehai.pai == mjp.NAN {
+			nan += tehai.val
+		}
+		if tehai.pai == mjp.SHA {
+			sha += tehai.val
+		}
+		if tehai.pai == mjp.PEI {
+			pei += tehai.val
+		}
+	}
+
+	kaze := []int{
+		ton, nan, sha, pei,
+	}
+
+	c2 := 0
+	c3 := 0
+	for _, pai := range kaze {
+		if pai >= 3 {
+			c3++
+		} else if pai == 2 {
+			c2++
+		}
+	}
+	// 4種が3枚づつ揃ってる or 3種3枚づつ揃ってて、1種だけ2枚
+	return c3 == 4 || (c3 == 3 && c2 == 1)
+}
+
 // 緑一色.
 func isRyouiso(t []Tehai) bool {
 	for _, tehai := range t {

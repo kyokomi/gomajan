@@ -168,9 +168,13 @@ func yakuManCheck(p Player) []string {
 		res = append(res, "字一色")
 	}
 
-	// TODO: 大四喜
+	// 大四喜 or 小四喜
+	if isDaisushi(p.tiles) {
+		res = append(res, "大四喜")
+	} else if isSyosushi(p.tiles) {
+		res = append(res, "小四喜")
+	}
 
-	// TODO: 小四喜
 
 	// TODO: 四暗刻
 
