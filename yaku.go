@@ -50,6 +50,23 @@ func isDaisangen(t []Tehai) bool {
 	return false
 }
 
+// 字一色.
+func isTuiso(t []Tehai) bool {
+
+	// TODO: 鳴き面子OK
+
+	for _, tehai := range t {
+		if tehai.val < 1 {
+			continue
+		}
+
+		if tehai.pai.Type() != mjp.G_TYPE && tehai.pai.Type() != mjp.K_TYPE {
+			return false
+		}
+	}
+	return true
+}
+
 // 緑一色.
 func isRyouiso(t []Tehai) bool {
 	for _, tehai := range t {

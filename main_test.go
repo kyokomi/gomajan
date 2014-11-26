@@ -167,6 +167,18 @@ func TestYakuCheck(t *testing.T) {
 			}),
 			out: []string{"大三元"},
 		},
+		// 字一色
+		TestCase{
+			in: NewTehai(map[mjp.MJP]int{
+				mjp.TON: 2,
+				mjp.NAN: 2,
+				mjp.SHA: 2,
+				mjp.PEI: 2,
+				mjp.HAK: 2,
+				mjp.HAT: 2,
+				mjp.CHN: 2,
+			}),
+			out: []string{"字一色"},
 	}
 
 	for _, testCase := range testCases {

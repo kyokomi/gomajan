@@ -163,7 +163,10 @@ func yakuManCheck(p Player) []string {
 		res = append(res, "大三元")
 	}
 
-	// TODO: 字一色
+	// 字一色
+	if isTuiso(p.tiles) {
+		res = append(res, "字一色")
+	}
 
 	// TODO: 大四喜
 
