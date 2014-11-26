@@ -121,6 +121,11 @@ func yakuCheck(p Player) []string {
 		if isTanyao(p.tiles) {
 			res = append(res, "断么九")
 		}
+
+		// 三暗刻
+		if isSananko(p.tiles) {
+			res = append(res, "三暗刻")
+		}
 	}
 
 	// TODO: 七対子と国士無双は面子判定不要
@@ -175,8 +180,12 @@ func yakuManCheck(p Player) []string {
 		res = append(res, "小四喜")
 	}
 
+	// 四暗刻
+	if isSuanko(p.tiles) {
+		res = append(res, "四暗刻")
+	}
 
-	// TODO: 四暗刻
+	// TODO: 四槓子
 
 	// TODO: 清老頭
 

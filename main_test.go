@@ -205,6 +205,30 @@ func TestYakuCheck(t *testing.T) {
 			}),
 			out: []string{"小四喜"},
 		},
+		// 四暗刻
+		TestCase{
+			in: NewTehai(map[mjp.MJP]int{
+				mjp.TON: 3,
+				mjp.S1: 3,
+				mjp.S5: 3,
+				mjp.P9: 3,
+				mjp.CHN: 2,
+			}),
+			out: []string{"四暗刻"},
+		},
+		// 三暗刻
+		TestCase{
+			in: NewTehai(map[mjp.MJP]int{
+				mjp.TON: 3,
+				mjp.S1: 3,
+				mjp.S5: 3,
+				mjp.P7: 1,
+				mjp.P8: 1,
+				mjp.P9: 1,
+				mjp.CHN: 2,
+			}),
+			out: []string{"三暗刻"},
+		},
 	}
 
 	for _, testCase := range testCases {

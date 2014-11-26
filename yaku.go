@@ -25,6 +25,8 @@ func isKokushimusou(t []Tehai) bool {
 // 大三元.
 func isDaisangen(t []Tehai) bool {
 
+	// TODO: 鳴き面子OK
+
 	hak := 0
 	hat := 0
 	chn := 0
@@ -146,8 +148,30 @@ func isSyosushi(t []Tehai) bool {
 	return c3 == 4 || (c3 == 3 && c2 == 1)
 }
 
+// 四暗刻
+func isSuanko(t []Tehai) bool {
+
+	// TODO: 鳴き面子NG, 槓子OK
+
+	c := 0
+	for _, tehai := range t {
+		if tehai.val < 1 {
+			continue
+		}
+
+		if tehai.val >= 3 {
+			c++
+		}
+	}
+
+	return c == 4
+}
+
 // 緑一色.
 func isRyouiso(t []Tehai) bool {
+
+	// TODO: 鳴き面子OK
+
 	for _, tehai := range t {
 		if tehai.val < 1 {
 			continue
@@ -206,6 +230,7 @@ func isHonniTsu(t []Tehai) bool {
 	return jihai
 }
 
+// 断么九.
 func isTanyao(t []Tehai) bool {
 	for _, tehai := range t {
 		if tehai.val < 1 {
@@ -230,4 +255,23 @@ func isNikoNiko(t []Tehai) bool {
 		count++
 	}
 	return count == 7
+}
+
+// 三暗刻
+func isSananko(t []Tehai) bool {
+
+	// TODO: 鳴き面子NG, 槓子OK
+
+	c := 0
+	for _, tehai := range t {
+		if tehai.val < 1 {
+			continue
+		}
+
+		if tehai.val >= 3 {
+			c++
+		}
+	}
+
+	return c == 3
 }
