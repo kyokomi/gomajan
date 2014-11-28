@@ -180,7 +180,7 @@ func TestYakuCheck(t *testing.T) {
 			}),
 			out: []string{"字一色"},
 		},
-		// TODO: あとで四暗刻なくす
+		// TODO: 副露考慮したら、あとで四暗刻なくす
 		// 大四喜
 		TestCase{
 			in: NewTehai(map[mjp.MJP]int{
@@ -228,6 +228,18 @@ func TestYakuCheck(t *testing.T) {
 				mjp.CHN: 2,
 			}),
 			out: []string{"三暗刻"},
+		},
+		// TODO: 副露考慮したら、あとで四暗刻なくす
+		// 清老頭
+		TestCase{
+			in: NewTehai(map[mjp.MJP]int{
+				mjp.S1: 2,
+				mjp.P1: 3,
+				mjp.P9: 3,
+				mjp.M1: 3,
+				mjp.M9: 3,
+			}),
+			out: []string{"清老頭", "四暗刻"},
 		},
 	}
 

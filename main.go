@@ -187,7 +187,10 @@ func yakuManCheck(p Player) []string {
 
 	// TODO: 四槓子
 
-	// TODO: 清老頭
+	// 清老頭
+	if isChinrotou(p.tiles) {
+		res = append(res, "清老頭")
+	}
 
 	// 緑一色
 	if isRyouiso(p.tiles) {

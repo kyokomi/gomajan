@@ -167,6 +167,25 @@ func isSuanko(t []Tehai) bool {
 	return c == 4
 }
 
+// TODO: 四槓子.
+
+// 清老頭.
+func isChinrotou(t []Tehai) bool {
+
+	// TODO: 鳴き面子OK
+
+	for _, tehai := range t {
+		if tehai.val < 1 {
+			continue
+		}
+
+		if !tehai.pai.Is19() {
+			return false
+		}
+	}
+	return true
+}
+
 // 緑一色.
 func isRyouiso(t []Tehai) bool {
 
