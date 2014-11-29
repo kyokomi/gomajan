@@ -272,6 +272,47 @@ func isIkkitsukan(t []Tehai) bool {
 	return false
 }
 
+// 小三元.
+func isSyosangen(t []Tehai) bool {
+
+	// TODO: 鳴き面子OK
+
+	hak := 0
+	hat := 0
+	chn := 0
+	for _, tehai := range t {
+		if tehai.val < 1 {
+			continue
+		}
+
+		if tehai.pai == mjp.HAK {
+			hak += tehai.val
+		}
+		if tehai.pai == mjp.HAT {
+			hat += tehai.val
+		}
+		if tehai.pai == mjp.CHN {
+			chn += tehai.val
+		}
+	}
+
+	sangen := []int{
+		hak, hat, chn,
+	}
+
+	c2 := 0
+	c3 := 0
+	for _, pai := range sangen {
+		if pai >= 3 {
+			c3++
+		} else if pai == 2 {
+			c2++
+		}
+	}
+	// 2種3枚づつ揃ってて、1種だけ2枚
+	return c3 == 2 && c2 == 1
+}
+
 // 断么九.
 func isTanyao(t []Tehai) bool {
 	for _, tehai := range t {

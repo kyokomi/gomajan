@@ -148,6 +148,10 @@ func yakuCheck(p Player) []string {
 
 		// TODO: 三槓子
 
+		if isSyosangen(p.tiles) {
+			res = append(res, "小三元")
+		}
+
 		// --- 3 ---
 
 		// TODO: 混老頭
