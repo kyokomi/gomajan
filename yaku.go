@@ -211,6 +211,9 @@ func isRyouiso(t []Tehai) bool {
 
 // 清一色.
 func isChinniTsu(t []Tehai) bool {
+	// TODO: 鳴き牌OK
+	// TODO: 食い下がり
+
 	mjpType := mjp.NONE_TYPE
 	for _, tehai := range t {
 		if tehai.val < 1 {
@@ -247,6 +250,26 @@ func isHonniTsu(t []Tehai) bool {
 		}
 	}
 	return jihai
+}
+
+// 純全帯.
+func isJyunchan(t []Tehai) bool {
+
+	// TODO: 食い下がり
+
+	// TODO: 面子判定が必要なので一旦保留
+
+	return false
+}
+
+// 一気通貫.
+func isIkkitsukan(t []Tehai) bool {
+
+	// TODO: 食い下がり
+
+	// TODO: 面子判定が必要なので一旦保留
+
+	return false
 }
 
 // 断么九.

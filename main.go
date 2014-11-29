@@ -99,32 +99,74 @@ func yakuCheck(p Player) []string {
 		/////////////////////
 		// 通常役の判定
 
-		// 七対子判定
 		if isNikoNiko(p.tiles) {
 			// TODO: チンイツとかホンイツとかホンロウ等もありえる
 			res = append(res, "七対子")
 		}
 
-		// TODO: 混老頭
+		// --- 1翻 ---
 
-		// 清一色判定
-		if isChinniTsu(p.tiles) {
-			res = append(res, "清一色")
-		}
+		// TODO: リーチ
+		// TODO: 一発
+		// TODO: 門前清自摸
 
-		// ホンイツ判定
-		if isHonniTsu(p.tiles) {
-			res = append(res, "混一色")
-		}
+		// TODO: 平和
 
-		// 断么九判定
 		if isTanyao(p.tiles) {
 			res = append(res, "断么九")
 		}
 
-		// 三暗刻
+		// TODO: 一盃口
+
+		// TODO: 嶺上開花
+		// TODO: 槍槓
+		// TODO: 海底摸月
+		// TODO: 河底撈魚
+
+		// TODO: 風牌
+		// TODO: 三元牌
+		// TODO: 自風
+
+		// --- 2 ---
+
+		// TODO: ダブルリーチ
+
+		// TODO: 混全帯
+
+		// TODO: 三色同順
+		// 食い下がり
+
+		if isIkkitsukan(p.tiles) {
+			res = append(res, "一気通貫")
+		}
+
+		// TODO: 対々和
+
 		if isSananko(p.tiles) {
 			res = append(res, "三暗刻")
+		}
+
+		// TODO: 三槓子
+
+		// --- 3 ---
+
+		// TODO: 混老頭
+		// 食い下がり
+
+		if isHonniTsu(p.tiles) {
+			res = append(res, "混一色")
+		}
+
+		// TODO: 二盃口
+
+		if isJyunchan(p.tiles) {
+			res = append(res, "純全帯")
+		}
+
+		// --- 6 ---
+
+		if isChinniTsu(p.tiles) {
+			res = append(res, "清一色")
 		}
 	}
 
