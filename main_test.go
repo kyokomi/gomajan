@@ -139,6 +139,7 @@ func TestYakuCheck(t *testing.T) {
 				mjp.S5: 1,
 				mjp.S6: 1,
 				mjp.M7: 3,
+				mjp.S7: 3,
 				mjp.P8: 2,
 			}),
 			out: []mjp.Yaku{mjp.M_断么九},
