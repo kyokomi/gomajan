@@ -18,11 +18,22 @@ const (
 
 // Foo 鳴き牌
 type Foo struct {
+	// TODO: 誰から鳴いたか
+	dare int
 	// どの牌で鳴いたか
 	nakiPai MJP
 	// 鳴いた牌（全部）
 	mentsu []MJP
 	fooType FooType
+}
+
+func NewFooPon(nakiPai MJP) Foo {
+	return Foo{
+		dare: 1,
+		nakiPai: nakiPai,
+		mentsu: []MJP{nakiPai, nakiPai, nakiPai},
+		fooType: Pon,
+	}
 }
 
 // Player プレイヤー
@@ -53,7 +64,6 @@ func (y YakuCheck) Yakus() []Yaku {
 	return y.yakus
 }
 
-
 func (y YakuCheck) String() string {
 
 	var yakus string
@@ -72,6 +82,17 @@ func (y YakuCheck) String() string {
 		mentsu += " |"
 	}
 
+	for _, m := range y.nakiMentsu {
+		if len(m) == 0 {
+			continue
+		}
+		mentsu += " ("
+		for _, p := range m {
+			mentsu += p.String()
+		}
+		mentsu += ") |"
+	}
+
 	var nokori string
 	for _, n := range y.nokori {
 		if n.val >= 1 {
@@ -86,7 +107,7 @@ func (y YakuCheck) String() string {
 }
 
 // NewPlayer プレイヤー作成
-func NewPlayer(tiles []Tehai) Player {
+func NewPlayer(tiles []Tehai, foos []Foo) Player {
 	p := Player{}
 	// 33種類
 	if tiles == nil {
@@ -96,7 +117,11 @@ func NewPlayer(tiles []Tehai) Player {
 	}
 
 	// 最大4フーロ
-	p.foos = make([]Foo, 4)
+	if foos == nil {
+		p.foos = make([]Foo, 4)
+	} else {
+		p.foos = foos
+	}
 
 	p.yaku = nil
 	// TODO: ランダムな牌を設定する

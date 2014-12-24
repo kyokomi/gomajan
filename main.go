@@ -8,7 +8,7 @@ import (
 
 func main() {
 
-	p := mjp.NewPlayer(nil)
+	p := mjp.NewPlayer(nil, nil)
 	// ピンフ、一気通貫
 	p.TehaiSet(mjp.M1, 1)
 	p.TehaiSet(mjp.M2, 1)

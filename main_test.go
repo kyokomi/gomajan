@@ -9,8 +9,9 @@ import (
 )
 
 type TestCase struct {
-	in  []mjp.Tehai
-	out []mjp.Yaku
+	in     []mjp.Tehai
+	inFoos []mjp.Foo
+	out    []mjp.Yaku
 }
 
 func TestYakuCheck(t *testing.T) {
@@ -31,6 +32,7 @@ func TestYakuCheck(t *testing.T) {
 				mjp.HAT: 1,
 				mjp.CHN: 1,
 			}),
+			inFoos: nil,
 			out: []mjp.Yaku{mjp.M_国士無双},
 		},
 		TestCase{
@@ -43,6 +45,7 @@ func TestYakuCheck(t *testing.T) {
 				mjp.P6:  2,
 				mjp.TON: 2,
 			}),
+			inFoos: nil,
 			out: []mjp.Yaku{mjp.M_七対子},
 		},
 		// ソーズ清一色
@@ -57,6 +60,7 @@ func TestYakuCheck(t *testing.T) {
 				mjp.S7: 3,
 				mjp.S9: 2,
 			}),
+			inFoos: nil,
 			out: []mjp.Yaku{mjp.M_清一色},
 		},
 		// マンズ清一色
@@ -71,6 +75,7 @@ func TestYakuCheck(t *testing.T) {
 				mjp.M7: 3,
 				mjp.M9: 2,
 			}),
+			inFoos: nil,
 			out: []mjp.Yaku{mjp.M_清一色},
 		},
 		// ピンズ清一色
@@ -85,6 +90,7 @@ func TestYakuCheck(t *testing.T) {
 				mjp.P7: 3,
 				mjp.P9: 2,
 			}),
+			inFoos: nil,
 			out: []mjp.Yaku{mjp.M_清一色},
 		},
 		// ソーズ混一色
@@ -99,6 +105,7 @@ func TestYakuCheck(t *testing.T) {
 				mjp.S7: 3,
 				mjp.HAK: 2,
 			}),
+			inFoos: nil,
 			out: []mjp.Yaku{mjp.M_混一色},
 		},
 		// マンズ混一色
@@ -113,6 +120,7 @@ func TestYakuCheck(t *testing.T) {
 				mjp.M7: 3,
 				mjp.TON: 2,
 			}),
+			inFoos: nil,
 			out: []mjp.Yaku{mjp.M_混一色},
 		},
 		// ピンズ混一色
@@ -127,6 +135,7 @@ func TestYakuCheck(t *testing.T) {
 				mjp.P7: 3,
 				mjp.CHN: 2,
 			}),
+			inFoos: nil,
 			out: []mjp.Yaku{mjp.M_混一色},
 		},
 		// 断么九
@@ -142,6 +151,7 @@ func TestYakuCheck(t *testing.T) {
 				mjp.S7: 3,
 				mjp.P8: 2,
 			}),
+			inFoos: nil,
 			out: []mjp.Yaku{mjp.M_断么九},
 		},
 		// 緑一色
@@ -154,6 +164,7 @@ func TestYakuCheck(t *testing.T) {
 				mjp.HAT: 3,
 				mjp.S8: 2,
 			}),
+			inFoos: nil,
 			out: []mjp.Yaku{mjp.M_緑一色},
 		},
 		// 大三元
@@ -163,48 +174,45 @@ func TestYakuCheck(t *testing.T) {
 				mjp.S3: 1,
 				mjp.S4: 1,
 				mjp.P5: 2,
-				mjp.HAK: 3,
 				mjp.HAT: 3,
 				mjp.CHN: 3,
 			}),
+			inFoos: []mjp.Foo{mjp.NewFooPon(mjp.HAK)},
 			out: []mjp.Yaku{mjp.M_大三元},
 		},
 		// 字一色
 		TestCase{
 			in: mjp.NewTehai(map[mjp.MJP]int{
-				mjp.TON: 2,
-				mjp.NAN: 2,
-				mjp.SHA: 2,
-				mjp.PEI: 2,
-				mjp.HAK: 2,
-				mjp.HAT: 2,
+				mjp.TON: 3,
+				mjp.NAN: 3,
+				mjp.HAT: 3,
 				mjp.CHN: 2,
 			}),
+			inFoos: []mjp.Foo{mjp.NewFooPon(mjp.HAK)},
 			out: []mjp.Yaku{mjp.M_字一色},
 		},
-		// TODO: 副露考慮したら、あとで四暗刻なくす
 		// 大四喜
 		TestCase{
 			in: mjp.NewTehai(map[mjp.MJP]int{
 				mjp.TON: 3,
 				mjp.NAN: 3,
-				mjp.SHA: 3,
 				mjp.PEI: 3,
 				mjp.P1: 2,
 			}),
-			out: []mjp.Yaku{mjp.M_大四喜, mjp.M_四暗刻},
+			inFoos: []mjp.Foo{mjp.NewFooPon(mjp.SHA)},
+			out: []mjp.Yaku{mjp.M_大四喜},
 		},
 		// 小四喜
 		TestCase{
 			in: mjp.NewTehai(map[mjp.MJP]int{
 				mjp.TON: 3,
 				mjp.NAN: 3,
-				mjp.SHA: 3,
 				mjp.PEI: 2,
 				mjp.P1: 1,
 				mjp.P2: 1,
 				mjp.P3: 1,
 			}),
+			inFoos: []mjp.Foo{mjp.NewFooPon(mjp.SHA)},
 			out: []mjp.Yaku{mjp.M_小四喜},
 		},
 		// 四暗刻
@@ -216,6 +224,7 @@ func TestYakuCheck(t *testing.T) {
 				mjp.P9: 3,
 				mjp.CHN: 2,
 			}),
+			inFoos: nil,
 			out: []mjp.Yaku{mjp.M_四暗刻},
 		},
 		// 三暗刻
@@ -229,19 +238,19 @@ func TestYakuCheck(t *testing.T) {
 				mjp.P9: 1,
 				mjp.CHN: 2,
 			}),
+			inFoos: nil,
 			out: []mjp.Yaku{mjp.M_三暗刻},
 		},
-		// TODO: 副露考慮したら、あとで四暗刻なくす
 		// 清老頭
 		TestCase{
 			in: mjp.NewTehai(map[mjp.MJP]int{
 				mjp.S1: 2,
 				mjp.P1: 3,
 				mjp.P9: 3,
-				mjp.M1: 3,
-				mjp.M9: 3,
+				mjp.S9: 3,
 			}),
-			out: []mjp.Yaku{mjp.M_四暗刻, mjp.M_清老頭},
+			inFoos: []mjp.Foo{mjp.NewFooPon(mjp.M1)},
+			out: []mjp.Yaku{mjp.M_清老頭},
 		},
 		// 小三元
 		TestCase{
@@ -256,12 +265,13 @@ func TestYakuCheck(t *testing.T) {
 				mjp.HAT: 3,
 				mjp.CHN: 2,
 			}),
+			inFoos: nil,
 			out: []mjp.Yaku{mjp.M_小三元},
 		},
 	}
 
 	for _, testCase := range testCases {
-		p := mjp.NewPlayer(testCase.in)
+		p := mjp.NewPlayer(testCase.in, testCase.inFoos)
 
 		y := p.NewYakuCheck()
 

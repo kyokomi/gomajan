@@ -39,19 +39,19 @@ func (p Player) yakuManCheck() []Yaku {
 	}
 
 	// 大三元
-	if is大三元(p.tiles) {
+	if p.is大三元() {
 		res = append(res, M_大三元)
 	}
 
 	// 字一色
-	if is字一色(p.tiles) {
+	if p.is字一色() {
 		res = append(res, M_字一色)
 	}
 
 	// 大四喜 or 小四喜
-	if is大四喜(p.tiles) {
+	if p.is大四喜() {
 		res = append(res, M_大四喜)
-	} else if is小四喜(p.tiles) {
+	} else if p.is小四喜() {
 		res = append(res, M_小四喜)
 	}
 
@@ -63,7 +63,7 @@ func (p Player) yakuManCheck() []Yaku {
 	// TODO: 四槓子
 
 	// 清老頭
-	if is清老頭(p.tiles) {
+	if p.is清老頭() {
 		res = append(res, M_清老頭)
 	}
 

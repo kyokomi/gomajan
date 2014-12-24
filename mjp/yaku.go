@@ -21,14 +21,12 @@ func is国士無双(t []Tehai) bool {
 }
 
 // 大三元.
-func is大三元(t []Tehai) bool {
-
-	// TODO: 鳴き面子OK
+func (p Player) is大三元() bool {
 
 	hak := 0
 	hat := 0
 	chn := 0
-	for _, tehai := range t {
+	for _, tehai := range p.tiles {
 		if tehai.val < 1 {
 			continue
 		}
@@ -43,6 +41,23 @@ func is大三元(t []Tehai) bool {
 			chn += tehai.val
 		}
 	}
+
+	for _, foo := range p.foos {
+		if foo.fooType == Che {
+			continue
+		}
+
+		if foo.nakiPai == HAK {
+			hak = len(foo.mentsu)
+		}
+		if foo.nakiPai == HAT {
+			hat = len(foo.mentsu)
+		}
+		if foo.nakiPai == CHN {
+			chn = len(foo.mentsu)
+		}
+	}
+
 	if hak >= 3 && hat >= 3 && chn >= 3 {
 		return true
 	}
@@ -51,32 +66,39 @@ func is大三元(t []Tehai) bool {
 }
 
 // 字一色.
-func is字一色(t []Tehai) bool {
+func (p Player) is字一色() bool {
 
-	// TODO: 鳴き面子OK
-
-	for _, tehai := range t {
+	for _, tehai := range p.tiles {
 		if tehai.val < 1 {
 			continue
 		}
 
-		if tehai.pai.Type() != G_TYPE && tehai.pai.Type() != K_TYPE {
+		if !tehai.pai.IsJipai() {
 			return false
 		}
 	}
+
+	for _, foo := range p.foos {
+		if foo.fooType == Che {
+			continue
+		}
+
+		if !foo.nakiPai.IsJipai() {
+			return false
+		}
+	}
+
 	return true
 }
 
 // 大四喜.
-func is大四喜(t []Tehai) bool {
-
-	// TODO: 鳴き面子OK
+func (p Player) is大四喜() bool {
 
 	ton := 0
 	nan := 0
 	sha := 0
 	pei := 0
-	for _, tehai := range t {
+	for _, tehai := range p.tiles {
 		if tehai.val < 1 {
 			continue
 		}
@@ -94,23 +116,40 @@ func is大四喜(t []Tehai) bool {
 			pei += tehai.val
 		}
 	}
+
+	for _, foo := range p.foos {
+		if foo.fooType == Che {
+			continue
+		}
+
+		if foo.nakiPai == TON {
+			ton += len(foo.mentsu)
+		}
+		if foo.nakiPai == NAN {
+			nan += len(foo.mentsu)
+		}
+		if foo.nakiPai == SHA {
+			sha += len(foo.mentsu)
+		}
+		if foo.nakiPai == PEI {
+			pei += len(foo.mentsu)
+		}
+	}
+
 	if ton >= 3 && nan >= 3 && sha >= 3 && pei >= 3 {
 		return true
 	}
-
 	return false
 }
 
 // 小四喜
-func is小四喜(t []Tehai) bool {
-
-	// TODO: 鳴き面子OK
+func (p Player) is小四喜() bool {
 
 	ton := 0
 	nan := 0
 	sha := 0
 	pei := 0
-	for _, tehai := range t {
+	for _, tehai := range p.tiles {
 		if tehai.val < 1 {
 			continue
 		}
@@ -126,6 +165,25 @@ func is小四喜(t []Tehai) bool {
 		}
 		if tehai.pai == PEI {
 			pei += tehai.val
+		}
+	}
+
+	for _, foo := range p.foos {
+		if foo.fooType == Che {
+			continue
+		}
+
+		if foo.nakiPai == TON {
+			ton += len(foo.mentsu)
+		}
+		if foo.nakiPai == NAN {
+			nan += len(foo.mentsu)
+		}
+		if foo.nakiPai == SHA {
+			sha += len(foo.mentsu)
+		}
+		if foo.nakiPai == PEI {
+			pei += len(foo.mentsu)
 		}
 	}
 
@@ -168,16 +226,24 @@ func is四暗刻(t []Tehai) bool {
 // TODO: 四槓子.
 
 // 清老頭.
-func is清老頭(t []Tehai) bool {
+func (p Player) is清老頭() bool {
 
-	// TODO: 鳴き面子OK
-
-	for _, tehai := range t {
+	for _, tehai := range p.tiles {
 		if tehai.val < 1 {
 			continue
 		}
 
 		if !tehai.pai.Is19() {
+			return false
+		}
+	}
+
+	for _, foo := range p.foos {
+		if foo.fooType == Che {
+			continue
+		}
+
+		if !foo.nakiPai.Is19() {
 			return false
 		}
 	}
