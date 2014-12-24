@@ -1,9 +1,8 @@
 gomajan
+=======
 
 [![Build Status](https://drone.io/github.com/kyokomi/gomajan/status.png)](https://drone.io/github.com/kyokomi/gomajan/latest)
 [![Coverage Status](https://img.shields.io/coveralls/kyokomi/gomajan.svg)](https://coveralls.io/r/kyokomi/gomajan?branch=master)
-
-=======
 
 golang 麻雀
 
