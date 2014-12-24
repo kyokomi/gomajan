@@ -1,21 +1,22 @@
 package main
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/kyokomi/gomajan/mjp"
+	"reflect"
+	"fmt"
 )
 
 type TestCase struct {
-	in  []Tehai
-	out []string
+	in  []mjp.Tehai
+	out []mjp.Yaku
 }
 
 func TestYakuCheck(t *testing.T) {
 	testCases := []TestCase{
 		TestCase{
-			in: NewTehai(map[mjp.MJP]int{
+			in: mjp.NewTehai(map[mjp.MJP]int{
 				mjp.S1:  2,
 				mjp.S9:  1,
 				mjp.P1:  1,
@@ -30,10 +31,10 @@ func TestYakuCheck(t *testing.T) {
 				mjp.HAT: 1,
 				mjp.CHN: 1,
 			}),
-			out: []string{"国士無双"},
+			out: []mjp.Yaku{mjp.M_国士無双},
 		},
 		TestCase{
-			in: NewTehai(map[mjp.MJP]int{
+			in: mjp.NewTehai(map[mjp.MJP]int{
 				mjp.S1:  2,
 				mjp.S2:  2,
 				mjp.M3:  2,
@@ -42,11 +43,11 @@ func TestYakuCheck(t *testing.T) {
 				mjp.P6:  2,
 				mjp.TON: 2,
 			}),
-			out: []string{"七対子"},
+			out: []mjp.Yaku{mjp.M_七対子},
 		},
 		// ソーズ清一色
 		TestCase{
-			in: NewTehai(map[mjp.MJP]int{
+			in: mjp.NewTehai(map[mjp.MJP]int{
 				mjp.S1: 2,
 				mjp.S2: 2,
 				mjp.S3: 2,
@@ -56,11 +57,11 @@ func TestYakuCheck(t *testing.T) {
 				mjp.S7: 3,
 				mjp.S9: 2,
 			}),
-			out: []string{"清一色"},
+			out: []mjp.Yaku{mjp.M_清一色},
 		},
 		// マンズ清一色
 		TestCase{
-			in: NewTehai(map[mjp.MJP]int{
+			in: mjp.NewTehai(map[mjp.MJP]int{
 				mjp.M1: 2,
 				mjp.M2: 2,
 				mjp.M3: 2,
@@ -70,11 +71,11 @@ func TestYakuCheck(t *testing.T) {
 				mjp.M7: 3,
 				mjp.M9: 2,
 			}),
-			out: []string{"清一色"},
+			out: []mjp.Yaku{mjp.M_清一色},
 		},
 		// ピンズ清一色
 		TestCase{
-			in: NewTehai(map[mjp.MJP]int{
+			in: mjp.NewTehai(map[mjp.MJP]int{
 				mjp.P1: 2,
 				mjp.P2: 2,
 				mjp.P3: 2,
@@ -84,11 +85,11 @@ func TestYakuCheck(t *testing.T) {
 				mjp.P7: 3,
 				mjp.P9: 2,
 			}),
-			out: []string{"清一色"},
+			out: []mjp.Yaku{mjp.M_清一色},
 		},
 		// ソーズ混一色
 		TestCase{
-			in: NewTehai(map[mjp.MJP]int{
+			in: mjp.NewTehai(map[mjp.MJP]int{
 				mjp.S1: 2,
 				mjp.S2: 2,
 				mjp.S3: 2,
@@ -98,11 +99,11 @@ func TestYakuCheck(t *testing.T) {
 				mjp.S7: 3,
 				mjp.HAK: 2,
 			}),
-			out: []string{"混一色"},
+			out: []mjp.Yaku{mjp.M_混一色},
 		},
 		// マンズ混一色
 		TestCase{
-			in: NewTehai(map[mjp.MJP]int{
+			in: mjp.NewTehai(map[mjp.MJP]int{
 				mjp.M1: 2,
 				mjp.M2: 2,
 				mjp.M3: 2,
@@ -112,11 +113,11 @@ func TestYakuCheck(t *testing.T) {
 				mjp.M7: 3,
 				mjp.TON: 2,
 			}),
-			out: []string{"混一色"},
+			out: []mjp.Yaku{mjp.M_混一色},
 		},
 		// ピンズ混一色
 		TestCase{
-			in: NewTehai(map[mjp.MJP]int{
+			in: mjp.NewTehai(map[mjp.MJP]int{
 				mjp.P1: 2,
 				mjp.P2: 2,
 				mjp.P3: 2,
@@ -126,11 +127,11 @@ func TestYakuCheck(t *testing.T) {
 				mjp.P7: 3,
 				mjp.CHN: 2,
 			}),
-			out: []string{"混一色"},
+			out: []mjp.Yaku{mjp.M_混一色},
 		},
 		// 断么九
 		TestCase{
-			in: NewTehai(map[mjp.MJP]int{
+			in: mjp.NewTehai(map[mjp.MJP]int{
 				mjp.P2: 1,
 				mjp.P3: 1,
 				mjp.P4: 1,
@@ -140,11 +141,11 @@ func TestYakuCheck(t *testing.T) {
 				mjp.M7: 3,
 				mjp.P8: 2,
 			}),
-			out: []string{"断么九"},
+			out: []mjp.Yaku{mjp.M_断么九},
 		},
 		// 緑一色
 		TestCase{
-			in: NewTehai(map[mjp.MJP]int{
+			in: mjp.NewTehai(map[mjp.MJP]int{
 				mjp.S2: 2,
 				mjp.S3: 2,
 				mjp.S4: 2,
@@ -152,11 +153,11 @@ func TestYakuCheck(t *testing.T) {
 				mjp.HAT: 3,
 				mjp.S8: 2,
 			}),
-			out: []string{"緑一色"},
+			out: []mjp.Yaku{mjp.M_緑一色},
 		},
 		// 大三元
 		TestCase{
-			in: NewTehai(map[mjp.MJP]int{
+			in: mjp.NewTehai(map[mjp.MJP]int{
 				mjp.S2: 1,
 				mjp.S3: 1,
 				mjp.S4: 1,
@@ -165,11 +166,11 @@ func TestYakuCheck(t *testing.T) {
 				mjp.HAT: 3,
 				mjp.CHN: 3,
 			}),
-			out: []string{"大三元"},
+			out: []mjp.Yaku{mjp.M_大三元},
 		},
 		// 字一色
 		TestCase{
-			in: NewTehai(map[mjp.MJP]int{
+			in: mjp.NewTehai(map[mjp.MJP]int{
 				mjp.TON: 2,
 				mjp.NAN: 2,
 				mjp.SHA: 2,
@@ -178,23 +179,23 @@ func TestYakuCheck(t *testing.T) {
 				mjp.HAT: 2,
 				mjp.CHN: 2,
 			}),
-			out: []string{"字一色"},
+			out: []mjp.Yaku{mjp.M_字一色},
 		},
 		// TODO: 副露考慮したら、あとで四暗刻なくす
 		// 大四喜
 		TestCase{
-			in: NewTehai(map[mjp.MJP]int{
+			in: mjp.NewTehai(map[mjp.MJP]int{
 				mjp.TON: 3,
 				mjp.NAN: 3,
 				mjp.SHA: 3,
 				mjp.PEI: 3,
 				mjp.P1: 2,
 			}),
-			out: []string{"大四喜", "四暗刻"},
+			out: []mjp.Yaku{mjp.M_大四喜, mjp.M_四暗刻},
 		},
 		// 小四喜
 		TestCase{
-			in: NewTehai(map[mjp.MJP]int{
+			in: mjp.NewTehai(map[mjp.MJP]int{
 				mjp.TON: 3,
 				mjp.NAN: 3,
 				mjp.SHA: 3,
@@ -203,22 +204,22 @@ func TestYakuCheck(t *testing.T) {
 				mjp.P2: 1,
 				mjp.P3: 1,
 			}),
-			out: []string{"小四喜"},
+			out: []mjp.Yaku{mjp.M_小四喜},
 		},
 		// 四暗刻
 		TestCase{
-			in: NewTehai(map[mjp.MJP]int{
+			in: mjp.NewTehai(map[mjp.MJP]int{
 				mjp.TON: 3,
 				mjp.S1: 3,
 				mjp.S5: 3,
 				mjp.P9: 3,
 				mjp.CHN: 2,
 			}),
-			out: []string{"四暗刻"},
+			out: []mjp.Yaku{mjp.M_四暗刻},
 		},
 		// 三暗刻
 		TestCase{
-			in: NewTehai(map[mjp.MJP]int{
+			in: mjp.NewTehai(map[mjp.MJP]int{
 				mjp.TON: 3,
 				mjp.S1: 3,
 				mjp.S5: 3,
@@ -227,23 +228,23 @@ func TestYakuCheck(t *testing.T) {
 				mjp.P9: 1,
 				mjp.CHN: 2,
 			}),
-			out: []string{"三暗刻"},
+			out: []mjp.Yaku{mjp.M_三暗刻},
 		},
 		// TODO: 副露考慮したら、あとで四暗刻なくす
 		// 清老頭
 		TestCase{
-			in: NewTehai(map[mjp.MJP]int{
+			in: mjp.NewTehai(map[mjp.MJP]int{
 				mjp.S1: 2,
 				mjp.P1: 3,
 				mjp.P9: 3,
 				mjp.M1: 3,
 				mjp.M9: 3,
 			}),
-			out: []string{"清老頭", "四暗刻"},
+			out: []mjp.Yaku{mjp.M_四暗刻, mjp.M_清老頭},
 		},
 		// 小三元
 		TestCase{
-			in: NewTehai(map[mjp.MJP]int{
+			in: mjp.NewTehai(map[mjp.MJP]int{
 				mjp.S2: 1,
 				mjp.S3: 1,
 				mjp.S4: 1,
@@ -254,18 +255,19 @@ func TestYakuCheck(t *testing.T) {
 				mjp.HAT: 3,
 				mjp.CHN: 2,
 			}),
-			out: []string{"小三元"},
+			out: []mjp.Yaku{mjp.M_小三元},
 		},
 	}
 
 	for _, testCase := range testCases {
-		p := NewPlayer()
-		p.tiles = testCase.in
+		p := mjp.NewPlayer(testCase.in)
 
-		if yaku := yakuCheck(p); len(yaku) != len(testCase.out) {
-			t.Error(testCase.out, "!= ", yaku, " error 手牌 => ", p)
+		y := p.NewYakuCheck()
+
+		if reflect.DeepEqual(y.Yakus(), testCase.out) {
+			fmt.Println(" => ", y.Yakus())
 		} else {
-			fmt.Println(" => ", yaku)
+			t.Error(testCase.out, "!= ", y.Yakus(), " error 手牌 => ", p)
 		}
 	}
 }

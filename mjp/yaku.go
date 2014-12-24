@@ -1,29 +1,27 @@
-package main
-
-import "github.com/kyokomi/gomajan/mjp"
+package mjp
 
 // 国士無双.
-func isKokushimusou(t []Tehai) bool {
-	if t[mjp.M1].val >= 1 &&
-		t[mjp.M9].val >= 1 &&
-		t[mjp.S1].val >= 1 &&
-		t[mjp.S9].val >= 1 &&
-		t[mjp.P1].val >= 1 &&
-		t[mjp.P9].val >= 1 &&
-		t[mjp.TON].val >= 1 &&
-		t[mjp.NAN].val >= 1 &&
-		t[mjp.SHA].val >= 1 &&
-		t[mjp.PEI].val >= 1 &&
-		t[mjp.HAK].val >= 1 &&
-		t[mjp.HAT].val >= 1 &&
-		t[mjp.CHN].val >= 1 {
+func is国士無双(t []Tehai) bool {
+	if t[M1].val >= 1 &&
+		t[M9].val >= 1 &&
+		t[S1].val >= 1 &&
+		t[S9].val >= 1 &&
+		t[P1].val >= 1 &&
+		t[P9].val >= 1 &&
+		t[TON].val >= 1 &&
+		t[NAN].val >= 1 &&
+		t[SHA].val >= 1 &&
+		t[PEI].val >= 1 &&
+		t[HAK].val >= 1 &&
+		t[HAT].val >= 1 &&
+		t[CHN].val >= 1 {
 		return true
 	}
 	return false
 }
 
 // 大三元.
-func isDaisangen(t []Tehai) bool {
+func is大三元(t []Tehai) bool {
 
 	// TODO: 鳴き面子OK
 
@@ -35,13 +33,13 @@ func isDaisangen(t []Tehai) bool {
 			continue
 		}
 
-		if tehai.pai == mjp.HAK {
+		if tehai.pai == HAK {
 			hak += tehai.val
 		}
-		if tehai.pai == mjp.HAT {
+		if tehai.pai == HAT {
 			hat += tehai.val
 		}
-		if tehai.pai == mjp.CHN {
+		if tehai.pai == CHN {
 			chn += tehai.val
 		}
 	}
@@ -53,7 +51,7 @@ func isDaisangen(t []Tehai) bool {
 }
 
 // 字一色.
-func isTuiso(t []Tehai) bool {
+func is字一色(t []Tehai) bool {
 
 	// TODO: 鳴き面子OK
 
@@ -62,7 +60,7 @@ func isTuiso(t []Tehai) bool {
 			continue
 		}
 
-		if tehai.pai.Type() != mjp.G_TYPE && tehai.pai.Type() != mjp.K_TYPE {
+		if tehai.pai.Type() != G_TYPE && tehai.pai.Type() != K_TYPE {
 			return false
 		}
 	}
@@ -70,7 +68,7 @@ func isTuiso(t []Tehai) bool {
 }
 
 // 大四喜.
-func isDaisushi(t []Tehai) bool {
+func is大四喜(t []Tehai) bool {
 
 	// TODO: 鳴き面子OK
 
@@ -83,16 +81,16 @@ func isDaisushi(t []Tehai) bool {
 			continue
 		}
 
-		if tehai.pai == mjp.TON {
+		if tehai.pai == TON {
 			ton += tehai.val
 		}
-		if tehai.pai == mjp.NAN {
+		if tehai.pai == NAN {
 			nan += tehai.val
 		}
-		if tehai.pai == mjp.SHA {
+		if tehai.pai == SHA {
 			sha += tehai.val
 		}
-		if tehai.pai == mjp.PEI {
+		if tehai.pai == PEI {
 			pei += tehai.val
 		}
 	}
@@ -104,7 +102,7 @@ func isDaisushi(t []Tehai) bool {
 }
 
 // 小四喜
-func isSyosushi(t []Tehai) bool {
+func is小四喜(t []Tehai) bool {
 
 	// TODO: 鳴き面子OK
 
@@ -117,16 +115,16 @@ func isSyosushi(t []Tehai) bool {
 			continue
 		}
 
-		if tehai.pai == mjp.TON {
+		if tehai.pai == TON {
 			ton += tehai.val
 		}
-		if tehai.pai == mjp.NAN {
+		if tehai.pai == NAN {
 			nan += tehai.val
 		}
-		if tehai.pai == mjp.SHA {
+		if tehai.pai == SHA {
 			sha += tehai.val
 		}
-		if tehai.pai == mjp.PEI {
+		if tehai.pai == PEI {
 			pei += tehai.val
 		}
 	}
@@ -149,7 +147,7 @@ func isSyosushi(t []Tehai) bool {
 }
 
 // 四暗刻
-func isSuanko(t []Tehai) bool {
+func is四暗刻(t []Tehai) bool {
 
 	// TODO: 鳴き面子NG, 槓子OK
 
@@ -170,7 +168,7 @@ func isSuanko(t []Tehai) bool {
 // TODO: 四槓子.
 
 // 清老頭.
-func isChinrotou(t []Tehai) bool {
+func is清老頭(t []Tehai) bool {
 
 	// TODO: 鳴き面子OK
 
@@ -187,7 +185,7 @@ func isChinrotou(t []Tehai) bool {
 }
 
 // 緑一色.
-func isRyouiso(t []Tehai) bool {
+func is緑一色(t []Tehai) bool {
 
 	// TODO: 鳴き面子OK
 
@@ -197,12 +195,12 @@ func isRyouiso(t []Tehai) bool {
 		}
 
 		// S2, S3, S4, S6, S8, 発 以外はNG
-		if tehai.pai != mjp.S2 &&
-			tehai.pai != mjp.S3 &&
-			tehai.pai != mjp.S4 &&
-			tehai.pai != mjp.S6 &&
-			tehai.pai != mjp.S8 &&
-			mjp.HAT != tehai.pai {
+		if tehai.pai != S2 &&
+			tehai.pai != S3 &&
+			tehai.pai != S4 &&
+			tehai.pai != S6 &&
+			tehai.pai != S8 &&
+			HAT != tehai.pai {
 			return false
 		}
 	}
@@ -210,17 +208,17 @@ func isRyouiso(t []Tehai) bool {
 }
 
 // 清一色.
-func isChinniTsu(t []Tehai) bool {
+func is清一色(t []Tehai) bool {
 	// TODO: 鳴き牌OK
 	// TODO: 食い下がり
 
-	mjpType := mjp.NONE_TYPE
+	mjpType := NONE_TYPE
 	for _, tehai := range t {
 		if tehai.val < 1 {
 			continue
 		}
 
-		if mjpType == mjp.NONE_TYPE {
+		if mjpType == NONE_TYPE {
 			mjpType = tehai.pai.Type()
 		} else if mjpType != tehai.pai.Type() {
 			return false
@@ -230,20 +228,20 @@ func isChinniTsu(t []Tehai) bool {
 }
 
 // 混一色.
-func isHonniTsu(t []Tehai) bool {
+func is混一色(t []Tehai) bool {
 	jihai := false
-	mjpType := mjp.NONE_TYPE
+	mjpType := NONE_TYPE
 	for _, tehai := range t {
 		if tehai.val < 1 {
 			continue
 		}
 
-		if tehai.pai.Type() == mjp.G_TYPE || tehai.pai.Type() == mjp.K_TYPE {
+		if tehai.pai.Type() == G_TYPE || tehai.pai.Type() == K_TYPE {
 			jihai = true
 			continue
 		}
 
-		if mjpType == mjp.NONE_TYPE {
+		if mjpType == NONE_TYPE {
 			mjpType = tehai.pai.Type()
 		} else if mjpType != tehai.pai.Type() {
 			return false
@@ -253,7 +251,7 @@ func isHonniTsu(t []Tehai) bool {
 }
 
 // 純全帯.
-func isJyunchan(t []Tehai) bool {
+func is純全帯(t []Tehai) bool {
 
 	// TODO: 食い下がり
 
@@ -263,7 +261,7 @@ func isJyunchan(t []Tehai) bool {
 }
 
 // 一気通貫.
-func isIkkitsukan(t []Tehai) bool {
+func is一気通貫(t []Tehai) bool {
 
 	// TODO: 食い下がり
 
@@ -273,7 +271,7 @@ func isIkkitsukan(t []Tehai) bool {
 }
 
 // 小三元.
-func isSyosangen(t []Tehai) bool {
+func is小三元(t []Tehai) bool {
 
 	// TODO: 鳴き面子OK
 
@@ -285,13 +283,13 @@ func isSyosangen(t []Tehai) bool {
 			continue
 		}
 
-		if tehai.pai == mjp.HAK {
+		if tehai.pai == HAK {
 			hak += tehai.val
 		}
-		if tehai.pai == mjp.HAT {
+		if tehai.pai == HAT {
 			hat += tehai.val
 		}
-		if tehai.pai == mjp.CHN {
+		if tehai.pai == CHN {
 			chn += tehai.val
 		}
 	}
@@ -314,7 +312,7 @@ func isSyosangen(t []Tehai) bool {
 }
 
 // 断么九.
-func isTanyao(t []Tehai) bool {
+func is断么九(t []Tehai) bool {
 	for _, tehai := range t {
 		if tehai.val < 1 {
 			continue
@@ -329,7 +327,7 @@ func isTanyao(t []Tehai) bool {
 }
 
 // 七対子.
-func isNikoNiko(t []Tehai) bool {
+func is七対子(t []Tehai) bool {
 	count := 0
 	for _, tehai := range t {
 		if tehai.val != 2 {
@@ -341,7 +339,7 @@ func isNikoNiko(t []Tehai) bool {
 }
 
 // 三暗刻
-func isSananko(t []Tehai) bool {
+func is三暗刻(t []Tehai) bool {
 
 	// TODO: 鳴き面子NG, 槓子OK
 
