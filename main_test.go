@@ -265,7 +265,7 @@ func TestYakuCheck(t *testing.T) {
 		y := p.NewYakuCheck()
 
 		if reflect.DeepEqual(y.Yakus(), testCase.out) {
-			fmt.Println(" => ", y.Yakus())
+			fmt.Println(" => ", y.String())
 		} else {
 			t.Error(testCase.out, "!= ", y.Yakus(), " error 手牌 => ", p)
 		}

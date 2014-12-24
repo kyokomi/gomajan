@@ -56,6 +56,14 @@ func (y YakuCheck) Yakus() []Yaku {
 
 func (y YakuCheck) String() string {
 
+	var yakus string
+	for _, yaku := range y.Yakus() {
+		yakus += (" "  + yaku.Name)
+		if yaku.Name == M_国士無双.Name || yaku.Name == M_七対子.Name {
+			return fmt.Sprintf("役 %s", yakus)
+		}
+	}
+
 	var mentsu string
 	for _, m := range y.mentsu {
 		for _, p := range m {
@@ -73,7 +81,8 @@ func (y YakuCheck) String() string {
 	if nokori == "" {
 		nokori = " なし"
 	}
-	return fmt.Sprintf("雀頭 %s 面子|%s 残り%s", y.jyanto, mentsu, nokori)
+
+	return fmt.Sprintf("雀頭 %s 面子|%s 残り%s => 役 %s", y.jyanto, mentsu, nokori, yakus)
 }
 
 // NewPlayer プレイヤー作成
