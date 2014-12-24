@@ -23,15 +23,15 @@ type Foo struct {
 	// どの牌で鳴いたか
 	nakiPai MJP
 	// 鳴いた牌（全部）
-	mentsu []MJP
+	mentsu  []MJP
 	fooType FooType
 }
 
 func NewFooPon(nakiPai MJP) Foo {
 	return Foo{
-		dare: 1,
+		dare:    1,
 		nakiPai: nakiPai,
-		mentsu: []MJP{nakiPai, nakiPai, nakiPai},
+		mentsu:  []MJP{nakiPai, nakiPai, nakiPai},
 		fooType: Pon,
 	}
 }
@@ -68,7 +68,7 @@ func (y YakuCheck) String() string {
 
 	var yakus string
 	for _, yaku := range y.Yakus() {
-		yakus += (" "  + yaku.Name)
+		yakus += (" " + yaku.Name)
 		if yaku.Name == M_国士無双.Name || yaku.Name == M_七対子.Name {
 			return fmt.Sprintf("役 %s", yakus)
 		}

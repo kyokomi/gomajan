@@ -11,21 +11,21 @@ type Yaku struct {
 
 var (
 	M_国士無双 = Yaku{Fan: 13, Name: "国士無双"}
-	M_大三元   = Yaku{Fan: 13, Name: "大三元"}
-	M_字一色   = Yaku{Fan: 13, Name: "字一色"}
-	M_大四喜   = Yaku{Fan: 13, Name: "大四喜"}
-	M_小四喜   = Yaku{Fan: 13, Name: "小四喜"}
-	M_四暗刻   = Yaku{Fan: 13, Name: "四暗刻"}
-	M_清老頭   = Yaku{Fan: 13, Name: "清老頭"}
-	M_緑一色   = Yaku{Fan: 13, Name: "緑一色"}
-	M_七対子   = Yaku{Fan: 2, Name: "七対子"}
-	M_断么九   = Yaku{Fan: 1, Name: "断么九"}
+	M_大三元  = Yaku{Fan: 13, Name: "大三元"}
+	M_字一色  = Yaku{Fan: 13, Name: "字一色"}
+	M_大四喜  = Yaku{Fan: 13, Name: "大四喜"}
+	M_小四喜  = Yaku{Fan: 13, Name: "小四喜"}
+	M_四暗刻  = Yaku{Fan: 13, Name: "四暗刻"}
+	M_清老頭  = Yaku{Fan: 13, Name: "清老頭"}
+	M_緑一色  = Yaku{Fan: 13, Name: "緑一色"}
+	M_七対子  = Yaku{Fan: 2, Name: "七対子"}
+	M_断么九  = Yaku{Fan: 1, Name: "断么九"}
 	M_一気通貫 = Yaku{Fan: 2, Name: "一気通貫"}
-	M_三暗刻   = Yaku{Fan: 2, Name: "三暗刻"}
-	M_小三元   = Yaku{Fan: 2, Name: "小三元"}
-	M_混一色   = Yaku{Fan: 3, Name: "混一色"}
-	M_純全帯   = Yaku{Fan: 3, Name: "純全帯"}
-	M_清一色   = Yaku{Fan: 3, Name: "清一色"}
+	M_三暗刻  = Yaku{Fan: 2, Name: "三暗刻"}
+	M_小三元  = Yaku{Fan: 2, Name: "小三元"}
+	M_混一色  = Yaku{Fan: 3, Name: "混一色"}
+	M_純全帯  = Yaku{Fan: 3, Name: "純全帯"}
+	M_清一色  = Yaku{Fan: 3, Name: "清一色"}
 )
 
 func (p Player) yakuManCheck() []Yaku {
