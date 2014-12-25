@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"fmt"
+
 	"github.com/kyokomi/gomajan/mjp"
 	"github.com/kyokomi/gomajan/mjp/pai"
 )
@@ -279,7 +280,7 @@ func TestYakuCheck(t *testing.T) {
 				mjp.NewFooAnnKan(pai.M3),
 				mjp.NewFooAnnKan(pai.M4),
 			},
-			out:    []mjp.Yaku{mjp.M四槓子},
+			out: []mjp.Yaku{mjp.M四槓子},
 		},
 	}
 

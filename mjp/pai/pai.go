@@ -2,6 +2,7 @@ package pai
 
 // MJPType 麻雀牌の種類
 type MJPType int
+
 // MJP 麻雀牌
 type MJP int
 

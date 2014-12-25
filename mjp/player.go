@@ -2,9 +2,9 @@ package mjp
 
 import (
 	"fmt"
+
 	"github.com/kyokomi/gomajan/mjp/pai"
 )
-
 
 // Player プレイヤー
 type Player struct {
