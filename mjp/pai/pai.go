@@ -1,82 +1,126 @@
 package pai
 
+// MJPType 麻雀牌の種類
 type MJPType int
+// MJP 麻雀牌
 type MJP int
 
 const (
-	// NONE_TYPE 初期値
-	NONE_TYPE MJPType = (0 + iota)
-	P_TYPE
-	M_TYPE
-	S_TYPE
-	K_TYPE
-	G_TYPE
+	// NoneType 初期値
+	NoneType MJPType = (0 + iota)
+	// PType 筒子
+	PType
+	// MType 萬子
+	MType
+	// SType 索子
+	SType
+	// KType 風牌
+	KType
+	// GType 字牌
+	GType
 )
 const (
 	// NonePai 初期値
 	NonePai MJP = (0 + iota)
-	// ピンズ
+
+	// P1 筒子の1
 	P1
+	// P2 筒子の2
 	P2
+	// P3 筒子の3
 	P3
+	// P4 筒子の4
 	P4
+	// P5 筒子の5
 	P5
+	// P6 筒子の6
 	P6
+	// P7 筒子の7
 	P7
+	// P8 筒子の8
 	P8
+	// P9 筒子の9
 	P9
-	// マンズ
+
+	// M1 萬子の1
 	M1
+	// M2 萬子の2
 	M2
+	// M3 萬子の3
 	M3
+	// M4 萬子の4
 	M4
+	// M5 萬子の5
 	M5
+	// M6 萬子の6
 	M6
+	// M7 萬子の7
 	M7
+	// M8 萬子の8
 	M8
+	// M9 萬子の9
 	M9
-	// ソーズ
+
+	// S1 索子の1
 	S1
+	// S2 索子の2
 	S2
+	// S3 索子の3
 	S3
+	// S4 索子の4
 	S4
+	// S5 索子の5
 	S5
+	// S6 索子の6
 	S6
+	// S7 索子の7
 	S7
+	// S8 索子の8
 	S8
+	// S9 索子の9
 	S9
-	// 風牌
+
+	// TON 東
 	TON
+	// NAN 南
 	NAN
+	// SHA 西
 	SHA
+	// PEI 北
 	PEI
-	// 三元牌
+
+	// HAK 白
 	HAK
+	// HAT 発
 	HAT
+	// CHN 中
 	CHN
-	// Size
+
 	paiSize
 )
 
+// PaiSize 麻雀牌の数
 func PaiSize() int {
 	return int(paiSize)
 }
 
+// Type 麻雀牌の種類
 func (i MJP) Type() MJPType {
 	if i >= P1 && i <= P9 {
-		return P_TYPE
+		return PType
 	} else if i >= M1 && i <= M9 {
-		return M_TYPE
+		return MType
 	} else if i >= S1 && i <= S9 {
-		return S_TYPE
+		return SType
 	} else if i >= TON && i <= PEI {
-		return K_TYPE
+		return KType
 	} else if i >= HAK && i <= CHN {
-		return G_TYPE
+		return GType
 	}
-	return NONE_TYPE
+	return NoneType
 }
 
+// Is19 1,9牌かを返す
 func (i MJP) Is19() bool {
 	if i == P1 || i == P9 ||
 		i == M1 || i == M9 ||
@@ -86,13 +130,15 @@ func (i MJP) Is19() bool {
 	return false
 }
 
+// IsJipai 字牌かを返す
 func (i MJP) IsJipai() bool {
-	if i.Type() == G_TYPE || i.Type() == K_TYPE {
+	if i.Type() == GType || i.Type() == KType {
 		return true
 	}
 	return false
 }
 
+// IsJipai19 1,9字牌かを返す
 func (i MJP) IsJipai19() bool {
 	if i.IsJipai() || i.Is19() {
 		return true

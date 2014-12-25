@@ -18,6 +18,7 @@ const (
 	AnnKan
 )
 
+// DareType 誰から鳴いたかの区分
 type DareType int
 
 const (
@@ -43,14 +44,17 @@ type Foo struct {
 	fooType FooType
 }
 
+// FooType getter fooType
 func (f Foo) FooType() FooType {
 	return f.fooType
 }
 
+// Mentsu getter mentsu
 func (f Foo) Mentsu() []pai.MJP {
 	return f.mentsu
 }
 
+// NakiPai getter nakiPai
 func (f Foo) NakiPai() pai.MJP {
 	return f.nakiPai
 }

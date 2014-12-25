@@ -30,6 +30,7 @@ type YakuCheck struct {
 	yakus []Yaku
 }
 
+// Yakus getter yakus
 func (y YakuCheck) Yakus() []Yaku {
 	return y.yakus
 }
@@ -39,7 +40,7 @@ func (y YakuCheck) String() string {
 	var yakus string
 	for _, yaku := range y.Yakus() {
 		yakus += (" " + yaku.Name)
-		if yaku.Name == M_国士無双.Name || yaku.Name == M_七対子.Name {
+		if yaku.Name == M国士無双.Name || yaku.Name == M七対子.Name {
 			return fmt.Sprintf("役 %s", yakus)
 		}
 	}
@@ -113,6 +114,7 @@ func (p Player) String() string {
 	return tehaiStr
 }
 
+// TehaiSet 手牌設定
 func (p *Player) TehaiSet(m pai.MJP, v int) {
 	p.tiles[m].val = v
 }

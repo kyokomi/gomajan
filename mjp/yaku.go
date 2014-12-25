@@ -333,9 +333,9 @@ func is緑一色(p Player) bool {
 func is清一色(p Player) bool {
 	// TODO: 食い下がり
 
-	mjpType := pai.NONE_TYPE
+	mjpType := pai.NoneType
 	checkFunc := func(mjpPai pai.MJP) bool {
-		if mjpType == pai.NONE_TYPE {
+		if mjpType == pai.NoneType {
 			mjpType = mjpPai.Type()
 		} else if mjpType != mjpPai.Type() {
 			return false
@@ -368,18 +368,18 @@ func is清一色(p Player) bool {
 // 混一色.
 func is混一色(t []Tehai) bool {
 	jihai := false
-	mjpType := pai.NONE_TYPE
+	mjpType := pai.NoneType
 	for _, tehai := range t {
 		if tehai.val < 1 {
 			continue
 		}
 
-		if tehai.pai.Type() == pai.G_TYPE || tehai.pai.Type() == pai.K_TYPE {
+		if tehai.pai.Type() == pai.GType || tehai.pai.Type() == pai.KType {
 			jihai = true
 			continue
 		}
 
-		if mjpType == pai.NONE_TYPE {
+		if mjpType == pai.NoneType {
 			mjpType = tehai.pai.Type()
 		} else if mjpType != tehai.pai.Type() {
 			return false

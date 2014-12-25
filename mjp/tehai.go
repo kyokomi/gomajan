@@ -26,14 +26,14 @@ func NewTehai(tehai map[pai.MJP]int) []Tehai {
 
 func checkMentsu(nokori []Tehai) [][]pai.MJP {
 	// 面子
-	mentsu := make([][]pai.MJP, 0)
+	var mentsu [][]pai.MJP
 
 	// 残り牌からチェック
 	tiles := make([]Tehai, pai.PaiSize())
 	copy(tiles, nokori)
 
 	// 面子候補
-	temp := make([]pai.MJP, 0)
+	var temp []pai.MJP
 
 	for _, t := range tiles {
 		if t.val < 1 {
