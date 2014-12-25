@@ -5,71 +5,78 @@ type Yaku struct {
 	Fan int
 	// 名前
 	Name string
-	// 判定ロジック
-	CheckFunc func() bool
+}
+
+func (y1 Yaku) Equal(y2 Yaku) bool {
+	return y1.Name == y2.Name
 }
 
 var (
 	M_国士無双 = Yaku{Fan: 13, Name: "国士無双"}
-	M_大三元  = Yaku{Fan: 13, Name: "大三元"}
-	M_字一色  = Yaku{Fan: 13, Name: "字一色"}
 	M_大四喜  = Yaku{Fan: 13, Name: "大四喜"}
 	M_小四喜  = Yaku{Fan: 13, Name: "小四喜"}
+
+	M_大三元  = Yaku{Fan: 13, Name: "大三元"}
+	M_字一色  = Yaku{Fan: 13, Name: "字一色"}
 	M_四暗刻  = Yaku{Fan: 13, Name: "四暗刻"}
 	M_清老頭  = Yaku{Fan: 13, Name: "清老頭"}
 	M_緑一色  = Yaku{Fan: 13, Name: "緑一色"}
+	M_四槓子  = Yaku{Fan: 13, Name: "四槓子"}
+
 	M_七対子  = Yaku{Fan: 2, Name: "七対子"}
+
 	M_断么九  = Yaku{Fan: 1, Name: "断么九"}
+
 	M_一気通貫 = Yaku{Fan: 2, Name: "一気通貫"}
 	M_三暗刻  = Yaku{Fan: 2, Name: "三暗刻"}
 	M_小三元  = Yaku{Fan: 2, Name: "小三元"}
+
 	M_混一色  = Yaku{Fan: 3, Name: "混一色"}
 	M_純全帯  = Yaku{Fan: 3, Name: "純全帯"}
-	M_清一色  = Yaku{Fan: 3, Name: "清一色"}
+
+	M_清一色  = Yaku{Fan: 6, Name: "清一色"}
 )
 
 func (p Player) yakuManCheck() []Yaku {
 	res := make([]Yaku, 0)
 
 	// 国士無双判定
-	if is国士無双(p.tiles) {
+	if is国士無双(p) {
 		res = append(res, M_国士無双)
 		// 国士無双と他の組み合わせはないので終わり
 		return res
 	}
 
-	// 大三元
-	if p.is大三元() {
-		res = append(res, M_大三元)
-	}
-
-	// 字一色
-	if p.is字一色() {
-		res = append(res, M_字一色)
-	}
-
 	// 大四喜 or 小四喜
-	if p.is大四喜() {
+	if is大四喜(p) {
 		res = append(res, M_大四喜)
-	} else if p.is小四喜() {
+	} else if is小四喜(p) {
 		res = append(res, M_小四喜)
 	}
 
-	// 四暗刻
-	if is四暗刻(p.tiles) {
+	// その他
+	if is大三元(p) {
+		res = append(res, M_大三元)
+	}
+
+	if is字一色(p) {
+		res = append(res, M_字一色)
+	}
+
+	if is四暗刻(p) {
 		res = append(res, M_四暗刻)
 	}
 
-	// TODO: 四槓子
-
-	// 清老頭
-	if p.is清老頭() {
+	if is清老頭(p) {
 		res = append(res, M_清老頭)
 	}
 
-	// 緑一色
-	if is緑一色(p.tiles) {
+	if is緑一色(p) {
 		res = append(res, M_緑一色)
+	}
+
+	if is四槓子(p) {
+		res = append(res, M_四槓子)
 	}
 
 	return res
@@ -149,7 +156,7 @@ func (p Player) yakuCheck() []Yaku {
 
 	// --- 6 ---
 
-	if is清一色(p.tiles) {
+	if is清一色(p) {
 		yakus = append(yakus, M_清一色)
 	}
 

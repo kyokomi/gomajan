@@ -4,9 +4,8 @@ import (
 	"testing"
 
 	"fmt"
-	"reflect"
-
 	"github.com/kyokomi/gomajan/mjp"
+	"github.com/kyokomi/gomajan/mjp/pai"
 )
 
 type TestCase struct {
@@ -18,268 +17,294 @@ type TestCase struct {
 func TestYakuCheck(t *testing.T) {
 	testCases := []TestCase{
 		TestCase{
-			in: mjp.NewTehai(map[mjp.MJP]int{
-				mjp.S1:  2,
-				mjp.S9:  1,
-				mjp.P1:  1,
-				mjp.P9:  1,
-				mjp.M1:  1,
-				mjp.M9:  1,
-				mjp.TON: 1,
-				mjp.NAN: 1,
-				mjp.SHA: 1,
-				mjp.PEI: 1,
-				mjp.HAK: 1,
-				mjp.HAT: 1,
-				mjp.CHN: 1,
+			in: mjp.NewTehai(map[pai.MJP]int{
+				pai.S1:  2,
+				pai.S9:  1,
+				pai.P1:  1,
+				pai.P9:  1,
+				pai.M1:  1,
+				pai.M9:  1,
+				pai.TON: 1,
+				pai.NAN: 1,
+				pai.SHA: 1,
+				pai.PEI: 1,
+				pai.HAK: 1,
+				pai.HAT: 1,
+				pai.CHN: 1,
 			}),
 			inFoos: nil,
 			out:    []mjp.Yaku{mjp.M_国士無双},
 		},
 		TestCase{
-			in: mjp.NewTehai(map[mjp.MJP]int{
-				mjp.S1:  2,
-				mjp.S2:  2,
-				mjp.M3:  2,
-				mjp.M4:  2,
-				mjp.P5:  2,
-				mjp.P6:  2,
-				mjp.TON: 2,
+			in: mjp.NewTehai(map[pai.MJP]int{
+				pai.S1:  2,
+				pai.S2:  2,
+				pai.M3:  2,
+				pai.M4:  2,
+				pai.P5:  2,
+				pai.P6:  2,
+				pai.TON: 2,
 			}),
 			inFoos: nil,
 			out:    []mjp.Yaku{mjp.M_七対子},
 		},
 		// ソーズ清一色
 		TestCase{
-			in: mjp.NewTehai(map[mjp.MJP]int{
-				mjp.S1: 2,
-				mjp.S2: 2,
-				mjp.S3: 2,
-				mjp.S4: 1,
-				mjp.S5: 1,
-				mjp.S6: 1,
-				mjp.S7: 3,
-				mjp.S9: 2,
+			in: mjp.NewTehai(map[pai.MJP]int{
+				pai.S1: 2,
+				pai.S2: 2,
+				pai.S3: 2,
+				pai.S4: 1,
+				pai.S5: 1,
+				pai.S6: 1,
+				pai.S7: 3,
+				pai.S9: 2,
 			}),
 			inFoos: nil,
 			out:    []mjp.Yaku{mjp.M_清一色},
 		},
 		// マンズ清一色
 		TestCase{
-			in: mjp.NewTehai(map[mjp.MJP]int{
-				mjp.M1: 2,
-				mjp.M2: 2,
-				mjp.M3: 2,
-				mjp.M4: 1,
-				mjp.M5: 1,
-				mjp.M6: 1,
-				mjp.M7: 3,
-				mjp.M9: 2,
+			in: mjp.NewTehai(map[pai.MJP]int{
+				pai.M1: 2,
+				pai.M2: 2,
+				pai.M3: 2,
+				pai.M4: 1,
+				pai.M5: 1,
+				pai.M6: 1,
+				pai.M7: 3,
+				pai.M9: 2,
 			}),
 			inFoos: nil,
 			out:    []mjp.Yaku{mjp.M_清一色},
 		},
 		// ピンズ清一色
 		TestCase{
-			in: mjp.NewTehai(map[mjp.MJP]int{
-				mjp.P1: 2,
-				mjp.P2: 2,
-				mjp.P3: 2,
-				mjp.P4: 1,
-				mjp.P5: 1,
-				mjp.P6: 1,
-				mjp.P7: 3,
-				mjp.P9: 2,
+			in: mjp.NewTehai(map[pai.MJP]int{
+				pai.P1: 2,
+				pai.P2: 2,
+				pai.P3: 2,
+				pai.P4: 1,
+				pai.P5: 1,
+				pai.P6: 1,
+				pai.P7: 3,
+				pai.P9: 2,
 			}),
 			inFoos: nil,
 			out:    []mjp.Yaku{mjp.M_清一色},
 		},
 		// ソーズ混一色
 		TestCase{
-			in: mjp.NewTehai(map[mjp.MJP]int{
-				mjp.S1:  2,
-				mjp.S2:  2,
-				mjp.S3:  2,
-				mjp.S4:  1,
-				mjp.S5:  1,
-				mjp.S6:  1,
-				mjp.S7:  3,
-				mjp.HAK: 2,
+			in: mjp.NewTehai(map[pai.MJP]int{
+				pai.S1:  2,
+				pai.S2:  2,
+				pai.S3:  2,
+				pai.S4:  1,
+				pai.S5:  1,
+				pai.S6:  1,
+				pai.S7:  3,
+				pai.HAK: 2,
 			}),
 			inFoos: nil,
 			out:    []mjp.Yaku{mjp.M_混一色},
 		},
 		// マンズ混一色
 		TestCase{
-			in: mjp.NewTehai(map[mjp.MJP]int{
-				mjp.M1:  2,
-				mjp.M2:  2,
-				mjp.M3:  2,
-				mjp.M4:  1,
-				mjp.M5:  1,
-				mjp.M6:  1,
-				mjp.M7:  3,
-				mjp.TON: 2,
+			in: mjp.NewTehai(map[pai.MJP]int{
+				pai.M1:  2,
+				pai.M2:  2,
+				pai.M3:  2,
+				pai.M4:  1,
+				pai.M5:  1,
+				pai.M6:  1,
+				pai.M7:  3,
+				pai.TON: 2,
 			}),
 			inFoos: nil,
 			out:    []mjp.Yaku{mjp.M_混一色},
 		},
 		// ピンズ混一色
 		TestCase{
-			in: mjp.NewTehai(map[mjp.MJP]int{
-				mjp.P1:  2,
-				mjp.P2:  2,
-				mjp.P3:  2,
-				mjp.P4:  1,
-				mjp.P5:  1,
-				mjp.P6:  1,
-				mjp.P7:  3,
-				mjp.CHN: 2,
+			in: mjp.NewTehai(map[pai.MJP]int{
+				pai.P1:  2,
+				pai.P2:  2,
+				pai.P3:  2,
+				pai.P4:  1,
+				pai.P5:  1,
+				pai.P6:  1,
+				pai.P7:  3,
+				pai.CHN: 2,
 			}),
 			inFoos: nil,
 			out:    []mjp.Yaku{mjp.M_混一色},
 		},
 		// 断么九
 		TestCase{
-			in: mjp.NewTehai(map[mjp.MJP]int{
-				mjp.P2: 1,
-				mjp.P3: 1,
-				mjp.P4: 1,
-				mjp.S4: 1,
-				mjp.S5: 1,
-				mjp.S6: 1,
-				mjp.M7: 3,
-				mjp.S7: 3,
-				mjp.P8: 2,
+			in: mjp.NewTehai(map[pai.MJP]int{
+				pai.P2: 1,
+				pai.P3: 1,
+				pai.P4: 1,
+				pai.S4: 1,
+				pai.S5: 1,
+				pai.S6: 1,
+				pai.M7: 3,
+				pai.S7: 3,
+				pai.P8: 2,
 			}),
 			inFoos: nil,
 			out:    []mjp.Yaku{mjp.M_断么九},
 		},
 		// 緑一色
 		TestCase{
-			in: mjp.NewTehai(map[mjp.MJP]int{
-				mjp.S2:  2,
-				mjp.S3:  2,
-				mjp.S4:  2,
-				mjp.S6:  3,
-				mjp.HAT: 3,
-				mjp.S8:  2,
+			in: mjp.NewTehai(map[pai.MJP]int{
+				pai.S2:  2,
+				pai.S3:  2,
+				pai.S4:  2,
+				pai.S6:  3,
+				pai.HAT: 3,
+				pai.S8:  2,
 			}),
 			inFoos: nil,
 			out:    []mjp.Yaku{mjp.M_緑一色},
 		},
 		// 大三元
 		TestCase{
-			in: mjp.NewTehai(map[mjp.MJP]int{
-				mjp.S2:  1,
-				mjp.S3:  1,
-				mjp.S4:  1,
-				mjp.P5:  2,
-				mjp.HAT: 3,
-				mjp.CHN: 3,
+			in: mjp.NewTehai(map[pai.MJP]int{
+				pai.S2:  1,
+				pai.S3:  1,
+				pai.S4:  1,
+				pai.P5:  2,
+				pai.HAT: 3,
+				pai.CHN: 3,
 			}),
-			inFoos: []mjp.Foo{mjp.NewFooPon(mjp.HAK)},
+			inFoos: []mjp.Foo{mjp.NewFooPon(mjp.Toimen, pai.HAK)},
 			out:    []mjp.Yaku{mjp.M_大三元},
 		},
 		// 字一色
 		TestCase{
-			in: mjp.NewTehai(map[mjp.MJP]int{
-				mjp.TON: 3,
-				mjp.NAN: 3,
-				mjp.HAT: 3,
-				mjp.CHN: 2,
+			in: mjp.NewTehai(map[pai.MJP]int{
+				pai.TON: 3,
+				pai.NAN: 3,
+				pai.HAT: 3,
+				pai.CHN: 2,
 			}),
-			inFoos: []mjp.Foo{mjp.NewFooPon(mjp.HAK)},
+			inFoos: []mjp.Foo{mjp.NewFooPon(mjp.Toimen, pai.HAK)},
 			out:    []mjp.Yaku{mjp.M_字一色},
 		},
 		// 大四喜
 		TestCase{
-			in: mjp.NewTehai(map[mjp.MJP]int{
-				mjp.TON: 3,
-				mjp.NAN: 3,
-				mjp.PEI: 3,
-				mjp.P1:  2,
+			in: mjp.NewTehai(map[pai.MJP]int{
+				pai.TON: 3,
+				pai.NAN: 3,
+				pai.PEI: 3,
+				pai.P1:  2,
 			}),
-			inFoos: []mjp.Foo{mjp.NewFooPon(mjp.SHA)},
+			inFoos: []mjp.Foo{mjp.NewFooPon(mjp.Toimen, pai.SHA)},
 			out:    []mjp.Yaku{mjp.M_大四喜},
 		},
 		// 小四喜
 		TestCase{
-			in: mjp.NewTehai(map[mjp.MJP]int{
-				mjp.TON: 3,
-				mjp.NAN: 3,
-				mjp.PEI: 2,
-				mjp.P1:  1,
-				mjp.P2:  1,
-				mjp.P3:  1,
+			in: mjp.NewTehai(map[pai.MJP]int{
+				pai.TON: 3,
+				pai.NAN: 3,
+				pai.PEI: 2,
+				pai.P1:  1,
+				pai.P2:  1,
+				pai.P3:  1,
 			}),
-			inFoos: []mjp.Foo{mjp.NewFooPon(mjp.SHA)},
+			inFoos: []mjp.Foo{mjp.NewFooPon(mjp.Toimen, pai.SHA)},
 			out:    []mjp.Yaku{mjp.M_小四喜},
 		},
 		// 四暗刻
 		TestCase{
-			in: mjp.NewTehai(map[mjp.MJP]int{
-				mjp.TON: 3,
-				mjp.S1:  3,
-				mjp.S5:  3,
-				mjp.P9:  3,
-				mjp.CHN: 2,
+			in: mjp.NewTehai(map[pai.MJP]int{
+				pai.TON: 3,
+				pai.S1:  3,
+				pai.S5:  3,
+				pai.P9:  3,
+				pai.CHN: 2,
 			}),
 			inFoos: nil,
 			out:    []mjp.Yaku{mjp.M_四暗刻},
 		},
 		// 三暗刻
 		TestCase{
-			in: mjp.NewTehai(map[mjp.MJP]int{
-				mjp.TON: 3,
-				mjp.S1:  3,
-				mjp.S5:  3,
-				mjp.P7:  1,
-				mjp.P8:  1,
-				mjp.P9:  1,
-				mjp.CHN: 2,
+			in: mjp.NewTehai(map[pai.MJP]int{
+				pai.TON: 3,
+				pai.S1:  3,
+				pai.S5:  3,
+				pai.P7:  1,
+				pai.P8:  1,
+				pai.P9:  1,
+				pai.CHN: 2,
 			}),
 			inFoos: nil,
 			out:    []mjp.Yaku{mjp.M_三暗刻},
 		},
 		// 清老頭
 		TestCase{
-			in: mjp.NewTehai(map[mjp.MJP]int{
-				mjp.S1: 2,
-				mjp.P1: 3,
-				mjp.P9: 3,
-				mjp.S9: 3,
+			in: mjp.NewTehai(map[pai.MJP]int{
+				pai.S1: 2,
+				pai.P1: 3,
+				pai.P9: 3,
+				pai.S9: 3,
 			}),
-			inFoos: []mjp.Foo{mjp.NewFooPon(mjp.M1)},
+			inFoos: []mjp.Foo{mjp.NewFooPon(mjp.Toimen, pai.M1)},
 			out:    []mjp.Yaku{mjp.M_清老頭},
 		},
 		// 小三元
 		TestCase{
-			in: mjp.NewTehai(map[mjp.MJP]int{
-				mjp.S2:  1,
-				mjp.S3:  1,
-				mjp.S4:  1,
-				mjp.P5:  1,
-				mjp.P6:  1,
-				mjp.P7:  1,
-				mjp.HAK: 3,
-				mjp.HAT: 3,
-				mjp.CHN: 2,
+			in: mjp.NewTehai(map[pai.MJP]int{
+				pai.S2:  1,
+				pai.S3:  1,
+				pai.S4:  1,
+				pai.P5:  1,
+				pai.P6:  1,
+				pai.P7:  1,
+				pai.HAK: 3,
+				pai.HAT: 3,
+				pai.CHN: 2,
 			}),
 			inFoos: nil,
 			out:    []mjp.Yaku{mjp.M_小三元},
+		},
+		// 四槓子
+		TestCase{
+			in: mjp.NewTehai(map[pai.MJP]int{
+				pai.CHN: 2,
+			}),
+			inFoos: []mjp.Foo{
+				mjp.NewFooMinKan(mjp.Toimen, pai.M1),
+				mjp.NewFooAnnKan(pai.M2),
+				mjp.NewFooAnnKan(pai.M3),
+				mjp.NewFooAnnKan(pai.M4),
+			},
+			out:    []mjp.Yaku{mjp.M_四槓子},
 		},
 	}
 
 	for _, testCase := range testCases {
 		p := mjp.NewPlayer(testCase.in, testCase.inFoos)
 
-		y := p.NewYakuCheck()
+		yakuCheck := p.NewYakuCheck()
 
-		if reflect.DeepEqual(y.Yakus(), testCase.out) {
-			fmt.Println(" => ", y.String())
-		} else {
-			t.Error(testCase.out, "!= ", y.Yakus(), " error 手牌 => ", p)
+		// 役の数
+		if len(yakuCheck.Yakus()) != len(testCase.out) {
+			t.Error(testCase.out, "!= ", yakuCheck.Yakus(), " error 手牌 => ", p)
+			continue
+		}
+
+		// 役の内容（順番もチェックしてる）
+		ok := true
+		for idx, y := range yakuCheck.Yakus() {
+			if !y.Equal(testCase.out[idx]) {
+				t.Error(testCase.out, "!= ", yakuCheck.Yakus(), " error 手牌 => ", p)
+				ok = false
+				break
+			}
+		}
+		if ok {
+			fmt.Println(" => ", yakuCheck.String())
 		}
 	}
 }

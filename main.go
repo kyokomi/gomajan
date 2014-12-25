@@ -4,25 +4,26 @@ import (
 	"fmt"
 
 	"github.com/kyokomi/gomajan/mjp"
+	"github.com/kyokomi/gomajan/mjp/pai"
 )
 
 func main() {
 
 	p := mjp.NewPlayer(nil, nil)
 	// ピンフ、一気通貫
-	p.TehaiSet(mjp.M1, 1)
-	p.TehaiSet(mjp.M2, 1)
-	p.TehaiSet(mjp.M3, 1)
-	p.TehaiSet(mjp.M4, 1)
-	p.TehaiSet(mjp.M5, 1)
-	p.TehaiSet(mjp.M6, 1)
-	p.TehaiSet(mjp.M7, 1)
-	p.TehaiSet(mjp.M8, 1)
-	p.TehaiSet(mjp.M9, 1)
-	p.TehaiSet(mjp.P1, 1)
-	p.TehaiSet(mjp.P2, 1)
-	p.TehaiSet(mjp.P3, 1)
-	p.TehaiSet(mjp.S2, 2)
+	p.TehaiSet(pai.M1, 1)
+	p.TehaiSet(pai.M2, 1)
+	p.TehaiSet(pai.M3, 1)
+	p.TehaiSet(pai.M4, 1)
+	p.TehaiSet(pai.M5, 1)
+	p.TehaiSet(pai.M6, 1)
+	p.TehaiSet(pai.M7, 1)
+	p.TehaiSet(pai.M8, 1)
+	p.TehaiSet(pai.M9, 1)
+	p.TehaiSet(pai.P1, 1)
+	p.TehaiSet(pai.P2, 1)
+	p.TehaiSet(pai.P3, 1)
+	p.TehaiSet(pai.S2, 2)
 
 	yakuCheck(p)
 }

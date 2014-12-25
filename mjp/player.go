@@ -1,40 +1,10 @@
 package mjp
 
-import "fmt"
-
-// FooType フーロ区分
-type FooType int
-
-const (
-	// Che チー
-	Che FooType = iota
-	// Pon ポン
-	Pon
-	// MinKan 明カン
-	MinKan
-	// AnnKan 暗カン
-	AnnKan
+import (
+	"fmt"
+	"github.com/kyokomi/gomajan/mjp/pai"
 )
 
-// Foo 鳴き牌
-type Foo struct {
-	// TODO: 誰から鳴いたか
-	dare int
-	// どの牌で鳴いたか
-	nakiPai MJP
-	// 鳴いた牌（全部）
-	mentsu  []MJP
-	fooType FooType
-}
-
-func NewFooPon(nakiPai MJP) Foo {
-	return Foo{
-		dare:    1,
-		nakiPai: nakiPai,
-		mentsu:  []MJP{nakiPai, nakiPai, nakiPai},
-		fooType: Pon,
-	}
-}
 
 // Player プレイヤー
 type Player struct {
@@ -49,11 +19,11 @@ type Player struct {
 // YakuCheck 役チェック結果
 type YakuCheck struct {
 	// 面子
-	mentsu [][]MJP
+	mentsu [][]pai.MJP
 	// 鳴き面子
-	nakiMentsu [][]MJP
+	nakiMentsu [][]pai.MJP
 	// 雀頭
-	jyanto MJP
+	jyanto pai.MJP
 	// 面子外残り
 	nokori []Tehai
 	// 役
@@ -143,7 +113,7 @@ func (p Player) String() string {
 	return tehaiStr
 }
 
-func (p *Player) TehaiSet(m MJP, v int) {
+func (p *Player) TehaiSet(m pai.MJP, v int) {
 	p.tiles[m].val = v
 }
 
@@ -152,13 +122,13 @@ func (p Player) NewYakuCheck() *YakuCheck {
 	y := YakuCheck{}
 
 	// 面子
-	y.mentsu = make([][]MJP, 0)
+	y.mentsu = make([][]pai.MJP, 0)
 
 	// 鳴き面子
-	y.nakiMentsu = make([][]MJP, 0)
+	y.nakiMentsu = make([][]pai.MJP, 0)
 
 	// 残り牌（テンパイ判定用）
-	y.nokori = make([]Tehai, 34)
+	y.nokori = make([]Tehai, pai.PaiSize())
 	copy(y.nokori, p.tiles)
 
 	// 面子がひとつも出来ない場合、判定終わり
@@ -180,8 +150,8 @@ func (p Player) NewYakuCheck() *YakuCheck {
 	}
 
 	// 鳴いてる時点で面子確定
-	for _, foo := range p.foos {
-		y.nakiMentsu = append(y.nakiMentsu, foo.mentsu)
+	for _, f := range p.foos {
+		y.nakiMentsu = append(y.nakiMentsu, f.Mentsu())
 	}
 
 	// 手牌を雀頭と面子に分解する

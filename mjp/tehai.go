@@ -1,16 +1,18 @@
 package mjp
 
+import "github.com/kyokomi/gomajan/mjp/pai"
+
 // Tehai 手牌1枚
 type Tehai struct {
-	pai MJP
+	pai pai.MJP
 	val int
 }
 
 // NewTehai 手牌作成
-func NewTehai(tehai map[MJP]int) []Tehai {
-	tiles := make([]Tehai, 34)
-	for i := 0; i < 34; i++ {
-		tiles[i].pai = MJP(i)
+func NewTehai(tehai map[pai.MJP]int) []Tehai {
+	tiles := make([]Tehai, pai.PaiSize())
+	for i := 0; i < pai.PaiSize(); i++ {
+		tiles[i].pai = pai.MJP(i)
 
 		if tehai != nil && tehai[tiles[i].pai] > 0 {
 			tiles[i].val = tehai[tiles[i].pai]
@@ -22,16 +24,16 @@ func NewTehai(tehai map[MJP]int) []Tehai {
 	return tiles
 }
 
-func checkMentsu(nokori []Tehai) [][]MJP {
+func checkMentsu(nokori []Tehai) [][]pai.MJP {
 	// 面子
-	mentsu := make([][]MJP, 0)
+	mentsu := make([][]pai.MJP, 0)
 
 	// 残り牌からチェック
-	tiles := make([]Tehai, 34)
+	tiles := make([]Tehai, pai.PaiSize())
 	copy(tiles, nokori)
 
 	// 面子候補
-	temp := make([]MJP, 0)
+	temp := make([]pai.MJP, 0)
 
 	for _, t := range tiles {
 		if t.val < 1 {
@@ -47,20 +49,20 @@ func checkMentsu(nokori []Tehai) [][]MJP {
 			// 暗刻
 
 			// 面子候補リセット
-			temp = make([]MJP, 0)
+			temp = make([]pai.MJP, 0)
 			for i := 0; i < 3; i++ {
 				temp = append(temp, t.pai)
 			}
 		} else {
 			// 面子候補リセット
-			temp = make([]MJP, 0)
+			temp = make([]pai.MJP, 0)
 			temp = append(temp, t.pai)
 		}
 
 		// 面子完成
 		if len(temp) == 3 {
 			mentsu = append(mentsu, temp)
-			temp = make([]MJP, 0)
+			temp = make([]pai.MJP, 0)
 		}
 	}
 

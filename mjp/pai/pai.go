@@ -1,10 +1,11 @@
-package mjp
+package pai
 
 type MJPType int
 type MJP int
 
 const (
-	NONE_TYPE MJPType = iota
+	// NONE_TYPE 初期値
+	NONE_TYPE MJPType = (0 + iota)
 	P_TYPE
 	M_TYPE
 	S_TYPE
@@ -12,8 +13,10 @@ const (
 	G_TYPE
 )
 const (
+	// NonePai 初期値
+	NonePai MJP = (0 + iota)
 	// ピンズ
-	P1 MJP = (0 + iota)
+	P1
 	P2
 	P3
 	P4
@@ -51,7 +54,13 @@ const (
 	HAK
 	HAT
 	CHN
+	// Size
+	paiSize
 )
+
+func PaiSize() int {
+	return int(paiSize)
+}
 
 func (i MJP) Type() MJPType {
 	if i >= P1 && i <= P9 {
@@ -93,6 +102,8 @@ func (i MJP) IsJipai19() bool {
 
 func (i MJP) String() string {
 	switch i {
+	default:
+		return "None"
 	case P1:
 		return "P1"
 	case P2:
@@ -168,5 +179,4 @@ func (i MJP) String() string {
 	case CHN:
 		return "中"
 	}
-	return ""
 }
