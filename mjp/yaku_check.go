@@ -46,6 +46,8 @@ var (
 	三暗刻 = Yaku{Fan: 2, Name: "三暗刻"}
 	// 小三元 小三元
 	小三元 = Yaku{Fan: 2, Name: "小三元"}
+	// 三槓子 三槓子
+	三槓子 = Yaku{Fan: 2, Name: "三槓子"}
 
 	// 混一色 混一色
 	混一色 = Yaku{Fan: 3, Name: "混一色"}
@@ -152,7 +154,9 @@ func (p Player) yakuCheck() []Yaku {
 		yakus = append(yakus, 三暗刻)
 	}
 
-	// TODO: 三槓子
+	if is三槓子(p) {
+		yakus = append(yakus, 三槓子)
+	}
 
 	if is小三元(p) {
 		yakus = append(yakus, 小三元)

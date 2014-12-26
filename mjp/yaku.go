@@ -415,7 +415,18 @@ func is一気通貫(p Player) bool {
 	return false
 }
 
+func is三槓子(p Player) bool {
 
+	c := 0
+	for _, f := range p.foos {
+		if f.FooType() != AnnKan && f.FooType() != MinKan {
+			continue
+		}
+		c++
+	}
+
+	return c == 3
+}
 
 func is小三元(p Player) bool {
 

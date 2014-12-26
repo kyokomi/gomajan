@@ -303,6 +303,21 @@ func TestYakuCheck(t *testing.T) {
 			},
 			out: []string{"四槓子"},
 		},
+		// 三槓子
+		TestCase{
+			in: mjp.NewTehai(map[pai.MJP]int{
+				pai.CHN: 2,
+				pai.P1: 1,
+				pai.P2: 1,
+				pai.P3: 1,
+			}),
+			inFoos: []mjp.Foo{
+				mjp.NewFooMinKan(mjp.Toimen, pai.M1),
+				mjp.NewFooAnnKan(pai.M3),
+				mjp.NewFooAnnKan(pai.M4),
+			},
+			out: []string{"三槓子"},
+		},
 	}
 
 	for _, testCase := range testCases {
