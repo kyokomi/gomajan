@@ -12,7 +12,7 @@ import (
 type TestCase struct {
 	in     []mjp.Tehai
 	inFoos []mjp.Foo
-	out    []mjp.Yaku
+	out    []string
 }
 
 func TestYakuCheck(t *testing.T) {
@@ -34,7 +34,7 @@ func TestYakuCheck(t *testing.T) {
 				pai.CHN: 1,
 			}),
 			inFoos: nil,
-			out:    []mjp.Yaku{mjp.M国士無双},
+			out:    []string{"国士無双"},
 		},
 		TestCase{
 			in: mjp.NewTehai(map[pai.MJP]int{
@@ -47,7 +47,7 @@ func TestYakuCheck(t *testing.T) {
 				pai.TON: 2,
 			}),
 			inFoos: nil,
-			out:    []mjp.Yaku{mjp.M七対子},
+			out:    []string{"七対子"},
 		},
 		// ソーズ清一色
 		TestCase{
@@ -62,7 +62,7 @@ func TestYakuCheck(t *testing.T) {
 				pai.S9: 2,
 			}),
 			inFoos: nil,
-			out:    []mjp.Yaku{mjp.M清一色},
+			out:    []string{"清一色"},
 		},
 		// マンズ清一色
 		TestCase{
@@ -77,7 +77,7 @@ func TestYakuCheck(t *testing.T) {
 				pai.M9: 2,
 			}),
 			inFoos: nil,
-			out:    []mjp.Yaku{mjp.M清一色},
+			out:    []string{"清一色"},
 		},
 		// ピンズ清一色
 		TestCase{
@@ -92,7 +92,7 @@ func TestYakuCheck(t *testing.T) {
 				pai.P9: 2,
 			}),
 			inFoos: nil,
-			out:    []mjp.Yaku{mjp.M清一色},
+			out:    []string{"清一色"},
 		},
 		// ソーズ混一色
 		TestCase{
@@ -107,7 +107,7 @@ func TestYakuCheck(t *testing.T) {
 				pai.HAK: 2,
 			}),
 			inFoos: nil,
-			out:    []mjp.Yaku{mjp.M混一色},
+			out:    []string{"混一色"},
 		},
 		// マンズ混一色
 		TestCase{
@@ -122,7 +122,7 @@ func TestYakuCheck(t *testing.T) {
 				pai.TON: 2,
 			}),
 			inFoos: nil,
-			out:    []mjp.Yaku{mjp.M混一色},
+			out:    []string{"混一色"},
 		},
 		// ピンズ混一色
 		TestCase{
@@ -137,7 +137,7 @@ func TestYakuCheck(t *testing.T) {
 				pai.CHN: 2,
 			}),
 			inFoos: nil,
-			out:    []mjp.Yaku{mjp.M混一色},
+			out:    []string{"混一色"},
 		},
 		// 断么九
 		TestCase{
@@ -153,7 +153,24 @@ func TestYakuCheck(t *testing.T) {
 				pai.P8: 2,
 			}),
 			inFoos: nil,
-			out:    []mjp.Yaku{mjp.M断么九},
+			out:    []string{"断么九"},
+		},
+		// 断么九（クイタン）
+		TestCase{
+			in: mjp.NewTehai(map[pai.MJP]int{
+				pai.P2: 1,
+				pai.P3: 1,
+				pai.P4: 1,
+				pai.S4: 1,
+				pai.S5: 1,
+				pai.S6: 1,
+				pai.P8: 2,
+			}),
+			inFoos: []mjp.Foo{
+				mjp.NewFooPon(mjp.Toimen, pai.M8),
+				mjp.NewFooPon(mjp.SimoCha, pai.M2),
+			},
+			out:    []string{"断么九"},
 		},
 		// 緑一色
 		TestCase{
@@ -162,11 +179,12 @@ func TestYakuCheck(t *testing.T) {
 				pai.S3:  2,
 				pai.S4:  2,
 				pai.S6:  3,
-				pai.HAT: 3,
 				pai.S8:  2,
 			}),
-			inFoos: nil,
-			out:    []mjp.Yaku{mjp.M緑一色},
+			inFoos: []mjp.Foo{
+				mjp.NewFooPon(mjp.KamiCha, pai.HAT),
+			},
+			out:    []string{"緑一色"},
 		},
 		// 大三元
 		TestCase{
@@ -179,7 +197,7 @@ func TestYakuCheck(t *testing.T) {
 				pai.CHN: 3,
 			}),
 			inFoos: []mjp.Foo{mjp.NewFooPon(mjp.Toimen, pai.HAK)},
-			out:    []mjp.Yaku{mjp.M大三元},
+			out:    []string{"大三元"},
 		},
 		// 字一色
 		TestCase{
@@ -190,7 +208,7 @@ func TestYakuCheck(t *testing.T) {
 				pai.CHN: 2,
 			}),
 			inFoos: []mjp.Foo{mjp.NewFooPon(mjp.Toimen, pai.HAK)},
-			out:    []mjp.Yaku{mjp.M字一色},
+			out:    []string{"字一色"},
 		},
 		// 大四喜
 		TestCase{
@@ -201,7 +219,7 @@ func TestYakuCheck(t *testing.T) {
 				pai.P1:  2,
 			}),
 			inFoos: []mjp.Foo{mjp.NewFooPon(mjp.Toimen, pai.SHA)},
-			out:    []mjp.Yaku{mjp.M大四喜},
+			out:    []string{"大四喜"},
 		},
 		// 小四喜
 		TestCase{
@@ -214,7 +232,7 @@ func TestYakuCheck(t *testing.T) {
 				pai.P3:  1,
 			}),
 			inFoos: []mjp.Foo{mjp.NewFooPon(mjp.Toimen, pai.SHA)},
-			out:    []mjp.Yaku{mjp.M小四喜},
+			out:    []string{"小四喜"},
 		},
 		// 四暗刻
 		TestCase{
@@ -222,25 +240,27 @@ func TestYakuCheck(t *testing.T) {
 				pai.TON: 3,
 				pai.S1:  3,
 				pai.S5:  3,
-				pai.P9:  3,
 				pai.CHN: 2,
 			}),
-			inFoos: nil,
-			out:    []mjp.Yaku{mjp.M四暗刻},
+			inFoos: []mjp.Foo{
+				mjp.NewFooAnnKan(pai.P9),
+			},
+			out:    []string{"四暗刻"},
 		},
 		// 三暗刻
 		TestCase{
 			in: mjp.NewTehai(map[pai.MJP]int{
 				pai.TON: 3,
 				pai.S1:  3,
-				pai.S5:  3,
 				pai.P7:  1,
 				pai.P8:  1,
 				pai.P9:  1,
 				pai.CHN: 2,
 			}),
-			inFoos: nil,
-			out:    []mjp.Yaku{mjp.M三暗刻},
+			inFoos: []mjp.Foo{
+				mjp.NewFooAnnKan(pai.S5),
+			},
+			out:    []string{"三暗刻"},
 		},
 		// 清老頭
 		TestCase{
@@ -251,7 +271,7 @@ func TestYakuCheck(t *testing.T) {
 				pai.S9: 3,
 			}),
 			inFoos: []mjp.Foo{mjp.NewFooPon(mjp.Toimen, pai.M1)},
-			out:    []mjp.Yaku{mjp.M清老頭},
+			out:    []string{"清老頭"},
 		},
 		// 小三元
 		TestCase{
@@ -262,12 +282,13 @@ func TestYakuCheck(t *testing.T) {
 				pai.P5:  1,
 				pai.P6:  1,
 				pai.P7:  1,
-				pai.HAK: 3,
 				pai.HAT: 3,
 				pai.CHN: 2,
 			}),
-			inFoos: nil,
-			out:    []mjp.Yaku{mjp.M小三元},
+			inFoos: []mjp.Foo{
+				mjp.NewFooPon(mjp.KamiCha, pai.HAK),
+			},
+			out:    []string{"小三元"},
 		},
 		// 四槓子
 		TestCase{
@@ -280,7 +301,7 @@ func TestYakuCheck(t *testing.T) {
 				mjp.NewFooAnnKan(pai.M3),
 				mjp.NewFooAnnKan(pai.M4),
 			},
-			out: []mjp.Yaku{mjp.M四槓子},
+			out: []string{"四槓子"},
 		},
 	}
 
@@ -298,7 +319,7 @@ func TestYakuCheck(t *testing.T) {
 		// 役の内容（順番もチェックしてる）
 		ok := true
 		for idx, y := range yakuCheck.Yakus() {
-			if !y.Equal(testCase.out[idx]) {
+			if y.Name != testCase.out[idx] {
 				t.Error(testCase.out, "!= ", yakuCheck.Yakus(), " error 手牌 => ", p)
 				ok = false
 				break

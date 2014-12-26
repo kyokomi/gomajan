@@ -40,7 +40,7 @@ func (y YakuCheck) String() string {
 	var yakus string
 	for _, yaku := range y.Yakus() {
 		yakus += (" " + yaku.Name)
-		if yaku.Name == M国士無双.Name || yaku.Name == M七対子.Name {
+		if yaku.Name == 国士無双.Name || yaku.Name == 七対子.Name {
 			return fmt.Sprintf("役 %s", yakus)
 		}
 	}
