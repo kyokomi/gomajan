@@ -4,7 +4,6 @@ import (
 	"github.com/kyokomi/gomajan/mjp/pai"
 )
 
-// 国士無双.
 func is国士無双(p Player) bool {
 	t := p.tiles
 	if t[pai.M1].val >= 1 &&
@@ -25,7 +24,6 @@ func is国士無双(p Player) bool {
 	return false
 }
 
-// 大三元.
 func is大三元(p Player) bool {
 
 	hak := 0
@@ -74,7 +72,6 @@ func is大三元(p Player) bool {
 	return false
 }
 
-// 字一色.
 func is字一色(p Player) bool {
 
 	for _, tehai := range p.tiles {
@@ -104,7 +101,6 @@ func is字一色(p Player) bool {
 	return true
 }
 
-// 大四喜.
 func is大四喜(p Player) bool {
 
 	ton := 0
@@ -155,7 +151,6 @@ func is大四喜(p Player) bool {
 	return false
 }
 
-// 小四喜
 func is小四喜(p Player) bool {
 
 	ton := 0
@@ -182,6 +177,10 @@ func is小四喜(p Player) bool {
 	}
 
 	for _, f := range p.foos {
+		if f.fooType == NoneFoo {
+			continue
+		}
+
 		if f.FooType() == Che {
 			continue
 		}
@@ -217,7 +216,6 @@ func is小四喜(p Player) bool {
 	return c3 == 4 || (c3 == 3 && c2 == 1)
 }
 
-// 四暗刻
 func is四暗刻(p Player) bool {
 
 	c := 0
@@ -245,7 +243,6 @@ func is四暗刻(p Player) bool {
 	return c == 4
 }
 
-// 四槓子
 func is四槓子(p Player) bool {
 
 	c := 0
@@ -259,7 +256,6 @@ func is四槓子(p Player) bool {
 	return c == 4
 }
 
-// 清老頭.
 func is清老頭(p Player) bool {
 
 	for _, tehai := range p.tiles {
@@ -288,7 +284,6 @@ func is清老頭(p Player) bool {
 	return true
 }
 
-// 緑一色.
 func is緑一色(p Player) bool {
 
 	checkFunc := func(mjpPai pai.MJP) bool {
@@ -329,10 +324,7 @@ func is緑一色(p Player) bool {
 	return true
 }
 
-// 清一色.
 func is清一色(p Player) bool {
-	// TODO: 食い下がり
-
 	mjpType := pai.NoneType
 	checkFunc := func(mjpPai pai.MJP) bool {
 		if mjpType == pai.NoneType {
@@ -365,70 +357,100 @@ func is清一色(p Player) bool {
 	return true
 }
 
-// 混一色.
-func is混一色(t []Tehai) bool {
+func is混一色(p Player) bool {
+
+	// 字牌有無
 	jihai := false
+	// 染めた種類
 	mjpType := pai.NoneType
-	for _, tehai := range t {
+
+	checkFunc := func (mjpPai pai.MJP) bool {
+		if mjpPai.Type() == pai.GType || mjpPai.Type() == pai.KType {
+			jihai = true
+			return true
+		}
+
+		if mjpType == pai.NoneType {
+			mjpType = mjpPai.Type()
+		} else if mjpType != mjpPai.Type() {
+			return false
+		}
+		return true
+	}
+
+	for _, tehai := range p.tiles {
 		if tehai.val < 1 {
 			continue
 		}
 
-		if tehai.pai.Type() == pai.GType || tehai.pai.Type() == pai.KType {
-			jihai = true
-			continue
-		}
-
-		if mjpType == pai.NoneType {
-			mjpType = tehai.pai.Type()
-		} else if mjpType != tehai.pai.Type() {
+		if !checkFunc(tehai.pai) {
 			return false
 		}
 	}
+
+	for _, f := range p.foos {
+		if f.fooType == NoneFoo {
+			continue
+		}
+		if !checkFunc(f.NakiPai()) {
+			return false
+		}
+	}
+
 	return jihai
 }
 
 // 純全帯.
-func is純全帯(t []Tehai) bool {
-
-	// TODO: 食い下がり
+func is純全帯(p Player) bool {
 
 	// TODO: 面子判定が必要なので一旦保留
 
 	return false
 }
 
-// 一気通貫.
-func is一気通貫(t []Tehai) bool {
-
-	// TODO: 食い下がり
+func is一気通貫(p Player) bool {
 
 	// TODO: 面子判定が必要なので一旦保留
 
 	return false
 }
 
-// 小三元.
-func is小三元(t []Tehai) bool {
 
-	// TODO: 鳴き面子OK
+
+func is小三元(p Player) bool {
 
 	hak := 0
 	hat := 0
 	chn := 0
-	for _, tehai := range t {
+	for _, tehai := range p.tiles {
 		if tehai.val < 1 {
 			continue
 		}
 
 		if tehai.pai == pai.HAK {
 			hak += tehai.val
-		}
-		if tehai.pai == pai.HAT {
+		} else if tehai.pai == pai.HAT {
 			hat += tehai.val
-		}
-		if tehai.pai == pai.CHN {
+		} else if tehai.pai == pai.CHN {
 			chn += tehai.val
+		}
+	}
+
+	for _, f := range p.foos {
+		if f.fooType == NoneFoo {
+			continue
+		}
+
+		if f.FooType() == Che {
+			continue
+		}
+
+		if f.nakiPai == pai.HAK {
+			hak += len(f.mentsu)
+		} else if f.nakiPai == pai.HAT {
+			hat += len(f.mentsu)
+		} else if f.nakiPai == pai.CHN {
+			chn += len(f.mentsu)
 		}
 	}
 
@@ -449,9 +471,8 @@ func is小三元(t []Tehai) bool {
 	return c3 == 2 && c2 == 1
 }
 
-// 断么九.
-func is断么九(t []Tehai) bool {
-	for _, tehai := range t {
+func is断么九(p Player) bool {
+	for _, tehai := range p.tiles {
 		if tehai.val < 1 {
 			continue
 		}
@@ -461,13 +482,26 @@ func is断么九(t []Tehai) bool {
 			return false
 		}
 	}
+
+	for _, f := range p.foos {
+		if f.fooType == NoneFoo {
+			continue
+		}
+
+		for _, m := range f.mentsu {
+			// 三元牌、風牌
+			if m.IsJipai19() {
+				return false
+			}
+		}
+	}
+
 	return true
 }
 
-// 七対子.
-func is七対子(t []Tehai) bool {
+func is七対子(p Player) bool {
 	count := 0
-	for _, tehai := range t {
+	for _, tehai := range p.tiles {
 		if tehai.val != 2 {
 			continue
 		}
@@ -476,18 +510,25 @@ func is七対子(t []Tehai) bool {
 	return count == 7
 }
 
-// 三暗刻
-func is三暗刻(t []Tehai) bool {
-
-	// TODO: 鳴き面子NG, 槓子OK
+func is三暗刻(p Player) bool {
 
 	c := 0
-	for _, tehai := range t {
+	for _, tehai := range p.tiles {
 		if tehai.val < 1 {
 			continue
 		}
 
 		if tehai.val >= 3 {
+			c++
+		}
+	}
+
+	for _, f := range p.foos {
+		if f.fooType == NoneFoo {
+			continue
+		}
+
+		if f.fooType == AnnKan {
 			c++
 		}
 	}

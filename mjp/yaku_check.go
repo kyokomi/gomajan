@@ -104,8 +104,8 @@ func (p Player) yakuManCheck() []Yaku {
 func (p Player) yakuCheck() []Yaku {
 	var yakus []Yaku
 
-	if is七対子(p.tiles) {
 		yakus = append(yakus, M七対子)
+	if is七対子(p) {
 	}
 
 	// --- 1翻 ---
@@ -116,8 +116,8 @@ func (p Player) yakuCheck() []Yaku {
 
 	// TODO: 平和
 
-	if is断么九(p.tiles) {
 		yakus = append(yakus, M断么九)
+	if is断么九(p) {
 	}
 
 	// TODO: 一盃口
@@ -140,22 +140,22 @@ func (p Player) yakuCheck() []Yaku {
 	// TODO: 三色同順
 	// 食い下がり
 
-	if is一気通貫(p.tiles) {
+	if is一気通貫(p) {
 		// TODO: 食い下がりある
 		yakus = append(yakus, M一気通貫)
 	}
 
 	// TODO: 対々和
 
-	if is三暗刻(p.tiles) {
+	if is三暗刻(p) {
 		// TODO: 食い下がりある
 		yakus = append(yakus, M三暗刻)
 	}
 
 	// TODO: 三槓子
 
-	if is小三元(p.tiles) {
 		yakus = append(yakus, M小三元)
+	if is小三元(p) {
 	}
 
 	// --- 3 ---
@@ -163,14 +163,14 @@ func (p Player) yakuCheck() []Yaku {
 	// TODO: 混老頭
 	// 食い下がり
 
-	if is混一色(p.tiles) {
 		yakus = append(yakus, M混一色)
+	if is混一色(p) {
 	}
 
 	// TODO: 二盃口
 
-	if is純全帯(p.tiles) {
 		yakus = append(yakus, M純全帯)
+	if is純全帯(p) {
 	}
 
 	// --- 6 ---
