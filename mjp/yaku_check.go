@@ -14,47 +14,28 @@ func (y1 Yaku) Equal(y2 Yaku) bool {
 }
 
 var (
-	// 国士無双 国士無双
 	国士無双 = Yaku{Fan: 13, Name: "国士無双"}
-	// 大四喜 大四喜
 	大四喜 = Yaku{Fan: 13, Name: "大四喜"}
-	// 小四喜 小四喜
 	小四喜 = Yaku{Fan: 13, Name: "小四喜"}
 
-	// 大三元 大三元
 	大三元 = Yaku{Fan: 13, Name: "大三元"}
-	// 字一色 字一色
 	字一色 = Yaku{Fan: 13, Name: "字一色"}
-	// 四暗刻 四暗刻
 	四暗刻 = Yaku{Fan: 13, Name: "四暗刻"}
-	// 清老頭 清老頭
 	清老頭 = Yaku{Fan: 13, Name: "清老頭"}
-	// 緑一色 緑一色
 	緑一色 = Yaku{Fan: 13, Name: "緑一色"}
-	// 四槓子 四槓子
 	四槓子 = Yaku{Fan: 13, Name: "四槓子"}
 
-	// 七対子 七対子
 	七対子 = Yaku{Fan: 2, Name: "七対子"}
 
-	// 断么九 断么九
 	断么九 = Yaku{Fan: 1, Name: "断么九"}
 
-	// 一気通貫 一気通貫
 	一気通貫 = Yaku{Fan: 2, Name: "一気通貫"}
-	// 三暗刻 三暗刻
 	三暗刻 = Yaku{Fan: 2, Name: "三暗刻"}
-	// 小三元 小三元
 	小三元 = Yaku{Fan: 2, Name: "小三元"}
-	// 三槓子 三槓子
 	三槓子 = Yaku{Fan: 2, Name: "三槓子"}
 
-	// 混一色 混一色
 	混一色 = Yaku{Fan: 3, Name: "混一色"}
-	// 純全帯 純全帯
 	純全帯 = Yaku{Fan: 3, Name: "純全帯"}
-
-	// 清一色 清一色
 	清一色 = Yaku{Fan: 6, Name: "清一色"}
 )
 

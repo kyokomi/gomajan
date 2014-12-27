@@ -90,7 +90,7 @@ func is字一色(p Player) bool {
 		}
 
 		if f.FooType() == Che {
-			continue
+			return false
 		}
 
 		if !f.NakiPai().IsJipai() {
@@ -274,7 +274,7 @@ func is清老頭(p Player) bool {
 		}
 
 		if f.FooType() == Che {
-			continue
+			return false
 		}
 
 		if !f.NakiPai().Is19() {

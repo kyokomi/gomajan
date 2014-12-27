@@ -166,6 +166,8 @@ func (p Player) NewYakuCheck() *YakuCheck {
 			break
 		}
 	}
+	// TODO: こっちにもsetしないといけないのがイマイチ
+	p.yaku = &y
 
 	yakuman := p.yakuManCheck()
 	if len(yakuman) != 0 {
