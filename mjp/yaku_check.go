@@ -29,11 +29,13 @@ var (
 
 	断么九 = Yaku{Fan: 1, Name: "断么九"}
 
+	対々和 = Yaku{Fan: 2, Name: "対々和"}
 	一気通貫 = Yaku{Fan: 2, Name: "一気通貫"}
 	三暗刻 = Yaku{Fan: 2, Name: "三暗刻"}
 	小三元 = Yaku{Fan: 2, Name: "小三元"}
 	三槓子 = Yaku{Fan: 2, Name: "三槓子"}
 
+	混老頭 = Yaku{Fan: 3, Name: "混老頭"}
 	混一色 = Yaku{Fan: 3, Name: "混一色"}
 	純全帯 = Yaku{Fan: 3, Name: "純全帯"}
 	清一色 = Yaku{Fan: 6, Name: "清一色"}
@@ -128,7 +130,9 @@ func (p Player) yakuCheck() []Yaku {
 		yakus = append(yakus, 一気通貫)
 	}
 
-	// TODO: 対々和
+	if is対々和(p) {
+		yakus = append(yakus, 対々和)
+	}
 
 	if is三暗刻(p) {
 		// TODO: 食い下がりある
@@ -145,8 +149,10 @@ func (p Player) yakuCheck() []Yaku {
 
 	// --- 3 ---
 
-	// TODO: 混老頭
-	// 食い下がり
+	// TODO: 食い下がり
+	if is混老頭(p) {
+		yakus = append(yakus, 混老頭)
+	}
 
 	if is混一色(p) {
 		yakus = append(yakus, 混一色)

@@ -357,6 +357,35 @@ func is清一色(p Player) bool {
 	return true
 }
 
+func is混老頭(p Player) bool {
+
+	for _, tehai := range p.tiles {
+		if tehai.val < 1 {
+			continue
+		}
+
+		if !tehai.pai.IsJipai19() {
+			return false
+		}
+	}
+
+	for _, f := range p.foos {
+		if f.fooType == NoneFoo {
+			continue
+		}
+
+		if f.FooType() == Che {
+			return false
+		}
+
+		if !f.NakiPai().IsJipai19() {
+			return false
+		}
+	}
+
+	return true
+}
+
 func is混一色(p Player) bool {
 
 	// 字牌有無
@@ -413,6 +442,36 @@ func is一気通貫(p Player) bool {
 	// TODO: 面子判定が必要なので一旦保留
 
 	return false
+}
+
+func is対々和(p Player) bool {
+
+	for _, tehai := range p.tiles {
+		if tehai.val < 1 {
+			continue
+		}
+
+		if p.yaku.jyanto == tehai.pai {
+			continue
+		}
+
+		// 雀頭以外は3枚以上ないとダメ
+		if tehai.val < 3 {
+			return false
+		}
+	}
+
+	for _, f := range p.foos {
+		if f.fooType == NoneFoo {
+			continue
+		}
+
+		if f.FooType() == Che {
+			return false
+		}
+	}
+
+	return true
 }
 
 func is三槓子(p Player) bool {

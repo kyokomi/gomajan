@@ -273,6 +273,19 @@ func TestYakuCheck(t *testing.T) {
 			inFoos: []mjp.Foo{mjp.NewFooPon(mjp.Toimen, pai.M1)},
 			out:    []string{"清老頭"},
 		},
+		// 混老頭
+		TestCase{
+			in: mjp.NewTehai(map[pai.MJP]int{
+				pai.S1: 2,
+				pai.P1: 3,
+				pai.HAK: 3,
+			}),
+			inFoos: []mjp.Foo{
+				mjp.NewFooPon(mjp.Toimen, pai.M1),
+				mjp.NewFooPon(mjp.Toimen, pai.TON),
+			},
+			out:    []string{"対々和", "混老頭"},
+		},
 		// 小三元
 		TestCase{
 			in: mjp.NewTehai(map[pai.MJP]int{
