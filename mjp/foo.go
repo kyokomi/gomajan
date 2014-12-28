@@ -88,3 +88,13 @@ func NewFooMinKan(dare DareType, nakiPai pai.MJP) Foo {
 		fooType: MinKan,
 	}
 }
+
+// NewFooChe チー
+func NewFooChe(nakiPai pai.MJP, tedashiPai ...pai.MJP) Foo {
+	return Foo{
+		dare:    SimoCha,
+		nakiPai: nakiPai,
+		mentsu:  []pai.MJP{nakiPai, tedashiPai[0], tedashiPai[1]},
+		fooType: Che,
+	}
+}
