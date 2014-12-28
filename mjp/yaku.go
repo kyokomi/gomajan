@@ -393,7 +393,7 @@ func is混一色(p Player) bool {
 	// 染めた種類
 	mjpType := pai.NoneType
 
-	checkFunc := func (mjpPai pai.MJP) bool {
+	checkFunc := func(mjpPai pai.MJP) bool {
 		if mjpPai.Type() == pai.GType || mjpPai.Type() == pai.KType {
 			jihai = true
 			return true

@@ -15,8 +15,8 @@ func (y1 Yaku) Equal(y2 Yaku) bool {
 
 var (
 	国士無双 = Yaku{Fan: 13, Name: "国士無双"}
-	大四喜 = Yaku{Fan: 13, Name: "大四喜"}
-	小四喜 = Yaku{Fan: 13, Name: "小四喜"}
+	大四喜  = Yaku{Fan: 13, Name: "大四喜"}
+	小四喜  = Yaku{Fan: 13, Name: "小四喜"}
 
 	大三元 = Yaku{Fan: 13, Name: "大三元"}
 	字一色 = Yaku{Fan: 13, Name: "字一色"}
@@ -29,11 +29,11 @@ var (
 
 	断么九 = Yaku{Fan: 1, Name: "断么九"}
 
-	対々和 = Yaku{Fan: 2, Name: "対々和"}
+	対々和  = Yaku{Fan: 2, Name: "対々和"}
 	一気通貫 = Yaku{Fan: 2, Name: "一気通貫"}
-	三暗刻 = Yaku{Fan: 2, Name: "三暗刻"}
-	小三元 = Yaku{Fan: 2, Name: "小三元"}
-	三槓子 = Yaku{Fan: 2, Name: "三槓子"}
+	三暗刻  = Yaku{Fan: 2, Name: "三暗刻"}
+	小三元  = Yaku{Fan: 2, Name: "小三元"}
+	三槓子  = Yaku{Fan: 2, Name: "三槓子"}
 
 	混老頭 = Yaku{Fan: 3, Name: "混老頭"}
 	混一色 = Yaku{Fan: 3, Name: "混一色"}
