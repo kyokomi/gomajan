@@ -331,6 +331,22 @@ func TestYakuCheck(t *testing.T) {
 			},
 			out: []string{"三槓子"},
 		},
+		// 一気通貫
+		TestCase{
+			in: mjp.NewTehai(map[pai.MJP]int{
+				pai.P4: 1,
+				pai.P5: 1,
+				pai.P6: 1,
+				pai.P7: 1,
+				pai.P8: 1,
+				pai.P9: 3,
+				pai.S2: 3,
+			}),
+			inFoos: []mjp.Foo{
+				mjp.NewFooChe(pai.P1, pai.P2, pai.P3),
+			},
+			out: []string{"一気通貫"},
+		},
 	}
 
 	for _, testCase := range testCases {

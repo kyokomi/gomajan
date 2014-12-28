@@ -439,7 +439,67 @@ func is純全帯(p Player) bool {
 
 func is一気通貫(p Player) bool {
 
-	// TODO: 面子判定が必要なので一旦保留
+	m123 := false
+	m456 := false
+	m789 := false
+	s123 := false
+	s456 := false
+	s789 := false
+	p123 := false
+	p456 := false
+	p789 := false
+	m1 := pai.Mentsu{pai.M1, pai.M2, pai.M3}
+	m2 := pai.Mentsu{pai.M4, pai.M5, pai.M6}
+	m3 := pai.Mentsu{pai.M7, pai.M8, pai.M9}
+
+	s1 := pai.Mentsu{pai.S1, pai.S2, pai.S3}
+	s2 := pai.Mentsu{pai.S4, pai.S5, pai.S6}
+	s3 := pai.Mentsu{pai.S7, pai.S8, pai.S9}
+
+	p1 := pai.Mentsu{pai.P1, pai.P2, pai.P3}
+	p2 := pai.Mentsu{pai.P4, pai.P5, pai.P6}
+	p3 := pai.Mentsu{pai.P7, pai.P8, pai.P9}
+
+	checkFunc := func(pais pai.Mentsu) {
+		if m1.Equal(pais) {
+			m123 = true
+		} else if m2.Equal(pais) {
+			m456 = true
+		} else if m3.Equal(pais) {
+			m789 = true
+		} else if s1.Equal(pais) {
+			s123 = true
+		} else if s2.Equal(pais) {
+			s456 = true
+		} else if s3.Equal(pais) {
+			s789 = true
+		} else if p1.Equal(pais) {
+			p123 = true
+		} else if p2.Equal(pais) {
+			p456 = true
+		} else if p3.Equal(pais) {
+			p789 = true
+		}
+	}
+
+	for _, pais := range p.yaku.mentsu {
+		if len(pais) != 3 {
+			continue
+		}
+
+		checkFunc(pai.Mentsu{pais[0], pais[1], pais[2]})
+	}
+
+	for _, f := range p.foos {
+		if f.fooType != Che {
+			continue
+		}
+		checkFunc(pai.Mentsu{f.mentsu[0], f.mentsu[1], f.mentsu[2]})
+	}
+
+	if (m123 && m456 && m789) || (s123 && s456 && s789) || (p123 && p456 && p789) {
+		return true
+	}
 
 	return false
 }
