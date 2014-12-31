@@ -429,7 +429,10 @@ func is混一色(p Player) bool {
 	return jihai
 }
 
-// 純全帯.
+func is二盃口(p Player) bool {
+	return count一盃口(p) == 2
+}
+
 func is純全帯(p Player) bool {
 
 	// TODO: 面子判定が必要なので一旦保留
@@ -664,4 +667,39 @@ func is三暗刻(p Player) bool {
 	}
 
 	return c == 3
+}
+
+func is一盃口(p Player) bool {
+	return count一盃口(p) == 1
+}
+
+// ============================
+
+func count一盃口(p Player) int {
+	count := 0
+	var hitMentsu *pai.Mentsu = nil
+	for idx, pais1 := range p.yaku.mentsu {
+		m1 := pai.NewMentsu(pais1)
+		if m1 == nil {
+			continue
+		}
+
+		// 重複チェック
+		if hitMentsu != nil && m1.Equal(*hitMentsu) {
+			continue
+		}
+
+		for i := idx+1; i < len(p.yaku.mentsu); i++ {
+			m2 := pai.NewMentsu(p.yaku.mentsu[i])
+			if m2 == nil {
+				continue
+			}
+
+			if m1.Equal(*m2) {
+				count++
+				hitMentsu = m2
+			}
+		}
+	}
+	return count
 }

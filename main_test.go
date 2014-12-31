@@ -347,6 +347,35 @@ func TestYakuCheck(t *testing.T) {
 			},
 			out: []string{"一気通貫"},
 		},
+		// 二盃口
+		TestCase{
+			in: mjp.NewTehai(map[pai.MJP]int{
+				pai.P4: 2,
+				pai.P5: 2,
+				pai.P6: 2,
+				pai.S7: 2,
+				pai.S8: 2,
+				pai.S9: 2,
+				pai.S1: 2,
+			}),
+			inFoos: nil,
+			out: []string{"二盃口"},
+		},
+		// 一盃口
+		TestCase{
+			in: mjp.NewTehai(map[pai.MJP]int{
+				pai.P4: 2,
+				pai.P5: 2,
+				pai.P6: 2,
+				pai.S7: 1,
+				pai.S8: 1,
+				pai.S9: 1,
+				pai.M3: 3,
+				pai.S2: 2,
+			}),
+			inFoos: nil,
+			out: []string{"一盃口"},
+		},
 	}
 
 	for _, testCase := range testCases {

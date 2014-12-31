@@ -28,6 +28,7 @@ var (
 	七対子 = Yaku{Fan: 2, Name: "七対子"}
 
 	断么九 = Yaku{Fan: 1, Name: "断么九"}
+	一盃口 = Yaku{Fan: 1, Name: "一盃口"}
 
 	対々和  = Yaku{Fan: 2, Name: "対々和"}
 	一気通貫 = Yaku{Fan: 2, Name: "一気通貫"}
@@ -37,7 +38,9 @@ var (
 
 	混老頭 = Yaku{Fan: 3, Name: "混老頭"}
 	混一色 = Yaku{Fan: 3, Name: "混一色"}
+	二盃口 = Yaku{Fan: 3, Name: "二盃口"}
 	純全帯 = Yaku{Fan: 3, Name: "純全帯"}
+
 	清一色 = Yaku{Fan: 6, Name: "清一色"}
 )
 
@@ -105,7 +108,9 @@ func (p Player) yakuCheck() []Yaku {
 		yakus = append(yakus, 断么九)
 	}
 
-	// TODO: 一盃口
+	if is一盃口(p) {
+		yakus = append(yakus, 一盃口)
+	}
 
 	// TODO: 嶺上開花
 	// TODO: 槍槓
@@ -158,7 +163,9 @@ func (p Player) yakuCheck() []Yaku {
 		yakus = append(yakus, 混一色)
 	}
 
-	// TODO: 二盃口
+	if is二盃口(p) {
+		yakus = append(yakus, 二盃口)
+	}
 
 	if is純全帯(p) {
 		yakus = append(yakus, 純全帯)
