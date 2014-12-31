@@ -633,6 +633,10 @@ func is断么九(p Player) bool {
 }
 
 func is七対子(p Player) bool {
+	if len(p.yaku.mentsu) != 0 {
+		return false
+	}
+
 	count := 0
 	for _, tehai := range p.tiles {
 		if tehai.val != 2 {
