@@ -485,7 +485,7 @@ func is一気通貫(p Player) bool {
 		}
 	}
 
-	for _, pais := range p.yaku.mentsu {
+	for _, pais := range p.yaku.mentsuCheck.mentsu {
 		if len(pais) != 3 {
 			continue
 		}
@@ -514,7 +514,7 @@ func is対々和(p Player) bool {
 			continue
 		}
 
-		if p.yaku.jyanto == tehai.pai {
+		if p.yaku.mentsuCheck.jyanto == tehai.pai {
 			continue
 		}
 
@@ -633,7 +633,7 @@ func is断么九(p Player) bool {
 }
 
 func is七対子(p Player) bool {
-	if len(p.yaku.mentsu) != 0 {
+	if len(p.yaku.mentsuCheck.mentsu) != 0 {
 		return false
 	}
 
@@ -682,7 +682,7 @@ func is一盃口(p Player) bool {
 func count一盃口(p Player) int {
 	count := 0
 	var hitMentsu *pai.Mentsu = nil
-	for idx, pais1 := range p.yaku.mentsu {
+	for idx, pais1 := range p.yaku.mentsuCheck.mentsu {
 		m1 := pai.NewMentsu(pais1)
 		if m1 == nil {
 			continue
@@ -693,8 +693,8 @@ func count一盃口(p Player) int {
 			continue
 		}
 
-		for i := idx+1; i < len(p.yaku.mentsu); i++ {
-			m2 := pai.NewMentsu(p.yaku.mentsu[i])
+		for i := idx+1; i < len(p.yaku.mentsuCheck.mentsu); i++ {
+			m2 := pai.NewMentsu(p.yaku.mentsuCheck.mentsu[i])
 			if m2 == nil {
 				continue
 			}

@@ -16,18 +16,19 @@ type Player struct {
 	yaku *YakuCheck
 }
 
-// YakuCheck 役チェック結果
+// MentuCheck 面子判定結果
+type MentuCheck struct {
+	agari pai.MJP // あがり牌
+	mentsu [][]pai.MJP // 面子
+	nakiMentsu [][]pai.MJP // 鳴き面子
+	jyanto pai.MJP // 雀頭
+	nokori []Tehai // 面子外残り
+}
+
+// YakuCheck 役判定結果
 type YakuCheck struct {
-	// 面子
-	mentsu [][]pai.MJP
-	// 鳴き面子
-	nakiMentsu [][]pai.MJP
-	// 雀頭
-	jyanto pai.MJP
-	// 面子外残り
-	nokori []Tehai
-	// 役
-	yakus []Yaku
+	mentsuCheck MentuCheck // 面子判定結果
+	yakus       []Yaku     // 役
 }
 
 // Yakus getter yakus
@@ -45,15 +46,17 @@ func (y YakuCheck) String() string {
 		}
 	}
 
+	mc := y.mentsuCheck
+
 	var mentsu string
-	for _, m := range y.mentsu {
+	for _, m := range mc.mentsu {
 		for _, p := range m {
 			mentsu += (" " + p.String())
 		}
 		mentsu += " |"
 	}
 
-	for _, m := range y.nakiMentsu {
+	for _, m := range mc.nakiMentsu {
 		if len(m) == 0 {
 			continue
 		}
@@ -65,7 +68,7 @@ func (y YakuCheck) String() string {
 	}
 
 	var nokori string
-	for _, n := range y.nokori {
+	for _, n := range mc.nokori {
 		if n.val >= 1 {
 			nokori += (" " + n.pai.String())
 		}
@@ -74,7 +77,7 @@ func (y YakuCheck) String() string {
 		nokori = " なし"
 	}
 
-	return fmt.Sprintf("雀頭 %s 面子|%s 残り%s => 役 %s", y.jyanto, mentsu, nokori, yakus)
+	return fmt.Sprintf("雀頭 %s 面子|%s 残り%s => 役 %s", mc.jyanto, mentsu, nokori, yakus)
 }
 
 // NewPlayer プレイヤー作成
@@ -119,53 +122,61 @@ func (p *Player) TehaiSet(m pai.MJP, v int) {
 	p.tiles[m].val = v
 }
 
-// NewYakuCheck 役チェック
-func (p Player) NewYakuCheck() *YakuCheck {
-	y := YakuCheck{}
+func (p Player) newMentuCheck() MentuCheck {
+	var mc MentuCheck
 
 	// 面子
-	y.mentsu = make([][]pai.MJP, 0)
+	mc.mentsu = make([][]pai.MJP, 0)
 
 	// 鳴き面子
-	y.nakiMentsu = make([][]pai.MJP, 0)
+	mc.nakiMentsu = make([][]pai.MJP, 0)
 
 	// 残り牌（テンパイ判定用）
-	y.nokori = make([]Tehai, pai.PaiSize())
-	copy(y.nokori, p.tiles)
+	mc.nokori = make([]Tehai, pai.PaiSize())
+	copy(mc.nokori, p.tiles)
 
 	// 面子がひとつも出来ない場合、判定終わり
 	for {
-		men := checkMentsu(y.nokori)
+		men := checkMentsu(mc.nokori)
 		if len(men) == 0 {
 			break
 		}
 
 		for _, m := range men {
 			// 完成した面子を更新
-			y.mentsu = append(y.mentsu, m)
+			mc.mentsu = append(mc.mentsu, m)
 
 			// 残り牌を更新
 			for _, p := range m {
-				y.nokori[p].val--
+				mc.nokori[p].val--
 			}
 		}
 	}
 
 	// 鳴いてる時点で面子確定
 	for _, f := range p.foos {
-		y.nakiMentsu = append(y.nakiMentsu, f.Mentsu())
+		mc.nakiMentsu = append(mc.nakiMentsu, f.Mentsu())
 	}
 
 	// 手牌を雀頭と面子に分解する
 	// 面子作成後の残り牌から雀頭を作成
-	for _, n := range y.nokori {
+	for _, n := range mc.nokori {
 		// 雀頭
 		if n.val == 2 {
-			y.jyanto = n.pai
-			y.nokori[n.pai].val -= 2
+			mc.jyanto = n.pai
+			mc.nokori[n.pai].val -= 2
 			break
 		}
 	}
+
+	return mc
+}
+
+// NewYakuCheck 役チェック
+func (p Player) NewYakuCheck() *YakuCheck {
+	y := YakuCheck{}
+
+	y.mentsuCheck = p.newMentuCheck()
 	// TODO: こっちにもsetしないといけないのがイマイチ
 	p.yaku = &y
 
