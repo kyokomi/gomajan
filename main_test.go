@@ -52,12 +52,12 @@ func TestYakuCheck(t *testing.T) {
 		// ソーズ清一色
 		TestCase{
 			in: mjp.NewTehai(map[pai.MJP]int{
-				pai.S1: 2,
-				pai.S2: 2,
+				pai.S1: 1,
+				pai.S2: 1,
 				pai.S3: 2,
 				pai.S4: 1,
 				pai.S5: 1,
-				pai.S6: 1,
+				pai.S6: 3,
 				pai.S7: 3,
 				pai.S9: 2,
 			}),
@@ -67,10 +67,10 @@ func TestYakuCheck(t *testing.T) {
 		// マンズ清一色
 		TestCase{
 			in: mjp.NewTehai(map[pai.MJP]int{
-				pai.M1: 2,
+				pai.M1: 1,
 				pai.M2: 2,
 				pai.M3: 2,
-				pai.M4: 1,
+				pai.M4: 2,
 				pai.M5: 1,
 				pai.M6: 1,
 				pai.M7: 3,
@@ -82,10 +82,10 @@ func TestYakuCheck(t *testing.T) {
 		// ピンズ清一色
 		TestCase{
 			in: mjp.NewTehai(map[pai.MJP]int{
-				pai.P1: 2,
+				pai.P1: 1,
 				pai.P2: 2,
 				pai.P3: 2,
-				pai.P4: 1,
+				pai.P4: 2,
 				pai.P5: 1,
 				pai.P6: 1,
 				pai.P7: 3,
@@ -97,10 +97,10 @@ func TestYakuCheck(t *testing.T) {
 		// ソーズ混一色
 		TestCase{
 			in: mjp.NewTehai(map[pai.MJP]int{
-				pai.S1:  2,
+				pai.S1:  1,
 				pai.S2:  2,
 				pai.S3:  2,
-				pai.S4:  1,
+				pai.S4:  2,
 				pai.S5:  1,
 				pai.S6:  1,
 				pai.S7:  3,
@@ -112,10 +112,10 @@ func TestYakuCheck(t *testing.T) {
 		// マンズ混一色
 		TestCase{
 			in: mjp.NewTehai(map[pai.MJP]int{
-				pai.M1:  2,
+				pai.M1:  1,
 				pai.M2:  2,
 				pai.M3:  2,
-				pai.M4:  1,
+				pai.M4:  2,
 				pai.M5:  1,
 				pai.M6:  1,
 				pai.M7:  3,
@@ -127,10 +127,10 @@ func TestYakuCheck(t *testing.T) {
 		// ピンズ混一色
 		TestCase{
 			in: mjp.NewTehai(map[pai.MJP]int{
-				pai.P1:  2,
+				pai.P1:  1,
 				pai.P2:  2,
 				pai.P3:  2,
-				pai.P4:  1,
+				pai.P4:  2,
 				pai.P5:  1,
 				pai.P6:  1,
 				pai.P7:  3,
@@ -385,7 +385,7 @@ func TestYakuCheck(t *testing.T) {
 
 		// 役の数
 		if len(yakuCheck.Yakus()) != len(testCase.out) {
-			t.Error(testCase.out, "!= ", yakuCheck.Yakus(), " error 手牌 => ", p)
+			t.Error(testCase.out, "!= ", yakuCheck.Yakus(), " 役数error 手牌 => ", p)
 			continue
 		}
 
@@ -393,7 +393,7 @@ func TestYakuCheck(t *testing.T) {
 		ok := true
 		for idx, y := range yakuCheck.Yakus() {
 			if y.Name != testCase.out[idx] {
-				t.Error(testCase.out, "!= ", yakuCheck.Yakus(), " error 手牌 => ", p)
+				t.Error(testCase.out, "!= ", yakuCheck.Yakus(), " 役内容error 手牌 => ", p)
 				ok = false
 				break
 			}
