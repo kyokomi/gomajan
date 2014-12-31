@@ -1,13 +1,15 @@
-package pai
+package mentsu
+
+import "github.com/kyokomi/gomajan/mjp/pai"
 
 // MentsuLen 面子の長さ
 const MentsuLen = 3
 
 // Mentsu 面子
-type Mentsu [MentsuLen]MJP
+type Mentsu [MentsuLen]pai.MJP
 
 // NewMentsu 面子作成
-func NewMentsu(pais []MJP) *Mentsu {
+func NewMentsu(pais []pai.MJP) *Mentsu {
 	if len(pais) != MentsuLen {
 		return nil
 	}

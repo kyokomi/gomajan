@@ -6,19 +6,21 @@ import (
 	"fmt"
 
 	"github.com/kyokomi/gomajan/mjp"
+	"github.com/kyokomi/gomajan/mjp/foo"
 	"github.com/kyokomi/gomajan/mjp/pai"
+	"github.com/kyokomi/gomajan/mjp/tehai"
 )
 
 type TestCase struct {
-	in     []mjp.Tehai
-	inFoos []mjp.Foo
+	in     []tehai.Tehai
+	inFoos []foo.Foo
 	out    []string
 }
 
 func TestYakuCheck(t *testing.T) {
 	testCases := []TestCase{
 		TestCase{
-			in: mjp.NewTehai(map[pai.MJP]int{
+			in: tehai.NewTehai(map[pai.MJP]int{
 				pai.S1:  2,
 				pai.S9:  1,
 				pai.P1:  1,
@@ -37,7 +39,7 @@ func TestYakuCheck(t *testing.T) {
 			out:    []string{"国士無双"},
 		},
 		TestCase{
-			in: mjp.NewTehai(map[pai.MJP]int{
+			in: tehai.NewTehai(map[pai.MJP]int{
 				pai.S1:  2,
 				pai.S2:  2,
 				pai.M3:  2,
@@ -51,7 +53,7 @@ func TestYakuCheck(t *testing.T) {
 		},
 		// ソーズ清一色
 		TestCase{
-			in: mjp.NewTehai(map[pai.MJP]int{
+			in: tehai.NewTehai(map[pai.MJP]int{
 				pai.S1: 1,
 				pai.S2: 1,
 				pai.S3: 2,
@@ -66,7 +68,7 @@ func TestYakuCheck(t *testing.T) {
 		},
 		// マンズ清一色
 		TestCase{
-			in: mjp.NewTehai(map[pai.MJP]int{
+			in: tehai.NewTehai(map[pai.MJP]int{
 				pai.M1: 1,
 				pai.M2: 2,
 				pai.M3: 2,
@@ -81,7 +83,7 @@ func TestYakuCheck(t *testing.T) {
 		},
 		// ピンズ清一色
 		TestCase{
-			in: mjp.NewTehai(map[pai.MJP]int{
+			in: tehai.NewTehai(map[pai.MJP]int{
 				pai.P1: 1,
 				pai.P2: 2,
 				pai.P3: 2,
@@ -96,7 +98,7 @@ func TestYakuCheck(t *testing.T) {
 		},
 		// ソーズ混一色
 		TestCase{
-			in: mjp.NewTehai(map[pai.MJP]int{
+			in: tehai.NewTehai(map[pai.MJP]int{
 				pai.S1:  1,
 				pai.S2:  2,
 				pai.S3:  2,
@@ -111,7 +113,7 @@ func TestYakuCheck(t *testing.T) {
 		},
 		// マンズ混一色
 		TestCase{
-			in: mjp.NewTehai(map[pai.MJP]int{
+			in: tehai.NewTehai(map[pai.MJP]int{
 				pai.M1:  1,
 				pai.M2:  2,
 				pai.M3:  2,
@@ -126,7 +128,7 @@ func TestYakuCheck(t *testing.T) {
 		},
 		// ピンズ混一色
 		TestCase{
-			in: mjp.NewTehai(map[pai.MJP]int{
+			in: tehai.NewTehai(map[pai.MJP]int{
 				pai.P1:  1,
 				pai.P2:  2,
 				pai.P3:  2,
@@ -141,7 +143,7 @@ func TestYakuCheck(t *testing.T) {
 		},
 		// 断么九
 		TestCase{
-			in: mjp.NewTehai(map[pai.MJP]int{
+			in: tehai.NewTehai(map[pai.MJP]int{
 				pai.P2: 1,
 				pai.P3: 1,
 				pai.P4: 1,
@@ -157,7 +159,7 @@ func TestYakuCheck(t *testing.T) {
 		},
 		// 断么九（クイタン）
 		TestCase{
-			in: mjp.NewTehai(map[pai.MJP]int{
+			in: tehai.NewTehai(map[pai.MJP]int{
 				pai.P2: 1,
 				pai.P3: 1,
 				pai.P4: 1,
@@ -166,29 +168,29 @@ func TestYakuCheck(t *testing.T) {
 				pai.S6: 1,
 				pai.P8: 2,
 			}),
-			inFoos: []mjp.Foo{
-				mjp.NewFooPon(mjp.Toimen, pai.M8),
-				mjp.NewFooPon(mjp.SimoCha, pai.M2),
+			inFoos: []foo.Foo{
+				foo.NewFooPon(foo.Toimen, pai.M8),
+				foo.NewFooPon(foo.SimoCha, pai.M2),
 			},
 			out: []string{"断么九"},
 		},
 		// 緑一色
 		TestCase{
-			in: mjp.NewTehai(map[pai.MJP]int{
+			in: tehai.NewTehai(map[pai.MJP]int{
 				pai.S2: 2,
 				pai.S3: 2,
 				pai.S4: 2,
 				pai.S6: 3,
 				pai.S8: 2,
 			}),
-			inFoos: []mjp.Foo{
-				mjp.NewFooPon(mjp.KamiCha, pai.HAT),
+			inFoos: []foo.Foo{
+				foo.NewFooPon(foo.KamiCha, pai.HAT),
 			},
 			out: []string{"緑一色"},
 		},
 		// 大三元
 		TestCase{
-			in: mjp.NewTehai(map[pai.MJP]int{
+			in: tehai.NewTehai(map[pai.MJP]int{
 				pai.S2:  1,
 				pai.S3:  1,
 				pai.S4:  1,
@@ -196,34 +198,34 @@ func TestYakuCheck(t *testing.T) {
 				pai.HAT: 3,
 				pai.CHN: 3,
 			}),
-			inFoos: []mjp.Foo{mjp.NewFooPon(mjp.Toimen, pai.HAK)},
+			inFoos: []foo.Foo{foo.NewFooPon(foo.Toimen, pai.HAK)},
 			out:    []string{"大三元"},
 		},
 		// 字一色
 		TestCase{
-			in: mjp.NewTehai(map[pai.MJP]int{
+			in: tehai.NewTehai(map[pai.MJP]int{
 				pai.TON: 3,
 				pai.NAN: 3,
 				pai.HAT: 3,
 				pai.CHN: 2,
 			}),
-			inFoos: []mjp.Foo{mjp.NewFooPon(mjp.Toimen, pai.HAK)},
+			inFoos: []foo.Foo{foo.NewFooPon(foo.Toimen, pai.HAK)},
 			out:    []string{"字一色"},
 		},
 		// 大四喜
 		TestCase{
-			in: mjp.NewTehai(map[pai.MJP]int{
+			in: tehai.NewTehai(map[pai.MJP]int{
 				pai.TON: 3,
 				pai.NAN: 3,
 				pai.PEI: 3,
 				pai.P1:  2,
 			}),
-			inFoos: []mjp.Foo{mjp.NewFooPon(mjp.Toimen, pai.SHA)},
+			inFoos: []foo.Foo{foo.NewFooPon(foo.Toimen, pai.SHA)},
 			out:    []string{"大四喜"},
 		},
 		// 小四喜
 		TestCase{
-			in: mjp.NewTehai(map[pai.MJP]int{
+			in: tehai.NewTehai(map[pai.MJP]int{
 				pai.TON: 3,
 				pai.NAN: 3,
 				pai.PEI: 2,
@@ -231,25 +233,25 @@ func TestYakuCheck(t *testing.T) {
 				pai.P2:  1,
 				pai.P3:  1,
 			}),
-			inFoos: []mjp.Foo{mjp.NewFooPon(mjp.Toimen, pai.SHA)},
+			inFoos: []foo.Foo{foo.NewFooPon(foo.Toimen, pai.SHA)},
 			out:    []string{"小四喜"},
 		},
 		// 四暗刻
 		TestCase{
-			in: mjp.NewTehai(map[pai.MJP]int{
+			in: tehai.NewTehai(map[pai.MJP]int{
 				pai.TON: 3,
 				pai.S1:  3,
 				pai.S5:  3,
 				pai.CHN: 2,
 			}),
-			inFoos: []mjp.Foo{
-				mjp.NewFooAnnKan(pai.P9),
+			inFoos: []foo.Foo{
+				foo.NewFooAnnKan(pai.P9),
 			},
 			out: []string{"四暗刻"},
 		},
 		// 三暗刻
 		TestCase{
-			in: mjp.NewTehai(map[pai.MJP]int{
+			in: tehai.NewTehai(map[pai.MJP]int{
 				pai.TON: 3,
 				pai.S1:  3,
 				pai.P7:  1,
@@ -257,38 +259,38 @@ func TestYakuCheck(t *testing.T) {
 				pai.P9:  1,
 				pai.CHN: 2,
 			}),
-			inFoos: []mjp.Foo{
-				mjp.NewFooAnnKan(pai.S5),
+			inFoos: []foo.Foo{
+				foo.NewFooAnnKan(pai.S5),
 			},
 			out: []string{"三暗刻"},
 		},
 		// 清老頭
 		TestCase{
-			in: mjp.NewTehai(map[pai.MJP]int{
+			in: tehai.NewTehai(map[pai.MJP]int{
 				pai.S1: 2,
 				pai.P1: 3,
 				pai.P9: 3,
 				pai.S9: 3,
 			}),
-			inFoos: []mjp.Foo{mjp.NewFooPon(mjp.Toimen, pai.M1)},
+			inFoos: []foo.Foo{foo.NewFooPon(foo.Toimen, pai.M1)},
 			out:    []string{"清老頭"},
 		},
 		// 混老頭
 		TestCase{
-			in: mjp.NewTehai(map[pai.MJP]int{
+			in: tehai.NewTehai(map[pai.MJP]int{
 				pai.S1:  2,
 				pai.P1:  3,
 				pai.HAK: 3,
 			}),
-			inFoos: []mjp.Foo{
-				mjp.NewFooPon(mjp.Toimen, pai.M1),
-				mjp.NewFooPon(mjp.Toimen, pai.TON),
+			inFoos: []foo.Foo{
+				foo.NewFooPon(foo.Toimen, pai.M1),
+				foo.NewFooPon(foo.Toimen, pai.TON),
 			},
 			out: []string{"対々和", "混老頭"},
 		},
 		// 小三元
 		TestCase{
-			in: mjp.NewTehai(map[pai.MJP]int{
+			in: tehai.NewTehai(map[pai.MJP]int{
 				pai.S2:  1,
 				pai.S3:  1,
 				pai.S4:  1,
@@ -298,42 +300,42 @@ func TestYakuCheck(t *testing.T) {
 				pai.HAT: 3,
 				pai.CHN: 2,
 			}),
-			inFoos: []mjp.Foo{
-				mjp.NewFooPon(mjp.KamiCha, pai.HAK),
+			inFoos: []foo.Foo{
+				foo.NewFooPon(foo.KamiCha, pai.HAK),
 			},
 			out: []string{"小三元"},
 		},
 		// 四槓子
 		TestCase{
-			in: mjp.NewTehai(map[pai.MJP]int{
+			in: tehai.NewTehai(map[pai.MJP]int{
 				pai.CHN: 2,
 			}),
-			inFoos: []mjp.Foo{
-				mjp.NewFooMinKan(mjp.Toimen, pai.M1),
-				mjp.NewFooAnnKan(pai.M2),
-				mjp.NewFooAnnKan(pai.M3),
-				mjp.NewFooAnnKan(pai.M4),
+			inFoos: []foo.Foo{
+				foo.NewFooMinKan(foo.Toimen, pai.M1),
+				foo.NewFooAnnKan(pai.M2),
+				foo.NewFooAnnKan(pai.M3),
+				foo.NewFooAnnKan(pai.M4),
 			},
 			out: []string{"四槓子"},
 		},
 		// 三槓子
 		TestCase{
-			in: mjp.NewTehai(map[pai.MJP]int{
+			in: tehai.NewTehai(map[pai.MJP]int{
 				pai.CHN: 2,
 				pai.P1:  1,
 				pai.P2:  1,
 				pai.P3:  1,
 			}),
-			inFoos: []mjp.Foo{
-				mjp.NewFooMinKan(mjp.Toimen, pai.M1),
-				mjp.NewFooAnnKan(pai.M3),
-				mjp.NewFooAnnKan(pai.M4),
+			inFoos: []foo.Foo{
+				foo.NewFooMinKan(foo.Toimen, pai.M1),
+				foo.NewFooAnnKan(pai.M3),
+				foo.NewFooAnnKan(pai.M4),
 			},
 			out: []string{"三槓子"},
 		},
 		// 一気通貫
 		TestCase{
-			in: mjp.NewTehai(map[pai.MJP]int{
+			in: tehai.NewTehai(map[pai.MJP]int{
 				pai.P4: 1,
 				pai.P5: 1,
 				pai.P6: 1,
@@ -342,14 +344,14 @@ func TestYakuCheck(t *testing.T) {
 				pai.P9: 3,
 				pai.S2: 3,
 			}),
-			inFoos: []mjp.Foo{
-				mjp.NewFooChe(pai.P1, pai.P2, pai.P3),
+			inFoos: []foo.Foo{
+				foo.NewFooChe(pai.P1, pai.P2, pai.P3),
 			},
 			out: []string{"一気通貫"},
 		},
 		// 二盃口
 		TestCase{
-			in: mjp.NewTehai(map[pai.MJP]int{
+			in: tehai.NewTehai(map[pai.MJP]int{
 				pai.P4: 2,
 				pai.P5: 2,
 				pai.P6: 2,
@@ -359,11 +361,11 @@ func TestYakuCheck(t *testing.T) {
 				pai.S1: 2,
 			}),
 			inFoos: nil,
-			out: []string{"二盃口"},
+			out:    []string{"二盃口"},
 		},
 		// 一盃口
 		TestCase{
-			in: mjp.NewTehai(map[pai.MJP]int{
+			in: tehai.NewTehai(map[pai.MJP]int{
 				pai.P4: 2,
 				pai.P5: 2,
 				pai.P6: 2,
@@ -374,7 +376,7 @@ func TestYakuCheck(t *testing.T) {
 				pai.S2: 2,
 			}),
 			inFoos: nil,
-			out: []string{"一盃口"},
+			out:    []string{"一盃口"},
 		},
 	}
 

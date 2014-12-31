@@ -1,4 +1,4 @@
-package mjp
+package foo
 
 import "github.com/kyokomi/gomajan/mjp/pai"
 
