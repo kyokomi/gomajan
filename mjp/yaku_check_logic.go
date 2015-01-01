@@ -435,11 +435,82 @@ func is二盃口(p Player) bool {
 	return count一盃口(p) == 2
 }
 
-func is純全帯(_ Player) bool {
+func is混全帯么九(p Player) bool {
 
-	// TODO: 面子判定が必要なので一旦保留
+	for _, pais := range p.yaku.mentsuCheck.mentsu {
 
-	return false
+		isJipai19 := false
+		for _, m := range pais {
+			if m.IsJipai19() {
+				isJipai19 = true
+				break
+			}
+		}
+
+		if !isJipai19 {
+			return false
+		}
+	}
+
+	for _, pais := range p.yaku.mentsuCheck.nakiMentsu {
+
+		isJipai19 := false
+		for _, m := range pais {
+			if m.IsJipai19() {
+				isJipai19 = true
+				break
+			}
+		}
+
+		if !isJipai19 {
+			return false
+		}
+	}
+
+	if !p.yaku.mentsuCheck.jyanto.IsJipai19() {
+		return false
+	}
+
+	return true
+}
+
+func is純全帯么九(p Player) bool {
+
+	for _, pais := range p.yaku.mentsuCheck.mentsu {
+
+		is19 := false
+		for _, m := range pais {
+			if m.Is19() {
+				is19 = true
+				break
+			}
+		}
+
+		if !is19 {
+			return false
+		}
+	}
+
+	for _, pais := range p.yaku.mentsuCheck.nakiMentsu {
+
+		is19 := false
+		for _, m := range pais {
+			if m.Is19() {
+				is19 = true
+				break
+			}
+		}
+
+		if !is19 {
+			return false
+		}
+	}
+
+	if !p.yaku.mentsuCheck.jyanto.Is19() {
+		return false
+	}
+
+	return true
 }
 
 func is一気通貫(p Player) bool {

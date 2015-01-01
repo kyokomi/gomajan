@@ -23,6 +23,7 @@ var (
 	断么九 = yaku.Yaku{Fan: 1, Name: "断么九"}
 	一盃口 = yaku.Yaku{Fan: 1, Name: "一盃口"}
 
+	混全帯么九 = yaku.Yaku{Fan: 2, Name: "混全帯么九"}
 	対々和  = yaku.Yaku{Fan: 2, Name: "対々和"}
 	一気通貫 = yaku.Yaku{Fan: 2, Name: "一気通貫"}
 	三暗刻  = yaku.Yaku{Fan: 2, Name: "三暗刻"}
@@ -32,7 +33,7 @@ var (
 	混老頭 = yaku.Yaku{Fan: 3, Name: "混老頭"}
 	混一色 = yaku.Yaku{Fan: 3, Name: "混一色"}
 	二盃口 = yaku.Yaku{Fan: 3, Name: "二盃口"}
-	純全帯 = yaku.Yaku{Fan: 3, Name: "純全帯"}
+	純全帯么九 = yaku.Yaku{Fan: 3, Name: "純全帯么九"}
 
 	清一色 = yaku.Yaku{Fan: 6, Name: "清一色"}
 )
@@ -194,7 +195,6 @@ func (p Player) yakuCheck() []yaku.Yaku {
 
 	// TODO: ダブルリーチ
 
-	// TODO: 混全帯
 
 	// TODO: 三色同順
 	// 食い下がり
@@ -223,11 +223,6 @@ func (p Player) yakuCheck() []yaku.Yaku {
 
 	// --- 3 ---
 
-	// TODO: 食い下がり
-	if is混老頭(p) {
-		yakus = append(yakus, 混老頭)
-	}
-
 	if is混一色(p) {
 		yakus = append(yakus, 混一色)
 	}
@@ -236,8 +231,12 @@ func (p Player) yakuCheck() []yaku.Yaku {
 		yakus = append(yakus, 二盃口)
 	}
 
-	if is純全帯(p) {
-		yakus = append(yakus, 純全帯)
+	if is純全帯么九(p) {
+		yakus = append(yakus, 純全帯么九)
+	} else if is混老頭(p) {
+		yakus = append(yakus, 混老頭)
+	} else if is混全帯么九(p) {
+		yakus = append(yakus, 混全帯么九)
 	}
 
 	// --- 6 ---
