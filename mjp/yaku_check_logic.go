@@ -1,10 +1,10 @@
 package mjp
 
 import (
+	"github.com/kyokomi/gomajan/mjp/agari"
 	"github.com/kyokomi/gomajan/mjp/foo"
 	"github.com/kyokomi/gomajan/mjp/mentsu"
 	"github.com/kyokomi/gomajan/mjp/pai"
-	"github.com/kyokomi/gomajan/mjp/agari"
 )
 
 func is国士無双(p Player) bool {

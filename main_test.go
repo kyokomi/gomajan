@@ -457,7 +457,7 @@ func TestYakuCheck(t *testing.T) {
 				pai.M7: 1,
 				pai.S1: 2,
 			}),
-			inFoos: nil,
+			inFoos:  nil,
 			inAgari: pai.P1,
 			out:     []string{"平和"},
 		},
