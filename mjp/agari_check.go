@@ -19,10 +19,10 @@ func (m MentuCheck) CheckAgari() []agari.Agari {
 			continue
 		}
 
-		if len(ac) >= 3 {
+		if len(ac) == 0 {
 			agaris = append(agaris, agari.Agari{
 				Agari:     m.agari,
-				Syanten:   [2]pai.MJP{ac[0], ac[1]},
+				Syanten:   [2]pai.MJP{m.agari, m.agari},
 				AgariType: agari.Shabo,
 			})
 			// 雀頭の対子も入れる

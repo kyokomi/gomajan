@@ -99,10 +99,10 @@ func (y YakuCheck) String() string {
 func (p Player) NewYakuCheck(agari pai.MJP) *YakuCheck {
 	y := YakuCheck{}
 
-	y.mentsuCheck = p.newMentuCheck(agari)
+	y.mentsuCheck = newMentuCheck(agari, p.tiles, p.foos)
+
 	// TODO: こっちにもsetしないといけないのがイマイチ
 	p.yaku = &y
-
 	yakuman := p.yakuManCheck()
 	if len(yakuman) != 0 {
 		// 役満確定したらチェック終わり

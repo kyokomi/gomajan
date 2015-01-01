@@ -3,6 +3,7 @@ package mjp
 import (
 	"github.com/kyokomi/gomajan/mjp/pai"
 	"github.com/kyokomi/gomajan/mjp/tehai"
+	"github.com/kyokomi/gomajan/mjp/foo"
 )
 
 // MentuCheck 面子判定結果
@@ -14,7 +15,7 @@ type MentuCheck struct {
 	nokori     []tehai.Tehai // 面子外残り
 }
 
-func (p Player) newMentuCheck(agari pai.MJP) MentuCheck {
+func newMentuCheck(agari pai.MJP, tiles []tehai.Tehai, foos []foo.Foo) MentuCheck {
 	var mc MentuCheck
 
 	mc.agari = agari
@@ -27,7 +28,7 @@ func (p Player) newMentuCheck(agari pai.MJP) MentuCheck {
 
 	// 残り牌（テンパイ判定用）
 	mc.nokori = make([]tehai.Tehai, pai.PaiSize())
-	copy(mc.nokori, p.tiles)
+	copy(mc.nokori, tiles)
 
 	// 面子がひとつも出来ない場合、判定終わり
 	for {
@@ -48,7 +49,7 @@ func (p Player) newMentuCheck(agari pai.MJP) MentuCheck {
 	}
 
 	// 鳴いてる時点で面子確定
-	for _, f := range p.foos {
+	for _, f := range foos {
 		mc.nakiMentsu = append(mc.nakiMentsu, f.Mentsu())
 	}
 

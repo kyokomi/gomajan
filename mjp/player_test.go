@@ -1,24 +1,24 @@
-package main
+package mjp
 
 import (
 	"testing"
 
 	"fmt"
 
-	"github.com/kyokomi/gomajan/mjp"
 	"github.com/kyokomi/gomajan/mjp/foo"
 	"github.com/kyokomi/gomajan/mjp/pai"
 	"github.com/kyokomi/gomajan/mjp/tehai"
 )
 
-type TestCase struct {
-	in      []tehai.Tehai
-	inFoos  []foo.Foo
-	inAgari pai.MJP
-	out     []string
-}
+func TestNewPlayer(t *testing.T) {
 
-func TestYakuCheck(t *testing.T) {
+	type TestCase struct {
+		in      []tehai.Tehai
+		inFoos  []foo.Foo
+		inAgari pai.MJP
+		out     []string
+	}
+
 	testCases := []TestCase{
 		TestCase{
 			in: tehai.NewTehai(map[pai.MJP]int{
@@ -464,7 +464,7 @@ func TestYakuCheck(t *testing.T) {
 	}
 
 	for _, testCase := range testCases {
-		p := mjp.NewPlayer(testCase.in, testCase.inFoos)
+		p := NewPlayer(testCase.in, testCase.inFoos)
 
 		yakuCheck := p.NewYakuCheck(testCase.inAgari)
 
