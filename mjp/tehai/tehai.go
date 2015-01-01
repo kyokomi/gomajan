@@ -2,8 +2,6 @@ package tehai
 
 import "github.com/kyokomi/gomajan/mjp/pai"
 
-type MJP pai.MJP
-
 // Tehai 手牌1枚
 type Tehai struct {
 	Pai pai.MJP
@@ -26,6 +24,7 @@ func NewTehai(tehai map[pai.MJP]int) []Tehai {
 	return tiles
 }
 
+// CheckTehaiMentsu 手牌から面子を作成
 func CheckTehaiMentsu(tehai []Tehai) [][]pai.MJP {
 	// 面子
 	var mentsu [][]pai.MJP

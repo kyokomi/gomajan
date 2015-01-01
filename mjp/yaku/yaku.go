@@ -2,10 +2,8 @@ package yaku
 
 // Yaku 麻雀の役
 type Yaku struct {
-	// 翻数
-	Fan int
-	// 名前
-	Name string
+	Fan  int    // 翻数
+	Name string // 名前
 }
 
 // Equal 役の名前で比較

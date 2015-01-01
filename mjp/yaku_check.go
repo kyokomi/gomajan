@@ -3,6 +3,7 @@ package mjp
 import (
 	"fmt"
 
+	"github.com/kyokomi/gomajan/mjp/pai"
 	"github.com/kyokomi/gomajan/mjp/yaku"
 )
 
@@ -20,19 +21,20 @@ var (
 
 	七対子 = yaku.Yaku{Fan: 2, Name: "七対子"}
 
+	平和  = yaku.Yaku{Fan: 1, Name: "平和"}
 	断么九 = yaku.Yaku{Fan: 1, Name: "断么九"}
 	一盃口 = yaku.Yaku{Fan: 1, Name: "一盃口"}
 
 	混全帯么九 = yaku.Yaku{Fan: 2, Name: "混全帯么九"}
-	対々和  = yaku.Yaku{Fan: 2, Name: "対々和"}
-	一気通貫 = yaku.Yaku{Fan: 2, Name: "一気通貫"}
-	三暗刻  = yaku.Yaku{Fan: 2, Name: "三暗刻"}
-	小三元  = yaku.Yaku{Fan: 2, Name: "小三元"}
-	三槓子  = yaku.Yaku{Fan: 2, Name: "三槓子"}
+	対々和   = yaku.Yaku{Fan: 2, Name: "対々和"}
+	一気通貫  = yaku.Yaku{Fan: 2, Name: "一気通貫"}
+	三暗刻   = yaku.Yaku{Fan: 2, Name: "三暗刻"}
+	小三元   = yaku.Yaku{Fan: 2, Name: "小三元"}
+	三槓子   = yaku.Yaku{Fan: 2, Name: "三槓子"}
 
-	混老頭 = yaku.Yaku{Fan: 3, Name: "混老頭"}
-	混一色 = yaku.Yaku{Fan: 3, Name: "混一色"}
-	二盃口 = yaku.Yaku{Fan: 3, Name: "二盃口"}
+	混老頭   = yaku.Yaku{Fan: 3, Name: "混老頭"}
+	混一色   = yaku.Yaku{Fan: 3, Name: "混一色"}
+	二盃口   = yaku.Yaku{Fan: 3, Name: "二盃口"}
 	純全帯么九 = yaku.Yaku{Fan: 3, Name: "純全帯么九"}
 
 	清一色 = yaku.Yaku{Fan: 6, Name: "清一色"}
@@ -49,17 +51,17 @@ func (y YakuCheck) Yakus() []yaku.Yaku {
 	return y.yakus
 }
 
-func (yc YakuCheck) String() string {
+func (y YakuCheck) String() string {
 
 	var yakus string
-	for _, y := range yc.Yakus() {
-		yakus += (" " + y.Name)
-		if y.Name == 国士無双.Name || y.Name == 七対子.Name {
+	for _, ya := range y.Yakus() {
+		yakus += (" " + ya.Name)
+		if ya.Name == 国士無双.Name || ya.Name == 七対子.Name {
 			return fmt.Sprintf("役 %s", yakus)
 		}
 	}
 
-	mc := yc.mentsuCheck
+	mc := y.mentsuCheck
 
 	var mentsu string
 	for _, m := range mc.mentsu {
@@ -94,10 +96,10 @@ func (yc YakuCheck) String() string {
 }
 
 // NewYakuCheck 役チェック
-func (p Player) NewYakuCheck() *YakuCheck {
+func (p Player) NewYakuCheck(agari pai.MJP) *YakuCheck {
 	y := YakuCheck{}
 
-	y.mentsuCheck = p.newMentuCheck()
+	y.mentsuCheck = p.newMentuCheck(agari)
 	// TODO: こっちにもsetしないといけないのがイマイチ
 	p.yaku = &y
 
@@ -172,7 +174,9 @@ func (p Player) yakuCheck() []yaku.Yaku {
 	// TODO: 一発
 	// TODO: 門前清自摸
 
-	// TODO: 平和
+	if is平和(p) {
+		yakus = append(yakus, 平和)
+	}
 
 	if is断么九(p) {
 		yakus = append(yakus, 断么九)
@@ -194,7 +198,6 @@ func (p Player) yakuCheck() []yaku.Yaku {
 	// --- 2 ---
 
 	// TODO: ダブルリーチ
-
 
 	// TODO: 三色同順
 	// 食い下がり

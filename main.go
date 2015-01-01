@@ -25,10 +25,10 @@ func main() {
 	p.TehaiSet(pai.P3, 1)
 	p.TehaiSet(pai.S2, 2)
 
-	yakuCheck(p)
+	yakuCheck(pai.S2, p)
 }
 
-func yakuCheck(p mjp.Player) {
+func yakuCheck(agari pai.MJP, p mjp.Player) {
 	fmt.Println(p)
 
 	// TODO: 少牌判定
@@ -36,7 +36,7 @@ func yakuCheck(p mjp.Player) {
 	// TODO: 多牌判定
 
 	/////////////////////
-	y := p.NewYakuCheck()
+	y := p.NewYakuCheck(agari)
 	fmt.Println(y.String())
 
 	// TODO: 雀頭の判定

@@ -1,6 +1,7 @@
 package mjp
 
 import (
+	"github.com/kyokomi/gomajan/mjp/agari"
 	"github.com/kyokomi/gomajan/mjp/pai"
 	"github.com/kyokomi/gomajan/mjp/tehai"
 )
@@ -14,8 +15,10 @@ type MentuCheck struct {
 	nokori     []tehai.Tehai // 面子外残り
 }
 
-func (p Player) newMentuCheck() MentuCheck {
+func (p Player) newMentuCheck(agari pai.MJP) MentuCheck {
 	var mc MentuCheck
+
+	mc.agari = agari
 
 	// 面子
 	mc.mentsu = make([][]pai.MJP, 0)
@@ -62,4 +65,81 @@ func (p Player) newMentuCheck() MentuCheck {
 	}
 
 	return mc
+}
+
+// CheckAgari 上がり系取得
+func (m MentuCheck) CheckAgari() []agari.Agari {
+	var agaris []agari.Agari
+
+	for _, pais := range m.mentsu {
+
+		// 上がり牌を含む面子か？
+		isAgari := false
+		// 上がり牌抜きの上がり形判定の残り牌
+		var ac []pai.MJP
+
+		for _, pa := range pais {
+			if pa.Type() == pai.NoneType {
+				continue
+			}
+
+			if m.agari == pa {
+				isAgari = true
+				continue
+			}
+			ac = append(ac, pa)
+		}
+
+		if !isAgari {
+			continue
+		}
+
+		if len(ac) >= 3 {
+			agaris = append(agaris, agari.Agari{
+				Agari:     m.agari,
+				Syanten:   [2]pai.MJP{ac[0], ac[1]},
+				AgariType: agari.Shabo,
+			})
+			// 雀頭の対子も入れる
+			agaris = append(agaris, agari.Agari{
+				Agari:     m.jyanto,
+				Syanten:   [2]pai.MJP{m.jyanto, m.jyanto},
+				AgariType: agari.Shabo,
+			})
+
+			// シャボ待ちは確定
+			return agaris
+		}
+
+		if ac[0] == (ac[1] - 1) {
+			// 繋がってる（両面待ち、辺張待ち）
+			if ac[0].Is19() || ac[1].Is19() {
+				// 辺張待ち
+				agaris = append(agaris, agari.Agari{
+					Agari:     m.agari,
+					Syanten:   [2]pai.MJP{ac[0], ac[1]},
+					AgariType: agari.Penchan,
+				})
+
+			} else {
+				// 両面待ち
+				agaris = append(agaris, agari.Agari{
+					Agari:     m.agari,
+					Syanten:   [2]pai.MJP{ac[0], ac[1]},
+					AgariType: agari.Ryanmen,
+				})
+			}
+		} else {
+			// つながってない（嵌張待ち）
+
+			// 嵌張待ち
+			agaris = append(agaris, agari.Agari{
+				Agari:     m.agari,
+				Syanten:   [2]pai.MJP{ac[0], ac[1]},
+				AgariType: agari.Kanchan,
+			})
+		}
+	}
+
+	return agaris
 }

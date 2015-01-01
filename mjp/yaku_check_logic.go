@@ -4,6 +4,7 @@ import (
 	"github.com/kyokomi/gomajan/mjp/foo"
 	"github.com/kyokomi/gomajan/mjp/mentsu"
 	"github.com/kyokomi/gomajan/mjp/pai"
+	"github.com/kyokomi/gomajan/mjp/agari"
 )
 
 func is国士無双(p Player) bool {
@@ -677,6 +678,45 @@ func is小三元(p Player) bool {
 	return c3 == 2 && c2 == 1
 }
 
+func is平和(p Player) bool {
+
+	// 鳴いてたらダメ
+	for _, f := range p.foos {
+		if f.FooType() != foo.NoneFoo {
+			return false
+		}
+	}
+
+	// 暗刻もだめ
+	for _, t := range p.tiles {
+		if t.Val < 1 {
+			continue
+		}
+
+		if t.Val >= 3 {
+			return false
+		}
+	}
+
+	if len(p.yaku.mentsuCheck.mentsu) != 4 {
+		return false
+	}
+
+	// 両面待ちのみ
+	agaris := p.yaku.mentsuCheck.CheckAgari()
+	for _, a := range agaris {
+		if a.Agari != p.yaku.mentsuCheck.agari {
+			continue
+		}
+
+		if a.AgariType != agari.Ryanmen {
+			return false
+		}
+	}
+
+	return true
+}
+
 func is断么九(p Player) bool {
 	for _, t := range p.tiles {
 		if t.Val < 1 {
@@ -754,7 +794,7 @@ func is一盃口(p Player) bool {
 
 func count一盃口(p Player) int {
 	count := 0
-	var hitMentsu *mentsu.Mentsu = nil
+	var hitMentsu *mentsu.Mentsu
 	for idx, pais1 := range p.yaku.mentsuCheck.mentsu {
 		m1 := mentsu.NewMentsu(pais1)
 		if m1 == nil {
