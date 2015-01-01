@@ -155,9 +155,3 @@ func TestCheckAgari(t *testing.T) {
 		}
 	}
 }
-
-func assertTrue(t *testing.T, a bool, message string) {
-	if a {
-		t.Error(message)
-	}
-}
