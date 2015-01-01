@@ -395,6 +395,23 @@ func TestYakuCheck(t *testing.T) {
 			},
 			out:    []string{"純全帯么九"},
 		},
+		// 混全帯么九
+		TestCase{
+			in: tehai.NewTehai(map[pai.MJP]int{
+				pai.P1: 1,
+				pai.P2: 1,
+				pai.P3: 1,
+				pai.S7: 1,
+				pai.S8: 1,
+				pai.S9: 1,
+				pai.HAK: 3,
+				pai.S1: 2,
+			}),
+			inFoos: []foo.Foo{
+				foo.NewFooChe(pai.P7, pai.P8, pai.P9),
+			},
+			out:    []string{"混全帯么九"},
+		},
 	}
 
 	for _, testCase := range testCases {
