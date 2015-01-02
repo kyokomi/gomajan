@@ -64,6 +64,10 @@ func CheckTehaiMentsu(tehai []Tehai) [][]pai.MJP {
 		if len(temp) == 3 {
 			mentsu = append(mentsu, temp)
 			temp = make([]pai.MJP, 0)
+
+			// TODO: 2枚の牌の片方が順子に組み込まれると1牌余って
+			// 次の順子に組み合わせられないので一旦抜ける
+			break
 		}
 	}
 
