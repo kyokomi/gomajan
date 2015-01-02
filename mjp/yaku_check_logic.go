@@ -513,6 +513,46 @@ func is純全帯么九(p Player) bool {
 
 	return true
 }
+func is三色同順(p Player) bool {
+	sansyoku := [9]int{0}
+
+	for _, t := range p.tiles {
+		if t.Val < 1 {
+			continue
+		}
+
+		if t.Pai.Num() == 0 {
+			continue
+		}
+
+		if t.Val >= 3 {
+			sansyoku[t.Pai.Num()-1]++
+		}
+	}
+
+	for _, f := range p.foos {
+		if f.FooType() == foo.NoneFoo {
+			continue
+		}
+
+		if f.FooType() == foo.Che {
+			continue
+		}
+
+		if f.NakiPai().Num() == 0 {
+			continue
+		}
+		sansyoku[f.NakiPai().Num()-1]++
+	}
+
+	for _, count := range sansyoku {
+		if count == 3 {
+			return true
+		}
+	}
+
+	return false
+}
 
 func is一気通貫(p Player) bool {
 

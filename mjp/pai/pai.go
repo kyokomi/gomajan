@@ -121,6 +121,23 @@ func (i MJP) Type() MJPType {
 	return NoneType
 }
 
+// Num 麻雀牌の数字を取得
+// 字牌は0
+func (i MJP) Num() int {
+	// 字牌
+	if i == NonePai || i >= TON {
+		return 0
+	}
+
+	if S1 <= i && i <= S9 {
+		return int(i - M9)
+	} else if M1 <= i && i <= M9 {
+		return int(i - P9)
+	} else {
+		return int(i)
+	}
+}
+
 // Is19 1,9牌かを返す
 func (i MJP) Is19() bool {
 	if i == P1 || i == P9 ||

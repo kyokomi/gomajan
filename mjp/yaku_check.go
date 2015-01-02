@@ -27,6 +27,7 @@ var (
 
 	混全帯么九 = yaku.Yaku{Fan: 2, Name: "混全帯么九"}
 	対々和   = yaku.Yaku{Fan: 2, Name: "対々和"}
+	三色同順 = yaku.Yaku{Fan: 2, Name: "三色同順"}
 	一気通貫  = yaku.Yaku{Fan: 2, Name: "一気通貫"}
 	三暗刻   = yaku.Yaku{Fan: 2, Name: "三暗刻"}
 	小三元   = yaku.Yaku{Fan: 2, Name: "小三元"}
@@ -199,8 +200,9 @@ func (p Player) yakuCheck() []yaku.Yaku {
 
 	// TODO: ダブルリーチ
 
-	// TODO: 三色同順
-	// 食い下がり
+	if is三色同順(p) {
+		yakus = append(yakus, 三色同順)
+	}
 
 	if is一気通貫(p) {
 		// TODO: 食い下がりある

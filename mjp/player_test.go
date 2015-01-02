@@ -461,6 +461,22 @@ func TestNewPlayer(t *testing.T) {
 			inAgari: pai.P1,
 			out:     []string{"平和"},
 		},
+		// 三色同順
+		TestCase{
+			in: tehai.NewTehai(map[pai.MJP]int{
+				pai.S2:  3,
+				pai.P2:  3,
+				pai.P5:  2,
+				pai.M7: 1,
+				pai.M8: 1,
+				pai.M9: 1,
+			}),
+			inFoos:  []foo.Foo{
+				foo.NewFooPon(foo.Toimen, pai.M2),
+			},
+			inAgari: pai.S2,
+			out:     []string{"三色同順"},
+		},
 	}
 
 	for _, testCase := range testCases {
