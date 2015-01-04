@@ -252,3 +252,21 @@ func (p Player) yakuCheck() []yaku.Yaku {
 
 	return yakus
 }
+
+func count役牌(p Player) int {
+	count := 0
+	for _, t := range p.tiles {
+		if t.Val < 3 {
+			continue
+		}
+
+		// TODO: 風牌
+		if t.Pai.Type() == pai.GType {
+			count++
+		}
+		// TODO: 三元牌
+		// TODO: 自風
+	}
+
+	return count
+}

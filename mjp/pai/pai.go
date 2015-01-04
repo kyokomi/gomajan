@@ -17,7 +17,7 @@ const (
 	SType
 	// KType 風牌
 	KType
-	// GType 字牌
+	// GType 三元牌
 	GType
 )
 const (
