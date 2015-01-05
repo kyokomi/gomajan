@@ -3,11 +3,11 @@ package taku
 import (
 	"testing"
 
-	"github.com/k0kubun/pp"
+	"fmt"
 )
 
 func TestDoCalcPoint(t *testing.T) {
 	taku := Taku{}
 	c := taku.DoCalcPoint(1)
-	pp.Println(c.String())
+	fmt.Println(c.String())
 }
