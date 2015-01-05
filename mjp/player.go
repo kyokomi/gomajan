@@ -8,6 +8,8 @@ import (
 
 // Player プレイヤー
 type Player struct {
+	// プレイヤーを一意に識別するID
+	playerID int
 	// 手牌
 	tiles []tehai.Tehai
 	// フーロ
