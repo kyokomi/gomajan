@@ -464,14 +464,14 @@ func TestNewPlayer(t *testing.T) {
 		// 三色同順
 		TestCase{
 			in: tehai.NewTehai(map[pai.MJP]int{
-				pai.S2:  3,
-				pai.P2:  3,
-				pai.P5:  2,
+				pai.S2: 3,
+				pai.P2: 3,
+				pai.P5: 2,
 				pai.M7: 1,
 				pai.M8: 1,
 				pai.M9: 1,
 			}),
-			inFoos:  []foo.Foo{
+			inFoos: []foo.Foo{
 				foo.NewFooPon(foo.Toimen, pai.M2),
 			},
 			inAgari: pai.S2,
@@ -480,7 +480,7 @@ func TestNewPlayer(t *testing.T) {
 	}
 
 	for _, testCase := range testCases {
-		p := NewPlayer(testCase.in, testCase.inFoos)
+		p := newPlayer(1, testCase.in, testCase.inFoos)
 
 		yakuCheck := p.NewYakuCheck(testCase.inAgari)
 

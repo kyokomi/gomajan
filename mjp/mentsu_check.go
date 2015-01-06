@@ -1,9 +1,9 @@
 package mjp
 
 import (
+	"github.com/kyokomi/gomajan/mjp/foo"
 	"github.com/kyokomi/gomajan/mjp/pai"
 	"github.com/kyokomi/gomajan/mjp/tehai"
-	"github.com/kyokomi/gomajan/mjp/foo"
 )
 
 // MentuCheck 面子判定結果

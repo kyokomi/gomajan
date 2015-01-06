@@ -27,7 +27,7 @@ var (
 
 	混全帯么九 = yaku.Yaku{Fan: 2, Name: "混全帯么九"}
 	対々和   = yaku.Yaku{Fan: 2, Name: "対々和"}
-	三色同順 = yaku.Yaku{Fan: 2, Name: "三色同順"}
+	三色同順  = yaku.Yaku{Fan: 2, Name: "三色同順"}
 	一気通貫  = yaku.Yaku{Fan: 2, Name: "一気通貫"}
 	三暗刻   = yaku.Yaku{Fan: 2, Name: "三暗刻"}
 	小三元   = yaku.Yaku{Fan: 2, Name: "小三元"}
@@ -50,6 +50,17 @@ type YakuCheck struct {
 // Yakus getter yakus
 func (y YakuCheck) Yakus() []yaku.Yaku {
 	return y.yakus
+}
+
+// Map create Map
+func (y YakuCheck) Map() map[string]int {
+	s := make(map[string]int, 0)
+
+	for _, ya := range y.yakus {
+		s[ya.Name] = ya.Fan
+	}
+
+	return s
 }
 
 func (y YakuCheck) String() string {

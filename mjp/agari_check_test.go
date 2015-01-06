@@ -1,20 +1,21 @@
 package mjp
 
 import (
+	"fmt"
 	"testing"
+
+	"github.com/kyokomi/gomajan/mjp/agari"
+	"github.com/kyokomi/gomajan/mjp/foo"
 	"github.com/kyokomi/gomajan/mjp/pai"
 	"github.com/kyokomi/gomajan/mjp/tehai"
-	"github.com/kyokomi/gomajan/mjp/foo"
-	"fmt"
-	"github.com/kyokomi/gomajan/mjp/agari"
 )
 
 func TestCheckAgari(t *testing.T) {
 
 	type TestCase struct {
-		inAgari pai.MJP
-		inTiles []tehai.Tehai
-		inFoos []foo.Foo
+		inAgari  pai.MJP
+		inTiles  []tehai.Tehai
+		inFoos   []foo.Foo
 		outAgari []agari.Agari
 	}
 
@@ -35,13 +36,13 @@ func TestCheckAgari(t *testing.T) {
 			inFoos: nil,
 			outAgari: []agari.Agari{
 				agari.Agari{
-					Agari: pai.HAK,
-					Syanten: [2]pai.MJP{pai.HAK, pai.HAK},
+					Agari:     pai.HAK,
+					Syanten:   [2]pai.MJP{pai.HAK, pai.HAK},
 					AgariType: agari.Shabo,
 				},
 				agari.Agari{
-					Agari: pai.S1,
-					Syanten: [2]pai.MJP{pai.S1, pai.S1},
+					Agari:     pai.S1,
+					Syanten:   [2]pai.MJP{pai.S1, pai.S1},
 					AgariType: agari.Shabo,
 				},
 			},
@@ -62,8 +63,8 @@ func TestCheckAgari(t *testing.T) {
 			inFoos: nil,
 			outAgari: []agari.Agari{
 				agari.Agari{
-					Agari: pai.P1,
-					Syanten: [2]pai.MJP{pai.P2, pai.P3},
+					Agari:     pai.P1,
+					Syanten:   [2]pai.MJP{pai.P2, pai.P3},
 					AgariType: agari.Ryanmen,
 				},
 			},
@@ -84,8 +85,8 @@ func TestCheckAgari(t *testing.T) {
 			inFoos: nil,
 			outAgari: []agari.Agari{
 				agari.Agari{
-					Agari: pai.P3,
-					Syanten: [2]pai.MJP{pai.P1, pai.P2},
+					Agari:     pai.P3,
+					Syanten:   [2]pai.MJP{pai.P1, pai.P2},
 					AgariType: agari.Penchan,
 				},
 			},
@@ -106,8 +107,8 @@ func TestCheckAgari(t *testing.T) {
 			inFoos: nil,
 			outAgari: []agari.Agari{
 				agari.Agari{
-					Agari: pai.S7,
-					Syanten: [2]pai.MJP{pai.S8, pai.S9},
+					Agari:     pai.S7,
+					Syanten:   [2]pai.MJP{pai.S8, pai.S9},
 					AgariType: agari.Penchan,
 				},
 			},
@@ -128,8 +129,8 @@ func TestCheckAgari(t *testing.T) {
 			inFoos: nil,
 			outAgari: []agari.Agari{
 				agari.Agari{
-					Agari: pai.P2,
-					Syanten: [2]pai.MJP{pai.P1, pai.P3},
+					Agari:     pai.P2,
+					Syanten:   [2]pai.MJP{pai.P1, pai.P3},
 					AgariType: agari.Kanchan,
 				},
 			},

@@ -5,7 +5,7 @@ import "testing"
 func TestNum(t *testing.T) {
 
 	type TestCase struct {
-		in MJP
+		in  MJP
 		out int
 	}
 

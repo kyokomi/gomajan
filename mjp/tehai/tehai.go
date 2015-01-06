@@ -10,17 +10,31 @@ type Tehai struct {
 
 // NewTehai 手牌作成
 func NewTehai(tehai map[pai.MJP]int) []Tehai {
+	tiles := newTehai(0)
+
+	if tehai == nil {
+		return tiles
+	}
+
+	for m, count := range tehai {
+		tiles[m].Val = count
+	}
+
+	return tiles
+}
+
+// NewTakuPai 1局の卓用の牌を作成
+func NewTakuPai() []Tehai {
+	// 全種類4枚
+	return newTehai(4)
+}
+
+func newTehai(val int) []Tehai {
 	tiles := make([]Tehai, pai.PaiSize())
 	for i := 0; i < pai.PaiSize(); i++ {
 		tiles[i].Pai = pai.MJP(i)
-
-		if tehai != nil && tehai[tiles[i].Pai] > 0 {
-			tiles[i].Val = tehai[tiles[i].Pai]
-		} else {
-			tiles[i].Val = 0
-		}
+		tiles[i].Val = val
 	}
-
 	return tiles
 }
 
