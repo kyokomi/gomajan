@@ -32,17 +32,30 @@ func (p Player) String() string {
 	return tehaiStr
 }
 
-// TehaiSet 手牌設定
-func (p *Player) TehaiSet(m pai.MJP, v int) {
-	p.tiles[m].Val = v
+// PaiInc 手牌加える
+func (p *Player) PaiInc(m pai.MJP) {
+	p.tiles[m].Val++
+}
+
+// PaiDec 手牌捨てる
+func (p *Player) PaiDec(m pai.MJP) {
+	p.tiles[m].Val--
 }
 
 // NewPlayer プレイヤー作成
-func NewPlayer(tiles []tehai.Tehai, foos []foo.Foo) Player {
+func NewPlayer(playerID int) Player {
+	return newPlayer(playerID, nil, nil)
+}
+
+func newPlayer(playerID int, tiles []tehai.Tehai, foos []foo.Foo) Player {
 	p := Player{}
+	p.playerID = playerID
+
 	// 33種類
 	if tiles == nil {
+		// TODO: ランダムな牌を設定する（卓側か?）
 		p.tiles = tehai.NewTehai(nil)
+
 	} else {
 		p.tiles = tiles
 	}
@@ -55,7 +68,6 @@ func NewPlayer(tiles []tehai.Tehai, foos []foo.Foo) Player {
 	}
 
 	p.yaku = nil
-	// TODO: ランダムな牌を設定する
 
 	return p
 }

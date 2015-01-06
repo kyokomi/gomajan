@@ -16,6 +16,8 @@ type CalcPoint struct {
 	Oyako oyako.OyakoType
 	// Hora 和了区分
 	Hora hora.HoraType
+	// TargetIdx 和了対象（ロンの場合のみ）
+	TargetID int
 	// Yakus 役名:翻数
 	Yakus map[string]int
 	// Fu 符

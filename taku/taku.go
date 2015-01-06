@@ -3,6 +3,7 @@ package taku
 import (
 	"github.com/kyokomi/gomajan/mjp"
 	"github.com/kyokomi/gomajan/mjp/pai"
+	"github.com/kyokomi/gomajan/mjp/tehai"
 	"github.com/kyokomi/gomajan/taku/calc"
 	"github.com/kyokomi/gomajan/taku/hora"
 	"github.com/kyokomi/gomajan/taku/oyako"
@@ -34,31 +35,72 @@ type Taku struct {
 	UraDora []pai.MJP
 	// Players プレイヤー
 	Players []mjp.Player
+	// Nokori 残り牌
+	Nokori []tehai.Tehai
 }
 
-// DoCalcPoint 得点計算
-func (t Taku) DoCalcPoint(playerIdx int) *calc.CalcPoint {
+// NewTaku 対局1回分の卓を生成する
+func NewTaku() *Taku {
 
-	// 役
-	//	hoge 1翻
-	// 	fuga 1翻
-	//
-	// 点数
-	//	30符 2翻 2900点
-	//	40符 3翻 5200点（子: 1300点 親: 2600点）
-
-	// TODO: sample
-	return &calc.CalcPoint{
-		Oyako: oyako.Ko,
-		Hora:  hora.Ron,
-		Yakus: map[string]int{
-			"断么九":  1,
-			"三色同順": 2,
-		},
-		Fu:           30,
-		TokutenRon:   3900,
-		TokutenTsumo: [2]int{2000, 1000},
+	var p [4]mjp.Player
+	for i := 0; i < len(p); i++ {
+		p[i] = mjp.NewPlayer(i + 1)
 	}
+
+	return &Taku{
+		Ba:      TonBa,
+		Kyoku:   1,
+		Honba:   0,
+		Jyunme:  0,
+		Dora:    []pai.MJP{pai.M1}, // TODO: ランダムにする
+		UraDora: []pai.MJP{pai.M1}, // TODO: ランダムにする
+		Players: p[:],
+		Nokori:  tehai.NewTakuPai(),
+	}
+}
+
+// RonCalcPoint ロン得点計算
+func (t Taku) RonCalcPoint(playerID, targetID int, agariPai pai.MJP) *calc.CalcPoint {
+	var c calc.CalcPoint
+
+	c.Hora = hora.Ron
+	c.TargetID = targetID
+
+	if t.Kyoku == playerID {
+		c.Oyako = oyako.Oya
+	} else {
+		c.Oyako = oyako.Ko
+	}
+
+	p := t.Players[playerID]
+
+	// 基本役の生成
+	yakuCheck := p.NewYakuCheck(agariPai)
+	c.Yakus = yakuCheck.Map()
+
+	// TODO: ドラ、赤ドラ、特殊上がり系（嶺上開花など）を付与する
+
+	// TODO: 符計算
+	c.Fu = 30
+
+	// TODO: 得点計算
+	switch c.Hora {
+	case hora.Ron:
+		c.TokutenRon = 3900
+	case hora.Tsumo:
+		c.TokutenTsumo = [2]int{2000, 1000}
+	}
+
+	return &c
+}
+
+// TsumoCalcPoint ツモ得点計算
+func (t Taku) TsumoCalcPoint(playerIdx, agariPai pai.MJP) *calc.CalcPoint {
+	var c calc.CalcPoint
+
+	// TODO: 未実装
+
+	return &c
 }
 
 // TODO: 河底撈魚

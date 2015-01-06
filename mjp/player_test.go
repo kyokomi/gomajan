@@ -480,7 +480,7 @@ func TestNewPlayer(t *testing.T) {
 	}
 
 	for _, testCase := range testCases {
-		p := NewPlayer(testCase.in, testCase.inFoos)
+		p := newPlayer(1, testCase.in, testCase.inFoos)
 
 		yakuCheck := p.NewYakuCheck(testCase.inAgari)
 

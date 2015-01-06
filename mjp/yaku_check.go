@@ -52,6 +52,17 @@ func (y YakuCheck) Yakus() []yaku.Yaku {
 	return y.yakus
 }
 
+// Map create Map
+func (y YakuCheck) Map() map[string]int {
+	s := make(map[string]int, 0)
+
+	for _, ya := range y.yakus {
+		s[ya.Name] = ya.Fan
+	}
+
+	return s
+}
+
 func (y YakuCheck) String() string {
 
 	var yakus string
