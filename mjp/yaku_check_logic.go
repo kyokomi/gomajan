@@ -82,7 +82,7 @@ func is字一色(p Player) bool {
 			continue
 		}
 
-		if !t.Pai.IsJipai() {
+		if !t.Pai.Is字牌() {
 			return false
 		}
 	}
@@ -96,7 +96,7 @@ func is字一色(p Player) bool {
 			return false
 		}
 
-		if !f.NakiPai().IsJipai() {
+		if !f.NakiPai().Is字牌() {
 			return false
 		}
 	}
@@ -367,7 +367,7 @@ func is混老頭(p Player) bool {
 			continue
 		}
 
-		if !t.Pai.IsJipai19() {
+		if !t.Pai.Is19字牌() {
 			return false
 		}
 	}
@@ -381,7 +381,7 @@ func is混老頭(p Player) bool {
 			return false
 		}
 
-		if !f.NakiPai().IsJipai19() {
+		if !f.NakiPai().Is19字牌() {
 			return false
 		}
 	}
@@ -442,7 +442,7 @@ func is混全帯么九(p Player) bool {
 
 		isJipai19 := false
 		for _, m := range pais {
-			if m.IsJipai19() {
+			if m.Is19字牌() {
 				isJipai19 = true
 				break
 			}
@@ -457,7 +457,7 @@ func is混全帯么九(p Player) bool {
 
 		isJipai19 := false
 		for _, m := range pais {
-			if m.IsJipai19() {
+			if m.Is19字牌() {
 				isJipai19 = true
 				break
 			}
@@ -468,7 +468,7 @@ func is混全帯么九(p Player) bool {
 		}
 	}
 
-	if !p.yaku.mentsuCheck.jyanto.IsJipai19() {
+	if !p.yaku.mentsuCheck.jyanto.Is19字牌() {
 		return false
 	}
 
@@ -764,7 +764,7 @@ func is断么九(p Player) bool {
 		}
 
 		// 三元牌、風牌
-		if t.Pai.IsJipai19() {
+		if t.Pai.Is19字牌() {
 			return false
 		}
 	}
@@ -776,7 +776,7 @@ func is断么九(p Player) bool {
 
 		for _, m := range f.Mentsu() {
 			// 三元牌、風牌
-			if m.IsJipai19() {
+			if m.Is19字牌() {
 				return false
 			}
 		}

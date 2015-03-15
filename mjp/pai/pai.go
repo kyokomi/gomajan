@@ -149,7 +149,7 @@ func (i MJP) Is19() bool {
 }
 
 // IsJipai 字牌かを返す
-func (i MJP) IsJipai() bool {
+func (i MJP) Is字牌() bool {
 	if i.Type() == GType || i.Type() == KType {
 		return true
 	}
@@ -157,8 +157,8 @@ func (i MJP) IsJipai() bool {
 }
 
 // IsJipai19 1,9字牌かを返す
-func (i MJP) IsJipai19() bool {
-	if i.IsJipai() || i.Is19() {
+func (i MJP) Is19字牌() bool {
+	if i.Is字牌() || i.Is19() {
 		return true
 	}
 	return false
