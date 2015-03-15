@@ -3,8 +3,8 @@ package yama
 import (
 	"math/rand"
 
-	"github.com/kyokomi/gomajan/mjp/pai"
-	"github.com/kyokomi/gomajan/mjp/tehai"
+	"github.com/kyokomi/gomajan/pai"
+	"github.com/kyokomi/gomajan/tehai"
 	"fmt"
 	"time"
 )

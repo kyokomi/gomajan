@@ -1,6 +1,6 @@
 package foo
 
-import "github.com/kyokomi/gomajan/mjp/pai"
+import "github.com/kyokomi/gomajan/pai"
 
 // FooType フーロ区分
 type FooType int

@@ -1,6 +1,6 @@
 package tehai
 
-import "github.com/kyokomi/gomajan/mjp/pai"
+import "github.com/kyokomi/gomajan/pai"
 
 // Tehai 手牌1枚
 type Tehai struct {

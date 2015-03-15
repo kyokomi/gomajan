@@ -1,6 +1,6 @@
 package mentsu
 
-import "github.com/kyokomi/gomajan/mjp/pai"
+import "github.com/kyokomi/gomajan/pai"
 
 // MentsuLen 面子の長さ
 const MentsuLen = 3

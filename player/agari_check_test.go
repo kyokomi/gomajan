@@ -1,17 +1,16 @@
-package mjp
+package player
 
 import (
 	"fmt"
 	"testing"
 
-	"github.com/kyokomi/gomajan/mjp/agari"
-	"github.com/kyokomi/gomajan/mjp/foo"
-	"github.com/kyokomi/gomajan/mjp/pai"
-	"github.com/kyokomi/gomajan/mjp/tehai"
+	"github.com/kyokomi/gomajan/agari"
+	"github.com/kyokomi/gomajan/foo"
+	"github.com/kyokomi/gomajan/pai"
+	"github.com/kyokomi/gomajan/tehai"
 )
 
 func TestCheckAgari(t *testing.T) {
-
 	type TestCase struct {
 		inAgari  pai.MJP
 		inTiles  []tehai.Tehai
@@ -36,14 +35,14 @@ func TestCheckAgari(t *testing.T) {
 			inFoos: nil,
 			outAgari: []agari.Agari{
 				agari.Agari{
-					Agari:     pai.HAK,
-					Syanten:   [2]pai.MJP{pai.HAK, pai.HAK},
-					AgariType: agari.Shabo,
+					Pai:     pai.HAK,
+					Syanten: [2]pai.MJP{pai.HAK, pai.HAK},
+					Type:    agari.Shabo,
 				},
 				agari.Agari{
-					Agari:     pai.S1,
-					Syanten:   [2]pai.MJP{pai.S1, pai.S1},
-					AgariType: agari.Shabo,
+					Pai:     pai.S1,
+					Syanten: [2]pai.MJP{pai.S1, pai.S1},
+					Type:    agari.Shabo,
 				},
 			},
 		},
@@ -63,9 +62,9 @@ func TestCheckAgari(t *testing.T) {
 			inFoos: nil,
 			outAgari: []agari.Agari{
 				agari.Agari{
-					Agari:     pai.P1,
-					Syanten:   [2]pai.MJP{pai.P2, pai.P3},
-					AgariType: agari.Ryanmen,
+					Pai:     pai.P1,
+					Syanten: [2]pai.MJP{pai.P2, pai.P3},
+					Type:    agari.Ryanmen,
 				},
 			},
 		},
@@ -85,9 +84,9 @@ func TestCheckAgari(t *testing.T) {
 			inFoos: nil,
 			outAgari: []agari.Agari{
 				agari.Agari{
-					Agari:     pai.P3,
-					Syanten:   [2]pai.MJP{pai.P1, pai.P2},
-					AgariType: agari.Penchan,
+					Pai:     pai.P3,
+					Syanten: [2]pai.MJP{pai.P1, pai.P2},
+					Type:    agari.Penchan,
 				},
 			},
 		},
@@ -107,9 +106,9 @@ func TestCheckAgari(t *testing.T) {
 			inFoos: nil,
 			outAgari: []agari.Agari{
 				agari.Agari{
-					Agari:     pai.S7,
-					Syanten:   [2]pai.MJP{pai.S8, pai.S9},
-					AgariType: agari.Penchan,
+					Pai:     pai.S7,
+					Syanten: [2]pai.MJP{pai.S8, pai.S9},
+					Type:    agari.Penchan,
 				},
 			},
 		},
@@ -129,9 +128,9 @@ func TestCheckAgari(t *testing.T) {
 			inFoos: nil,
 			outAgari: []agari.Agari{
 				agari.Agari{
-					Agari:     pai.P2,
-					Syanten:   [2]pai.MJP{pai.P1, pai.P3},
-					AgariType: agari.Kanchan,
+					Pai:     pai.P2,
+					Syanten: [2]pai.MJP{pai.P1, pai.P3},
+					Type:    agari.Kanchan,
 				},
 			},
 		},

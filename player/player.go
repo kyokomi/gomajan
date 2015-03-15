@@ -1,9 +1,9 @@
-package mjp
+package player
 
 import (
-	"github.com/kyokomi/gomajan/mjp/foo"
-	"github.com/kyokomi/gomajan/mjp/pai"
-	"github.com/kyokomi/gomajan/mjp/tehai"
+	"github.com/kyokomi/gomajan/foo"
+	"github.com/kyokomi/gomajan/pai"
+	"github.com/kyokomi/gomajan/tehai"
 )
 
 // Player プレイヤー

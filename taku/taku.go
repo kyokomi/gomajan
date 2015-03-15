@@ -1,12 +1,12 @@
 package taku
 
 import (
-	"github.com/kyokomi/gomajan/mjp"
-	"github.com/kyokomi/gomajan/mjp/pai"
-	"github.com/kyokomi/gomajan/mjp/tehai"
+	"github.com/kyokomi/gomajan/pai"
+	"github.com/kyokomi/gomajan/player"
 	"github.com/kyokomi/gomajan/taku/calc"
 	"github.com/kyokomi/gomajan/taku/hora"
 	"github.com/kyokomi/gomajan/taku/oyako"
+	"github.com/kyokomi/gomajan/tehai"
 )
 
 // BaType 場区分
@@ -34,7 +34,7 @@ type Taku struct {
 	// UraDora 裏ドラ
 	UraDora []pai.MJP
 	// Players プレイヤー
-	Players []mjp.Player
+	Players []player.Player
 	// Nokori 残り牌
 	Nokori []tehai.Tehai
 }
@@ -42,9 +42,9 @@ type Taku struct {
 // NewTaku 対局1回分の卓を生成する
 func NewTaku() *Taku {
 
-	var p [4]mjp.Player
+	var p [4]player.Player
 	for i := 0; i < len(p); i++ {
-		p[i] = mjp.NewPlayer(i + 1)
+		p[i] = player.NewPlayer(i + 1)
 	}
 
 	return &Taku{

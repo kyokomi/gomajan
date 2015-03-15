@@ -1,13 +1,13 @@
-package mjp
+package player
 
 import (
 	"testing"
 
 	"fmt"
 
-	"github.com/kyokomi/gomajan/mjp/foo"
-	"github.com/kyokomi/gomajan/mjp/pai"
-	"github.com/kyokomi/gomajan/mjp/tehai"
+	"github.com/kyokomi/gomajan/foo"
+	"github.com/kyokomi/gomajan/pai"
+	"github.com/kyokomi/gomajan/tehai"
 )
 
 func TestNewPlayer(t *testing.T) {

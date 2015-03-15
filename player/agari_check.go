@@ -1,8 +1,8 @@
-package mjp
+package player
 
 import (
-	"github.com/kyokomi/gomajan/mjp/agari"
-	"github.com/kyokomi/gomajan/mjp/pai"
+	"github.com/kyokomi/gomajan/agari"
+	"github.com/kyokomi/gomajan/pai"
 )
 
 // CheckAgari 上がり系取得
@@ -21,15 +21,15 @@ func (m MentuCheck) CheckAgari() []agari.Agari {
 
 		if len(ac) == 0 {
 			agaris = append(agaris, agari.Agari{
-				Agari:     m.agari,
-				Syanten:   [2]pai.MJP{m.agari, m.agari},
-				AgariType: agari.Shabo,
+				Pai:     m.agari,
+				Syanten: [2]pai.MJP{m.agari, m.agari},
+				Type:    agari.Shabo,
 			})
 			// 雀頭の対子も入れる
 			agaris = append(agaris, agari.Agari{
-				Agari:     m.jyanto,
-				Syanten:   [2]pai.MJP{m.jyanto, m.jyanto},
-				AgariType: agari.Shabo,
+				Pai:     m.jyanto,
+				Syanten: [2]pai.MJP{m.jyanto, m.jyanto},
+				Type:    agari.Shabo,
 			})
 
 			// シャボ待ちは確定
@@ -41,17 +41,17 @@ func (m MentuCheck) CheckAgari() []agari.Agari {
 			if ac[0].Is19() || ac[1].Is19() {
 				// 辺張待ち
 				agaris = append(agaris, agari.Agari{
-					Agari:     m.agari,
-					Syanten:   [2]pai.MJP{ac[0], ac[1]},
-					AgariType: agari.Penchan,
+					Pai:     m.agari,
+					Syanten: [2]pai.MJP{ac[0], ac[1]},
+					Type:    agari.Penchan,
 				})
 
 			} else {
 				// 両面待ち
 				agaris = append(agaris, agari.Agari{
-					Agari:     m.agari,
-					Syanten:   [2]pai.MJP{ac[0], ac[1]},
-					AgariType: agari.Ryanmen,
+					Pai:     m.agari,
+					Syanten: [2]pai.MJP{ac[0], ac[1]},
+					Type:    agari.Ryanmen,
 				})
 			}
 		} else {
@@ -59,9 +59,9 @@ func (m MentuCheck) CheckAgari() []agari.Agari {
 
 			// 嵌張待ち
 			agaris = append(agaris, agari.Agari{
-				Agari:     m.agari,
-				Syanten:   [2]pai.MJP{ac[0], ac[1]},
-				AgariType: agari.Kanchan,
+				Pai:     m.agari,
+				Syanten: [2]pai.MJP{ac[0], ac[1]},
+				Type:    agari.Kanchan,
 			})
 		}
 	}

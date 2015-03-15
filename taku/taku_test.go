@@ -5,7 +5,7 @@ import (
 
 	"fmt"
 
-	"github.com/kyokomi/gomajan/mjp/pai"
+	"github.com/kyokomi/gomajan/pai"
 )
 
 func TestDoCalcPoint(t *testing.T) {

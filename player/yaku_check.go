@@ -1,54 +1,63 @@
-package mjp
+package player
 
 import (
 	"fmt"
 
-	"github.com/kyokomi/gomajan/mjp/pai"
-	"github.com/kyokomi/gomajan/mjp/yaku"
+	"github.com/kyokomi/gomajan/pai"
 )
 
+type 役 struct {
+	Fan  int    // 翻数
+	Name string // 名前
+}
+
+// Equal 役の名前で比較
+func (y1 役) Equal(y2 役) bool {
+	return y1.Name == y2.Name
+}
+
 var (
-	国士無双 = yaku.Yaku{Fan: 13, Name: "国士無双"}
-	大四喜  = yaku.Yaku{Fan: 13, Name: "大四喜"}
-	小四喜  = yaku.Yaku{Fan: 13, Name: "小四喜"}
+	国士無双 = 役{Fan: 13, Name: "国士無双"}
+	大四喜  = 役{Fan: 13, Name: "大四喜"}
+	小四喜  = 役{Fan: 13, Name: "小四喜"}
 
-	大三元 = yaku.Yaku{Fan: 13, Name: "大三元"}
-	字一色 = yaku.Yaku{Fan: 13, Name: "字一色"}
-	四暗刻 = yaku.Yaku{Fan: 13, Name: "四暗刻"}
-	清老頭 = yaku.Yaku{Fan: 13, Name: "清老頭"}
-	緑一色 = yaku.Yaku{Fan: 13, Name: "緑一色"}
-	四槓子 = yaku.Yaku{Fan: 13, Name: "四槓子"}
+	大三元 = 役{Fan: 13, Name: "大三元"}
+	字一色 = 役{Fan: 13, Name: "字一色"}
+	四暗刻 = 役{Fan: 13, Name: "四暗刻"}
+	清老頭 = 役{Fan: 13, Name: "清老頭"}
+	緑一色 = 役{Fan: 13, Name: "緑一色"}
+	四槓子 = 役{Fan: 13, Name: "四槓子"}
 
-	七対子 = yaku.Yaku{Fan: 2, Name: "七対子"}
+	七対子 = 役{Fan: 2, Name: "七対子"}
 
-	平和  = yaku.Yaku{Fan: 1, Name: "平和"}
-	断么九 = yaku.Yaku{Fan: 1, Name: "断么九"}
-	一盃口 = yaku.Yaku{Fan: 1, Name: "一盃口"}
+	平和  = 役{Fan: 1, Name: "平和"}
+	断么九 = 役{Fan: 1, Name: "断么九"}
+	一盃口 = 役{Fan: 1, Name: "一盃口"}
 
-	混全帯么九 = yaku.Yaku{Fan: 2, Name: "混全帯么九"}
-	対々和   = yaku.Yaku{Fan: 2, Name: "対々和"}
-	三色同順  = yaku.Yaku{Fan: 2, Name: "三色同順"}
-	一気通貫  = yaku.Yaku{Fan: 2, Name: "一気通貫"}
-	三暗刻   = yaku.Yaku{Fan: 2, Name: "三暗刻"}
-	小三元   = yaku.Yaku{Fan: 2, Name: "小三元"}
-	三槓子   = yaku.Yaku{Fan: 2, Name: "三槓子"}
+	混全帯么九 = 役{Fan: 2, Name: "混全帯么九"}
+	対々和   = 役{Fan: 2, Name: "対々和"}
+	三色同順  = 役{Fan: 2, Name: "三色同順"}
+	一気通貫  = 役{Fan: 2, Name: "一気通貫"}
+	三暗刻   = 役{Fan: 2, Name: "三暗刻"}
+	小三元   = 役{Fan: 2, Name: "小三元"}
+	三槓子   = 役{Fan: 2, Name: "三槓子"}
 
-	混老頭   = yaku.Yaku{Fan: 3, Name: "混老頭"}
-	混一色   = yaku.Yaku{Fan: 3, Name: "混一色"}
-	二盃口   = yaku.Yaku{Fan: 3, Name: "二盃口"}
-	純全帯么九 = yaku.Yaku{Fan: 3, Name: "純全帯么九"}
+	混老頭   = 役{Fan: 3, Name: "混老頭"}
+	混一色   = 役{Fan: 3, Name: "混一色"}
+	二盃口   = 役{Fan: 3, Name: "二盃口"}
+	純全帯么九 = 役{Fan: 3, Name: "純全帯么九"}
 
-	清一色 = yaku.Yaku{Fan: 6, Name: "清一色"}
+	清一色 = 役{Fan: 6, Name: "清一色"}
 )
 
 // YakuCheck 役判定結果
 type YakuCheck struct {
-	mentsuCheck MentuCheck  // 面子判定結果
-	yakus       []yaku.Yaku // 役
+	mentsuCheck MentuCheck // 面子判定結果
+	yakus       []役        // 役
 }
 
 // Yakus getter yakus
-func (y YakuCheck) Yakus() []yaku.Yaku {
+func (y YakuCheck) Yakus() []役 {
 	return y.yakus
 }
 
@@ -128,8 +137,8 @@ func (p Player) NewYakuCheck(agari pai.MJP) *YakuCheck {
 	return &y
 }
 
-func (p Player) yakuManCheck() []yaku.Yaku {
-	var res []yaku.Yaku
+func (p Player) yakuManCheck() []役 {
+	var res []役
 
 	// 国士無双判定
 	if is国士無双(p) {
@@ -173,8 +182,8 @@ func (p Player) yakuManCheck() []yaku.Yaku {
 	return res
 }
 
-func (p Player) yakuCheck() []yaku.Yaku {
-	var yakus []yaku.Yaku
+func (p Player) yakuCheck() []役 {
+	var yakus []役
 
 	if is七対子(p) {
 		yakus = append(yakus, 七対子)

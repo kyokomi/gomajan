@@ -1,10 +1,10 @@
-package mjp
+package player
 
 import (
-	"github.com/kyokomi/gomajan/mjp/agari"
-	"github.com/kyokomi/gomajan/mjp/foo"
-	"github.com/kyokomi/gomajan/mjp/mentsu"
-	"github.com/kyokomi/gomajan/mjp/pai"
+	"github.com/kyokomi/gomajan/agari"
+	"github.com/kyokomi/gomajan/foo"
+	"github.com/kyokomi/gomajan/mentsu"
+	"github.com/kyokomi/gomajan/pai"
 )
 
 func is国士無双(p Player) bool {
@@ -745,11 +745,11 @@ func is平和(p Player) bool {
 	// 両面待ちのみ
 	agaris := p.yaku.mentsuCheck.CheckAgari()
 	for _, a := range agaris {
-		if a.Agari != p.yaku.mentsuCheck.agari {
+		if a.Pai != p.yaku.mentsuCheck.agari {
 			continue
 		}
 
-		if a.AgariType != agari.Ryanmen {
+		if a.Type != agari.Ryanmen {
 			return false
 		}
 	}

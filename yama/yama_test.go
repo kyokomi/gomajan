@@ -1,8 +1,8 @@
 package yama
 import (
 	"testing"
-	"github.com/kyokomi/gomajan/mjp/tehai"
-	"github.com/kyokomi/gomajan/mjp/pai"
+	"github.com/kyokomi/gomajan/tehai"
+	"github.com/kyokomi/gomajan/pai"
 )
 
 func TestYama(t *testing.T) {
