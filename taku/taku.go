@@ -3,10 +3,13 @@ package taku
 import (
 	"github.com/kyokomi/gomajan/pai"
 	"github.com/kyokomi/gomajan/player"
+	"github.com/kyokomi/gomajan/sai"
 	"github.com/kyokomi/gomajan/taku/calc"
 	"github.com/kyokomi/gomajan/taku/hora"
 	"github.com/kyokomi/gomajan/taku/oyako"
 	"github.com/kyokomi/gomajan/tehai"
+	"github.com/kyokomi/gomajan/yama"
+	"fmt"
 )
 
 // BaType 場区分
@@ -21,6 +24,8 @@ const (
 
 // Taku 麻雀卓
 type Taku struct {
+	Yama yama.Yama
+	Sai  sai.Sai
 	// Ba 場
 	Ba BaType
 	// Kyoku 局
@@ -29,10 +34,6 @@ type Taku struct {
 	Honba int
 	// Jyunme 順目
 	Jyunme int
-	// Dora ドラ
-	Dora []pai.MJP
-	// UraDora 裏ドラ
-	UraDora []pai.MJP
 	// Players プレイヤー
 	Players []player.Player
 	// Nokori 残り牌
@@ -41,22 +42,70 @@ type Taku struct {
 
 // NewTaku 対局1回分の卓を生成する
 func NewTaku() *Taku {
-
 	var p [4]player.Player
 	for i := 0; i < len(p); i++ {
 		p[i] = player.NewPlayer(i + 1)
 	}
 
 	return &Taku{
+		Yama:    yama.New(),
+		Sai:     sai.DoubleDiceRoll(),
 		Ba:      TonBa,
 		Kyoku:   1,
 		Honba:   0,
 		Jyunme:  0,
-		Dora:    []pai.MJP{pai.M1}, // TODO: ランダムにする
-		UraDora: []pai.MJP{pai.M1}, // TODO: ランダムにする
 		Players: p[:],
 		Nokori:  tehai.NewTakuPai(),
 	}
+}
+
+func (t Taku) Dora() []pai.MJP {
+	yamaIdx := 山Index(t.Sai)
+
+	retu := t.Sai.Sum()-1-2
+	if retu < 0 {
+		retu = len(t.Yama[0]) - 1
+		yamaIdx--
+		if yamaIdx < 0 {
+			yamaIdx = len(t.Yama) - 1
+		}
+	}
+
+	// TODO: カンの有無確認
+
+	return []pai.MJP{t.Yama[yamaIdx][0][retu]}
+}
+
+// UraDora 裏ドラ判定はリーチしてたら読んでいい
+func (t Taku) UraDora() []pai.MJP {
+	yamaIdx := 山Index(t.Sai)
+
+	retu := t.Sai.Sum()-1-2
+	if retu < 0 {
+		retu = len(t.Yama[0]) - 1
+		yamaIdx--
+		if yamaIdx < 0 {
+			yamaIdx = len(t.Yama) - 1
+		}
+	}
+
+	// TODO: カンの有無確認
+
+	return []pai.MJP{t.Yama[yamaIdx][1][retu]}
+}
+
+func 山Index(s sai.Sai) int {
+	switch s.Sum() {
+	case 2, 6, 10:
+		return 1
+	case 3, 7, 11:
+		return 2
+	case 4, 8, 12:
+		return 3
+	case 5, 9:
+		return 0
+	}
+	panic(fmt.Errorf("%s = %d", "不正なサイコロです", s.Sum()))
 }
 
 // RonCalcPoint ロン得点計算
@@ -105,12 +154,10 @@ func (t Taku) TsumoCalcPoint(playerIdx, agariPai pai.MJP) *calc.CalcPoint {
 
 // TODO: 河底撈魚
 func (t Taku) isLastAttack() bool {
-
 	return false
 }
 
 // TODO: 海底摸月
 func (t Taku) isLastAttackAll() bool {
-
 	return false
 }

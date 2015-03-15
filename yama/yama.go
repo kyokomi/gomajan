@@ -18,10 +18,12 @@ var takuName = map[int]string{
 	4: "北",
 }
 
+func init() {
+	rand.Seed(time.Now().UnixNano())
+}
+
 func New() Yama {
 	pais := tehai.NewTehai(nil)
-
-	rand.Seed(time.Now().UnixNano())
 
 	var y Yama
 	for i := 0; i < len(y); i++ {
@@ -29,6 +31,7 @@ func New() Yama {
 			for k := 0; k < len(y[i][j]); k++ {
 			RAND:
 				p := pai.MJP(rand.Intn(pai.PaiSize() -1)) + 1
+				// すでに4枚あるやつは再抽選
 				if pais[p].Val == 4 {
 					goto RAND
 				}
