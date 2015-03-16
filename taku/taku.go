@@ -1,6 +1,8 @@
 package taku
 
 import (
+	"fmt"
+
 	"github.com/kyokomi/gomajan/pai"
 	"github.com/kyokomi/gomajan/player"
 	"github.com/kyokomi/gomajan/sai"
@@ -9,7 +11,6 @@ import (
 	"github.com/kyokomi/gomajan/taku/oyako"
 	"github.com/kyokomi/gomajan/tehai"
 	"github.com/kyokomi/gomajan/yama"
-	"fmt"
 )
 
 // BaType 場区分
@@ -22,9 +23,12 @@ const (
 	NanBa
 )
 
+type YamaMask [4][2][17]int
+
 // Taku 麻雀卓
 type Taku struct {
 	Yama yama.Yama
+	YamaMask YamaMask
 	Sai  sai.Sai
 	// Ba 場
 	Ba BaType
@@ -42,56 +46,60 @@ type Taku struct {
 
 // NewTaku 対局1回分の卓を生成する
 func NewTaku() *Taku {
+	yama := yama.New()
+	var mask YamaMask
 	var p [4]player.Player
 	for i := 0; i < len(p); i++ {
-		p[i] = player.NewPlayer(i + 1)
+		p[i] = player.NewPlayer(i + 1, nil)
 	}
 
 	return &Taku{
-		Yama:    yama.New(),
-		Sai:     sai.DoubleDiceRoll(),
-		Ba:      TonBa,
-		Kyoku:   1,
-		Honba:   0,
-		Jyunme:  0,
-		Players: p[:],
-		Nokori:  tehai.NewTakuPai(),
+		Yama:     yama,
+		YamaMask: mask,
+		Sai:      sai.DoubleDiceRoll(),
+		Ba:       TonBa,
+		Kyoku:    1,
+		Honba:    0,
+		Jyunme:   0,
+		Players:  p[:],
+		Nokori:   tehai.NewTakuPai(),
 	}
 }
 
 func (t Taku) Dora() []pai.MJP {
-	yamaIdx := 山Index(t.Sai)
-
-	retu := t.Sai.Sum()-1-2
-	if retu < 0 {
-		retu = len(t.Yama[0]) - 1
-		yamaIdx--
-		if yamaIdx < 0 {
-			yamaIdx = len(t.Yama) - 1
-		}
-	}
+	yamaIdx, retu := t.doraIndex()
 
 	// TODO: カンの有無確認
 
 	return []pai.MJP{t.Yama[yamaIdx][0][retu]}
 }
 
-// UraDora 裏ドラ判定はリーチしてたら読んでいい
+// UraDora 裏ドラ判定はリーチしてたら呼んでいい
 func (t Taku) UraDora() []pai.MJP {
-	yamaIdx := 山Index(t.Sai)
+	yamaIdx, retu := t.doraIndex()
 
-	retu := t.Sai.Sum()-1-2
+	// TODO: カンの有無確認する
+
+	return []pai.MJP{t.Yama[yamaIdx][1][retu]}
+}
+
+// TODO: 残念コードすぎる・・・
+func (t Taku) doraIndex() (yamaIdx, retu int) {
+	yamaIdx = 山Index(t.Sai)
+	// -1はindex, ドラは3枚目なので-2
+	retu = t.Sai.Sum() - 1 - 2
+	// retuが無いときは、隣の山へ
 	if retu < 0 {
+		// -1はindex
 		retu = len(t.Yama[0]) - 1
 		yamaIdx--
+		// 山一周したら後ろに戻る
 		if yamaIdx < 0 {
+			// -1はindex
 			yamaIdx = len(t.Yama) - 1
 		}
 	}
-
-	// TODO: カンの有無確認
-
-	return []pai.MJP{t.Yama[yamaIdx][1][retu]}
+	return
 }
 
 func 山Index(s sai.Sai) int {

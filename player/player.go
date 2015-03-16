@@ -43,7 +43,7 @@ func (p *Player) PaiDec(m pai.MJP) {
 }
 
 // NewPlayer プレイヤー作成
-func NewPlayer(playerID int) Player {
+func NewPlayer(playerID int, tiles []tehai.Tehai) Player {
 	return newPlayer(playerID, nil, nil)
 }
 
