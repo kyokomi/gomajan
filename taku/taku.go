@@ -23,12 +23,9 @@ const (
 	NanBa
 )
 
-type YamaMask [4][2][17]int
-
 // Taku 麻雀卓
 type Taku struct {
 	Yama yama.Yama
-	YamaMask YamaMask
 	Sai  sai.Sai
 	// Ba 場
 	Ba BaType
@@ -42,30 +39,112 @@ type Taku struct {
 	Players []player.Player
 	// Nokori 残り牌
 	Nokori []tehai.Tehai
+
+	// 取得した牌のマスク
+	YamaMask yama.YamaMask
+	// 現在の山
+	PlayYamaIndex int
+	// 現在の列
+	PlayRetuIndex int
 }
 
 // NewTaku 対局1回分の卓を生成する
 func NewTaku() *Taku {
-	yama := yama.New()
-	var mask YamaMask
-	var p [4]player.Player
-	for i := 0; i < len(p); i++ {
-		p[i] = player.NewPlayer(i + 1, nil)
-	}
+	y := yama.New()
+	// debug log
+	yama.DebugLog(y)
 
-	return &Taku{
-		Yama:     yama,
-		YamaMask: mask,
+	taku := &Taku{
+		Yama:     y,
+		YamaMask: yama.YamaMask{},
 		Sai:      sai.DoubleDiceRoll(),
 		Ba:       TonBa,
 		Kyoku:    1,
 		Honba:    0,
 		Jyunme:   0,
-		Players:  p[:],
 		Nokori:   tehai.NewTakuPai(),
 	}
+
+	tehais := taku.配牌()
+
+	var p [4]player.Player
+	for i := 0; i < len(p); i++ {
+		p[i] = player.NewPlayer(i+1, tehais[i])
+	}
+	taku.Players = p[:]
+
+	// debug log
+	yama.DebugMaskLog(taku.YamaMask)
+
+	return taku
 }
 
+func (t *Taku) 配牌() [4][]tehai.Tehai {
+	yamaIdx := 山Index(t.Sai)
+	retu := t.Sai.Sum() - 1
+
+	// 4人分配牌
+
+	add列And山越しFunc := func(addRetu int) {
+		retu += addRetu
+		if retu > 16 {
+			retu = 0
+			yamaIdx--
+			if yamaIdx < 0 {
+				yamaIdx = 3
+			}
+		}
+	}
+
+	var p [4][14]pai.MJP
+	for i := 0; i < 3; i++ {
+		for j := 0; j < 4; j++ {
+			add列And山越しFunc(1)
+			p[j][(i*4)+0] = t.Yama[yamaIdx][0][retu]
+			t.YamaMask[yamaIdx][0][retu] = j + 1
+			p[j][(i*4)+1] = t.Yama[yamaIdx][1][retu]
+			t.YamaMask[yamaIdx][1][retu] = j + 1
+
+			add列And山越しFunc(1)
+			p[j][(i*4)+2] = t.Yama[yamaIdx][0][retu]
+			t.YamaMask[yamaIdx][0][retu] = j + 1
+			p[j][(i*4)+3] = t.Yama[yamaIdx][1][retu]
+			t.YamaMask[yamaIdx][1][retu] = j + 1
+		}
+	}
+
+	// ちょんちょんとちょん
+	p[0][12] = t.Yama[yamaIdx][0][retu]
+	t.YamaMask[yamaIdx][0][retu] = 1
+	p[1][12] = t.Yama[yamaIdx][1][retu]
+	t.YamaMask[yamaIdx][1][retu] = 2
+	add列And山越しFunc(1)
+	p[2][12] = t.Yama[yamaIdx][0][retu]
+	t.YamaMask[yamaIdx][0][retu] = 3
+	p[3][12] = t.Yama[yamaIdx][1][retu]
+	t.YamaMask[yamaIdx][1][retu] = 4
+	add列And山越しFunc(1)
+	p[0][13] = t.Yama[yamaIdx][0][retu]
+	t.YamaMask[yamaIdx][0][retu] = 1
+
+	var playerTehai [4][]tehai.Tehai
+	for idx, pais := range p {
+		playerTehai[idx] = tehai.NewTehai(nil)
+		for _, pp := range pais {
+			if pp.Type() == pai.NoneType {
+				continue
+			}
+			playerTehai[idx][pp].Val++
+		}
+	}
+
+	t.PlayYamaIndex = yamaIdx
+	t.PlayRetuIndex = retu
+
+	return playerTehai
+}
+
+// Dora ドラ表示牌を返す
 func (t Taku) Dora() []pai.MJP {
 	yamaIdx, retu := t.doraIndex()
 
@@ -74,7 +153,7 @@ func (t Taku) Dora() []pai.MJP {
 	return []pai.MJP{t.Yama[yamaIdx][0][retu]}
 }
 
-// UraDora 裏ドラ判定はリーチしてたら呼んでいい
+// UraDora 裏ドラ表示牌を返す
 func (t Taku) UraDora() []pai.MJP {
 	yamaIdx, retu := t.doraIndex()
 

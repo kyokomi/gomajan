@@ -18,6 +18,10 @@ type Player struct {
 	yaku *YakuCheck
 }
 
+func (p Player) PlayerID() int {
+	return p.playerID
+}
+
 func (p Player) String() string {
 	var tehaiStr string
 	// 手牌を表示
@@ -44,7 +48,7 @@ func (p *Player) PaiDec(m pai.MJP) {
 
 // NewPlayer プレイヤー作成
 func NewPlayer(playerID int, tiles []tehai.Tehai) Player {
-	return newPlayer(playerID, nil, nil)
+	return newPlayer(playerID, tiles, nil)
 }
 
 func newPlayer(playerID int, tiles []tehai.Tehai, foos []foo.Foo) Player {

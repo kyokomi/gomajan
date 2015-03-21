@@ -1,7 +1,8 @@
 package sai
+
 import (
-	"testing"
 	"fmt"
+	"testing"
 )
 
 func TestSai(t *testing.T) {
@@ -17,6 +18,6 @@ func TestSai(t *testing.T) {
 		if idx == 0 {
 			continue
 		}
-		fmt.Printf("%2d: %6d (%8.2f%%)\n", idx + 1, r, float32(r)/float32(testCount) * 100.0)
+		fmt.Printf("%2d: %6d (%8.2f%%)\n", idx+1, r, float32(r)/float32(testCount)*100.0)
 	}
 }
