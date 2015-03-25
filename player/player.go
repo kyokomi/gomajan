@@ -18,6 +18,10 @@ type Player struct {
 	yaku *YakuCheck
 }
 
+func (p Player) Tiles() []tehai.Tehai {
+	return p.tiles
+}
+
 func (p Player) PlayerID() int {
 	return p.playerID
 }
