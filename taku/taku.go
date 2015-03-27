@@ -113,6 +113,8 @@ func (t *Taku) 配牌() [4][]tehai.Tehai {
 		}
 	}
 
+	add列And山越しFunc(1)
+
 	// ちょんちょんとちょん
 	p[0][12] = t.Yama[yamaIdx][0][retu]
 	t.YamaMask[yamaIdx][0][retu] = 1
