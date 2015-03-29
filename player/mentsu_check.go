@@ -15,6 +15,10 @@ type MentuCheck struct {
 	nokori     []tehai.Tehai // 面子外残り
 }
 
+func (m MentuCheck) Nokori() []tehai.Tehai {
+	return m.nokori
+}
+
 func newMentuCheck(agari pai.MJP, tiles []tehai.Tehai, foos []foo.Foo) MentuCheck {
 	var mc MentuCheck
 

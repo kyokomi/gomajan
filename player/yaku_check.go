@@ -61,6 +61,10 @@ func (y YakuCheck) Yakus() []役 {
 	return y.yakus
 }
 
+func (y YakuCheck) MentsuCheck() MentuCheck {
+	return y.mentsuCheck
+}
+
 // Map create Map
 func (y YakuCheck) Map() map[string]int {
 	s := make(map[string]int, 0)
@@ -72,8 +76,44 @@ func (y YakuCheck) Map() map[string]int {
 	return s
 }
 
-func (y YakuCheck) String() string {
+func (y YakuCheck) Is和了() bool {
+	// 残り牌が1枚でもあればNG
+	mc := y.mentsuCheck
+	for _, n := range mc.nokori {
+		if n.Pai.Type() != pai.NoneType && n.Val > 0 {
+			return false
+		}
+	}
 
+	// 雀頭なしはNG
+	if mc.jyanto.Type() == pai.NoneType {
+		return false
+	}
+
+	// 面子4つなしはNG
+	mCount := 0
+	for _, m := range mc.mentsu {
+		if len(m) == 0 {
+			continue
+		}
+		mCount++
+	}
+
+	for _, m := range mc.nakiMentsu {
+		if len(m) == 0 {
+			continue
+		}
+		mCount++
+	}
+
+	if mCount != 4 {
+		return false
+	}
+
+	return true
+}
+
+func (y YakuCheck) String() string {
 	var yakus string
 	for _, ya := range y.Yakus() {
 		yakus += (" " + ya.Name)
@@ -86,6 +126,9 @@ func (y YakuCheck) String() string {
 
 	var mentsu string
 	for _, m := range mc.mentsu {
+		if len(m) == 0 {
+			continue
+		}
 		for _, p := range m {
 			mentsu += (" " + p.String())
 		}
@@ -105,7 +148,7 @@ func (y YakuCheck) String() string {
 
 	var nokori string
 	for _, n := range mc.nokori {
-		if n.Val >= 1 {
+		for i := 0; i < n.Val; i++ {
 			nokori += (" " + n.Pai.String())
 		}
 	}
