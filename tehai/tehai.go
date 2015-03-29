@@ -55,7 +55,12 @@ func CheckTehaiMentsu(tehai []Tehai) [][]pai.MJP {
 			continue
 		}
 
-		if len(temp) > 0 && temp[len(temp)-1] == (t.Pai-1) {
+		// 連続している
+		// 同じ種類
+		// 字牌以外
+		if len(temp) > 0 && temp[len(temp)-1] == (t.Pai-1) &&
+			temp[0].Type() == t.Pai.Type() &&
+			t.Pai.Type() != pai.KType && t.Pai.Type() != pai.GType {
 			// 順子
 
 			// 面子候補追加
