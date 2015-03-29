@@ -79,55 +79,54 @@ func NewTaku() *Taku {
 	return taku
 }
 
-func (t *Taku) 配牌() [4][]tehai.Tehai {
-	yamaIdx := 山Index(t.Sai)
-	retu := t.Sai.Sum() - 1
+func (t *Taku) Next(ueshita int, playerID int) pai.MJP {
+	if t.YamaMask[t.PlayYamaIndex][ueshita][t.PlayRetuIndex] != 0 {
+		return pai.NonePai
+	}
+	t.YamaMask[t.PlayYamaIndex][ueshita][t.PlayRetuIndex] = playerID
+	return t.Yama[t.PlayYamaIndex][ueshita][t.PlayRetuIndex]
+}
 
-	// 4人分配牌
-
-	add列And山越しFunc := func(addRetu int) {
-		retu += addRetu
-		if retu > 16 {
-			retu = 0
-			yamaIdx--
-			if yamaIdx < 0 {
-				yamaIdx = 3
-			}
+func (t *Taku) Add列And山越しFunc(addRetu int) {
+	t.PlayRetuIndex += addRetu
+	if t.PlayRetuIndex > 16 {
+		t.PlayRetuIndex = 0
+		t.PlayYamaIndex--
+		if t.PlayYamaIndex < 0 {
+			t.PlayYamaIndex = 3
 		}
 	}
+}
+
+func (t *Taku) 配牌() [4][]tehai.Tehai {
+	t.PlayYamaIndex = 山Index(t.Sai)
+	t.PlayRetuIndex = t.Sai.Sum() - 1
+
+	// 4人分配牌
 
 	var p [4][14]pai.MJP
 	for i := 0; i < 3; i++ {
 		for j := 0; j < 4; j++ {
-			add列And山越しFunc(1)
-			p[j][(i*4)+0] = t.Yama[yamaIdx][0][retu]
-			t.YamaMask[yamaIdx][0][retu] = j + 1
-			p[j][(i*4)+1] = t.Yama[yamaIdx][1][retu]
-			t.YamaMask[yamaIdx][1][retu] = j + 1
+			t.Add列And山越しFunc(1)
+			p[j][(i*4)+0] = t.Next(0, j + 1)
+			p[j][(i*4)+1] = t.Next(1, j + 1)
 
-			add列And山越しFunc(1)
-			p[j][(i*4)+2] = t.Yama[yamaIdx][0][retu]
-			t.YamaMask[yamaIdx][0][retu] = j + 1
-			p[j][(i*4)+3] = t.Yama[yamaIdx][1][retu]
-			t.YamaMask[yamaIdx][1][retu] = j + 1
+			t.Add列And山越しFunc(1)
+			p[j][(i*4)+2] = t.Next(0, j + 1)
+			p[j][(i*4)+3] = t.Next(1, j + 1)
 		}
 	}
 
-	add列And山越しFunc(1)
+	t.Add列And山越しFunc(1)
 
 	// ちょんちょんとちょん
-	p[0][12] = t.Yama[yamaIdx][0][retu]
-	t.YamaMask[yamaIdx][0][retu] = 1
-	p[1][12] = t.Yama[yamaIdx][1][retu]
-	t.YamaMask[yamaIdx][1][retu] = 2
-	add列And山越しFunc(1)
-	p[2][12] = t.Yama[yamaIdx][0][retu]
-	t.YamaMask[yamaIdx][0][retu] = 3
-	p[3][12] = t.Yama[yamaIdx][1][retu]
-	t.YamaMask[yamaIdx][1][retu] = 4
-	add列And山越しFunc(1)
-	p[0][13] = t.Yama[yamaIdx][0][retu]
-	t.YamaMask[yamaIdx][0][retu] = 1
+	p[0][12] = t.Next(0, 1)
+	p[1][12] = t.Next(1, 2)
+	t.Add列And山越しFunc(1)
+	p[2][12] = t.Next(0, 3)
+	p[3][12] = t.Next(1, 4)
+	t.Add列And山越しFunc(1)
+	p[0][13] = t.Next(0, 1)
 
 	var playerTehai [4][]tehai.Tehai
 	for idx, pais := range p {
@@ -139,9 +138,6 @@ func (t *Taku) 配牌() [4][]tehai.Tehai {
 			playerTehai[idx][pp].Val++
 		}
 	}
-
-	t.PlayYamaIndex = yamaIdx
-	t.PlayRetuIndex = retu
 
 	return playerTehai
 }
