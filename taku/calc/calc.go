@@ -70,33 +70,17 @@ var tsumoCalcPointMap = map[oyako.OyakoType]map[Fu]map[Fan][]int{
 // 上がった相手
 // 対局情報(東場or南場、海底摸月or河底撈魚or槍槓or嶺上開花、天和or地和or人和、ドラ、裏ドラ）
 type CalcPoint struct {
-	// Oyako 親子区分
-	Oyako oyako.OyakoType
-	// Hora 和了区分
-	Hora hora.HoraType
 	// Fu 符
 	Fu Fu
 	// Fan 翻
 	Fan Fan
-
-	// TODO: あとで
-
-	// TokutenRon ロン点数
-	TokutenRon int
-	// TokutenTsumo ツモ点数
-	TokutenTsumo [2]int
-
-	// TargetIdx 和了対象（ロンの場合のみ）
-	TargetID int
-	// Yakus 役名:翻数
-	Yakus map[string]int
 }
 
-func (c CalcPoint) Point() (int, int, int) {
-	if c.Hora == hora.Ron {
-		return ronCalcPointMap[c.Oyako][c.Fu][c.Fan], 0 , 0
-	} else if c.Hora == hora.Tsumo {
-		p := tsumoCalcPointMap[c.Oyako][c.Fu][c.Fan]
+func (c CalcPoint) Point(o oyako.OyakoType, h hora.HoraType) (int, int, int) {
+	if h == hora.Ron {
+		return ronCalcPointMap[o][c.Fu][c.Fan], 0, 0
+	} else if h == hora.Tsumo {
+		p := tsumoCalcPointMap[o][c.Fu][c.Fan]
 		return p[0], p[1], p[2]
 	} else {
 		panic("hora type error")
@@ -116,7 +100,43 @@ const templateText = `
 {{end}}
 `
 
-func (c CalcPoint) String() string {
+type Tokuten struct {
+	CalcPoint
+
+	// Oyako 親子区分
+	Oyako oyako.OyakoType
+	// Hora 和了区分
+	Hora hora.HoraType
+
+	// TargetIdx 和了対象（ロンの場合のみ）
+	TargetID int
+	// Yakus 役名:翻数
+	Yakus map[string]int
+}
+
+// IsRon ロンか判定
+func (c Tokuten) IsRon() bool {
+	return c.Hora == hora.Ron
+}
+
+// IsTsumo ツモか判定
+func (c Tokuten) IsTsumo() bool {
+	return c.Hora == hora.Tsumo
+}
+
+func (t Tokuten) TokutenRon() int {
+	t.Fan = Fan(t.TotalFan())
+	p, _, _ := t.Point(t.Oyako, hora.Ron)
+	return p
+}
+
+func (t Tokuten) TokutenTsumo() []int {
+	t.Fan = Fan(t.TotalFan())
+	a, b, c := t.Point(t.Oyako, hora.Tsumo)
+	return []int{a, b, c}
+}
+
+func (c Tokuten) String() string {
 	var w bytes.Buffer
 	t := template.Must(template.New("main").Parse(templateText))
 	if err := t.Execute(&w, c); err != nil {
@@ -127,20 +147,10 @@ func (c CalcPoint) String() string {
 }
 
 // TotalFan 合計翻数を取得
-func (c CalcPoint) TotalFan() int {
+func (c Tokuten) TotalFan() int {
 	fun := 0
 	for _, f := range c.Yakus {
 		fun += f
 	}
 	return fun
-}
-
-// IsRon ロンか判定
-func (c CalcPoint) IsRon() bool {
-	return c.Hora == hora.Ron
-}
-
-// IsTsumo ツモか判定
-func (c CalcPoint) IsTsumo() bool {
-	return c.Hora == hora.Tsumo
 }

@@ -10,8 +10,6 @@ import (
 
 func TestDoCalcPoint(t *testing.T) {
 	taku := NewTaku()
-	c := taku.RonCalcPoint(1, 2, pai.P1)
-	fmt.Println(c.String())
 	fmt.Println("サイコロ:", taku.Sai)
 	fmt.Println("ドラ表示:", taku.Dora())
 	fmt.Println("裏ドラ表示:", taku.UraDora())
@@ -44,6 +42,10 @@ func TestDoCalcPoint(t *testing.T) {
 		yakuCheck := taku.Players[1].NewYakuCheck(p)
 		if yakuCheck.Is和了() {
 			fmt.Println("アガリ: ", yakuCheck.String())
+
+			c := taku.RonCalcPoint(1, 2, pai.P1)
+			fmt.Println(c.String())
+
 			break
 		}
 		fmt.Println("チェック: ", yakuCheck.String())

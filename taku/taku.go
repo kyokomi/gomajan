@@ -108,12 +108,12 @@ func (t *Taku) 配牌() [4][]tehai.Tehai {
 	for i := 0; i < 3; i++ {
 		for j := 0; j < 4; j++ {
 			t.Add列And山越しFunc(1)
-			p[j][(i*4)+0] = t.Next(0, j + 1)
-			p[j][(i*4)+1] = t.Next(1, j + 1)
+			p[j][(i*4)+0] = t.Next(0, j+1)
+			p[j][(i*4)+1] = t.Next(1, j+1)
 
 			t.Add列And山越しFunc(1)
-			p[j][(i*4)+2] = t.Next(0, j + 1)
-			p[j][(i*4)+3] = t.Next(1, j + 1)
+			p[j][(i*4)+2] = t.Next(0, j+1)
+			p[j][(i*4)+3] = t.Next(1, j+1)
 		}
 	}
 
@@ -194,8 +194,8 @@ func 山Index(s sai.Sai) int {
 }
 
 // RonCalcPoint ロン得点計算
-func (t Taku) RonCalcPoint(playerID, targetID int, agariPai pai.MJP) *calc.CalcPoint {
-	var c calc.CalcPoint
+func (t Taku) RonCalcPoint(playerID, targetID int, agariPai pai.MJP) calc.Tokuten {
+	var c calc.Tokuten
 
 	c.Hora = hora.Ron
 	c.TargetID = targetID
@@ -217,24 +217,16 @@ func (t Taku) RonCalcPoint(playerID, targetID int, agariPai pai.MJP) *calc.CalcP
 	// TODO: 符計算
 	c.Fu = 30
 
-	// TODO: 得点計算
-	switch c.Hora {
-	case hora.Ron:
-		c.TokutenRon = 3900
-	case hora.Tsumo:
-		c.TokutenTsumo = [2]int{2000, 1000}
-	}
-
-	return &c
+	return c
 }
 
 // TsumoCalcPoint ツモ得点計算
-func (t Taku) TsumoCalcPoint(playerIdx, agariPai pai.MJP) *calc.CalcPoint {
-	var c calc.CalcPoint
+func (t Taku) TsumoCalcPoint(playerIdx, agariPai pai.MJP) calc.Tokuten {
+	var c calc.Tokuten
 
 	// TODO: 未実装
 
-	return &c
+	return c
 }
 
 // TODO: 河底撈魚

@@ -10,20 +10,16 @@ import (
 
 func TestCalcPoint(t *testing.T) {
 	c := CalcPoint{
-		Oyako: oyako.Oya,
-		Hora:  hora.Ron,
-		Fu:    30,
-		Fan:   2,
+		Fu:  30,
+		Fan: 2,
 	}
 
-	fmt.Println(c.Point())
+	fmt.Println(c.Point(oyako.Oya, hora.Ron))
 
 	c = CalcPoint{
-		Oyako: oyako.Ko,
-		Hora:  hora.Tsumo,
-		Fu:    50,
-		Fan:   3,
+		Fu:  50,
+		Fan: 3,
 	}
 
-	fmt.Println(c.Point())
+	fmt.Println(c.Point(oyako.Ko, hora.Tsumo))
 }
